@@ -4,8 +4,30 @@
 
 {% block title %}accueil{% endblock %}
 
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/base.css') }}"> {% endblock %}
+
 {% block body %}
 
+<div class = "col">
+        <div class = "row" >
+            <div  class="d-flex ">
+                <img id = "img1"  class="col-6 col-md-6 col-lg-6 mb-4" src = "{{ asset('img/sapeF.jpeg') }}" alt = "">
+                <img id = "img2"  class="col-6 col-md-6 col-lg-6 mb-4 "src = "{{ asset('img/sapeHH.jpeg') }}" alt = "">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="section_1">
 
+    <h3><strong>Découvrez nos top catégories</strong></h3>
+
+</div>
+
+<div>
+      cette div va contenir les nouveaux produits
+
+</div>
+
+        
 
 {% endblock %}

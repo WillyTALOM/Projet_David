@@ -8,8 +8,57 @@
     
 }
 
+/* **********************HEADER*********************** */
+#header1{
+    height: 4rem;
+}
+
+#header2{
+    height: 5rem;
+    margin-bottom: 2rem;
+}
+
+#icon1{
+    font-size: 30px;
+}
+
+#icon2{
+    font-size: 20px;
+    padding-top: 1.5rem;
+}
+
+#logo{
+    font-size: 30px;
+    color: rgba(91, 1, 1, 0.488);
+    font-weight: 900;
+}
+
+
+
+/* **********************ACCUEIL*********************** */
+
 main{
     min-height: calc(100vh - 61px - 357px);
 }
+
+
+div #img1{
+    width: 50%;
+    object-fit: cover;
+}
+
+div #img2{
+    width: 50%;
+    object-fit: cover;
+}
+
+ h3{
+
+   text-align: center;
+}
+
+
+/* ********************************************* */
+
 
 
