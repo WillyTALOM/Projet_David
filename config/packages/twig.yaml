@@ -1,5 +1,12 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    globals :
+         contact_company: 'Vente de Vetements'
+         contact_address: '11 Boulevard Vicor Schoelcher'
+         contact_zip : '77127'
+         contact_city : 'LIEUSAINT'
+         contact_phone: '06 76 75 76 65'
+         contact_email: 'vdv@domaine.com'
 
 when@test:
     twig:

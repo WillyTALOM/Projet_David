@@ -1,0 +1,15 @@
+/* **********************RESET*********************** */
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+    
+}
+
+main{
+    min-height: calc(100vh - 61px - 357px);
+}
+
+
