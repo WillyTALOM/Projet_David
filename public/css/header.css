@@ -1,0 +1,23 @@
+#header1{
+    height: 4rem;
+}
+
+#header2{
+    height: 5rem;
+    
+}
+
+#icon1{
+    font-size: 30px;
+}
+
+#icon2{
+    font-size: 20px;
+    padding-top: 1.5rem;
+}
+
+#logo{
+    font-size: 30px;
+    color: rgba(91, 1, 1, 0.488);
+    font-weight: 900;
+}
