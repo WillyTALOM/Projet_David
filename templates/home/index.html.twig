@@ -22,10 +22,31 @@
 
 </div>
 
-<div>
-      cette div va contenir les nouveaux produits
+<div class="row">
 
-</div>
+{% for product in products %}
+    <div class="col-3">
+        <div class="card">
+          <div class="card-img-top">
+            <img src="https://via.placeholder.com/360x360.jpg/CCCCC" class="img-fluid mx-auto d-block" alt="Card image cap">
+          </div>
+          <div class="card-body text-center">
+            <h4 class="card-title">
+              <a href="" class=" font-weight-bold text-dark"> {{ product.name }}</a>
+            </h4>
+            <h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
+            <h5 class="card-price small ">
+              <i class="text-danger">
+                <s class="text-secondary">{{product.price}} €</s> {{product.price}} €</i>
+            </h5>
+          </div>
+        </div>
+    </div>
+
+     
+    {% endfor %}    
+
+</div> 
 
         
 
