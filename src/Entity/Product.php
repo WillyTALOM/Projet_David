@@ -16,11 +16,11 @@ class Product
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 100)]
+        private ?string $name = null;
+
     #[ORM\Column(length: 100, unique: true)]
     private ?string $slug = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $abstract = null;
@@ -35,6 +35,12 @@ class Product
     private ?float $price = null;
 
     #[ORM\Column]
+    private ?float $priceSolde = null;
+
+    #[ORM\Column]
+    private ?int $reduction = null;
+
+    #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
@@ -47,10 +53,19 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: OrderDetails::class)]
     private Collection $orderDetails;
 
+    #[ORM\ManyToMany(targetEntity: BrandCategory::class, mappedBy: 'product')]
+    private Collection $brandCategories;
+
+    #[ORM\ManyToOne(inversedBy: 'product')]
+    private ?ProductCategory $productCategory = null;
+
+   
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
+        $this->brandCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -126,6 +141,30 @@ class Product
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPriceSolde(): ?float
+    {
+        return $this->priceSolde;
+    }
+
+    public function setPriceSolde(float $priceSolde): self
+    {
+        $this->priceSolde = $priceSolde;
+
+        return $this;
+    }
+
+    public function getReduction(): ?int
+    {
+        return $this->reduction;
+    }
+
+    public function setReduction(int $reduction): self
+    {
+        $this->reduction = $reduction;
 
         return $this;
     }
@@ -213,4 +252,47 @@ class Product
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, BrandCategory>
+     */
+    public function getBrandCategories(): Collection
+    {
+        return $this->brandCategories;
+    }
+
+    public function addBrandCategory(BrandCategory $brandCategory): self
+    {
+        if (!$this->brandCategories->contains($brandCategory)) {
+            $this->brandCategories->add($brandCategory);
+            $brandCategory->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBrandCategory(BrandCategory $brandCategory): self
+    {
+        if ($this->brandCategories->removeElement($brandCategory)) {
+            $brandCategory->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function getProductCategory(): ?ProductCategory
+    {
+        return $this->productCategory;
+    }
+
+    public function setProductCategory(?ProductCategory $productCategory): self
+    {
+        $this->productCategory = $productCategory;
+
+        return $this;
+    }
+
+    
+
+   
 }

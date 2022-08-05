@@ -15,68 +15,96 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $faker = Factory::create(); /*:: s'appelle opération de resolution de porté*/
+
+
         // $product = new Product();
         // $manager->persist($product);
 
-        $category = new Category();
-        $category->setName('Ambiance');
-        $category->setSlug('ambiance');
-        $manager->persist($category);
+        $homme = new Category();
+        $homme->setName('Homme');
+        $homme->setSlug('homme');
+        $homme->setDescription('Vetements, chaussures, bijoux et accessoires pour hommes');
+        $homme->setImg($faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg'));
+        $homme->setUrl('');
+        $manager->persist($homme);
 
-        $category = new Category();
-        $category->setName('Stratégie');
-        $category->setSlug('strategie');        
-        $manager->persist($category);
+        $femme = new Category();
+        $femme->setName('Femme');
+        $femme->setSlug('femme'); 
+        $femme->setDescription('Vetements, chaussures, bijoux et accessoires pour femmes');
+        $femme->setImg($faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg'));  
+        $femme->setUrl('');     
+        $manager->persist($femme);
 
-        $category = new Category();
-        $category->setName('Junior');
-        $category->setSlug('junior');
-        $manager->persist($category);
-
-        $category = new Category();
-        $category->setName('Classique');
-        $category->setSlug('classique');
-        $manager->persist($category);
+        $enfant = new Category();
+        $enfant->setName('Enfant');
+        $enfant->setSlug('enfant');
+        $enfant->setDescription('Vetements, chaussures, bijoux et accessoires pour enfants');
+        $enfant->setImg($faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg'));
+        $enfant->setUrl('');
+        $manager->persist($enfant);
 
         $manager->flush();
 
-        
-
-        $faker = Factory::create(); /*:: s'appelle opération de resolution de porté*/
-
+    
         $categories = $manager->getRepository(Category::class)->findAll();
         // demander au manager daller cherhcher le repo associer a l'entity' category // on recupere categories en base de donnèes
 
         $slugger = new AsciiSlugger();
 
         
-    for ($i = 0; $i < 20; $i++) { 
-        $product = new Product();
-        $product->setName($faker->text(35));
-        $product->setSlug(strtolower($slugger->slug(($product->getName()))));
-        $product->setAbstract($faker->text(100));
-        $product->setDescription($faker->text(1000));
-        $product->setQuantity($faker->numberBetween(0,100));
-        $product->setPrice($faker->randomFloat(2,4,200));
-        $product->setCreatedAt(new \DateTimeImmutable());
+     
+        $chaussure = new Product();
+        $chaussure->setName('Basket ADIDAS');
+        $chaussure->setSlug(strtolower($slugger->slug(($chaussure->getName()))));
+        $chaussure->setAbstract($faker->text(100));
+        $chaussure->setDescription($faker->text(1000));
+        $chaussure->setQuantity($faker->numberBetween(0,100));
+        $chaussure->setPrice($faker->randomFloat(2,4,200));
+        $chaussure->setPriceSolde($faker->randomFloat(2,5,210));
+        $chaussure->setReduction($faker->numberBetween(0,100));
+        $chaussure->setCreatedAt(new \DateTimeImmutable());
+        $chaussure->setCategory($homme); 
 
-
-
-        $index = array_rand($categories, 1); // renvoit un index aléatoire du tableau contenant les catégories
-        $category = $categories[$index]; // récupère la valeur liée à cet index
-        $product->setCategory($category); // définit la catégorie récupérer à la ligne précédente
-
-        $manager->persist($product);
+        $manager->persist($chaussure);
 
         $manager->flush();
        
 
         
-   }
+        $image = new Image();
+        $image->setName($faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg'));
+        $image->setProduct($chaussure);
+        $chaussure->addImage($image);
+
+        $manager->persist($image);
+
+        $manager->flush();
+
+        $chemise = new Product();
+        $chemise->setName('Basket NIKE');
+        $chemise->setSlug(strtolower($slugger->slug(($chemise->getName()))));
+        $chemise->setAbstract($faker->text(100));
+        $chemise->setDescription($faker->text(1000));
+        $chemise->setQuantity($faker->numberBetween(0,100));
+        $chemise->setPrice($faker->randomFloat(2,4,200));
+        $chemise->setPriceSolde($faker->randomFloat(2,5,210));
+        $chemise->setReduction($faker->numberBetween(0,100));
+        $chemise->setCreatedAt(new \DateTimeImmutable());
+        $chemise->setCategory($femme);
+        $chemise->setCategory($homme);
+
+        $manager->persist($chemise);
+
+        $manager->flush();
+       
+
         
         $image = new Image();
         $image->setName($faker->imageUrl(360, 360, 'animals', true, 'dogs', true, 'jpg'));
-        $image->setProduct($product);
+        $image->setProduct($chemise);
+        $chemise->addImage($image);
 
         $manager->persist($image);
 

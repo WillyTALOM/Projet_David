@@ -28,12 +28,25 @@ class Category
     #[ORM\Column(length: 45, nullable: true)]
     private ?string $img = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $url = null;
+
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]
     private Collection $products;
+
+    #[ORM\ManyToMany(targetEntity: ProductCategory::class, mappedBy: 'category')]
+    private Collection $productCategories;
+
+    #[ORM\ManyToMany(targetEntity: BrandCategory::class, mappedBy: 'category')]
+    private Collection $brandCategories;
+
+ 
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->productCategories = new ArrayCollection();
+        $this->brandCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +102,18 @@ class Category
         return $this;
     }
 
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Product>
      */
@@ -118,4 +143,60 @@ class Category
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, ProductCategory>
+     */
+    public function getProductCategories(): Collection
+    {
+        return $this->productCategories;
+    }
+
+    public function addProductCategory(ProductCategory $productCategory): self
+    {
+        if (!$this->productCategories->contains($productCategory)) {
+            $this->productCategories->add($productCategory);
+            $productCategory->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductCategory(ProductCategory $productCategory): self
+    {
+        if ($this->productCategories->removeElement($productCategory)) {
+            $productCategory->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BrandCategory>
+     */
+    public function getBrandCategories(): Collection
+    {
+        return $this->brandCategories;
+    }
+
+    public function addBrandCategory(BrandCategory $brandCategory): self
+    {
+        if (!$this->brandCategories->contains($brandCategory)) {
+            $this->brandCategories->add($brandCategory);
+            $brandCategory->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBrandCategory(BrandCategory $brandCategory): self
+    {
+        if ($this->brandCategories->removeElement($brandCategory)) {
+            $brandCategory->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+   
 }
