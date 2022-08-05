@@ -9,11 +9,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-    #[Route('/product', name: 'products')]
-    public function index(ProductRepository $productRepository): Response
+    #[Route('/homme', name: 'products')]
+    public function productHomme(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findAll();
-        return $this->render('product/index.html.twig',
+        return $this->render('product/homme.html.twig',
+         [
+            'products' => $products,
+        ]);
+    }
+
+    #[Route('/femme', name: 'products')]
+    public function productfemme(ProductRepository $productRepository): Response
+    {
+        $products = $productRepository->findAll();
+        return $this->render('product/femme.html.twig',
+         [
+            'products' => $products,
+        ]);
+    }
+
+    #[Route('/enfant', name: 'products')]
+    public function productenfant(ProductRepository $productRepository): Response
+    {
+        $products = $productRepository->findAll();
+        return $this->render('product/enfant.html.twig',
          [
             'products' => $products,
         ]);

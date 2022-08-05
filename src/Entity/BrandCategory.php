@@ -15,17 +15,17 @@ class BrandCategory
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 55)]
+    #[ORM\Column(length: 55, nullable: true)]
     private ?string $trendy_brands = null;
 
-    #[ORM\Column(length: 55)]
+    #[ORM\Column(length: 55, nullable: true)]
     private ?string $luxury_brands = null;
 
     #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'brandCategories')]
     private Collection $product;
 
     #[ORM\ManyToMany(targetEntity: ProductCategory::class, mappedBy: 'brandCategory')]
-    private Collection $productCategories;
+    private Collection $productCategory;
 
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'brandCategories')]
     private Collection $category;
@@ -33,7 +33,7 @@ class BrandCategory
     public function __construct()
     {
         $this->product = new ArrayCollection();
-        $this->productCategories = new ArrayCollection();
+        $this->productCategory = new ArrayCollection();
         $this->category = new ArrayCollection();
     }
 
@@ -47,7 +47,7 @@ class BrandCategory
         return $this->trendy_brands;
     }
 
-    public function setTrendyBrands(string $trendy_brands): self
+    public function setTrendyBrands(?string $trendy_brands): self
     {
         $this->trendy_brands = $trendy_brands;
 
@@ -59,7 +59,7 @@ class BrandCategory
         return $this->luxury_brands;
     }
 
-    public function setLuxuryBrands(string $luxury_brands): self
+    public function setLuxuryBrands(?string $luxury_brands): self
     {
         $this->luxury_brands = $luxury_brands;
 
@@ -93,15 +93,15 @@ class BrandCategory
     /**
      * @return Collection<int, ProductCategory>
      */
-    public function getProductCategories(): Collection
+    public function getProductCategory(): Collection
     {
         return $this->productCategories;
     }
 
     public function addProductCategory(ProductCategory $productCategory): self
     {
-        if (!$this->productCategories->contains($productCategory)) {
-            $this->productCategories->add($productCategory);
+        if (!$this->productCategory->contains($productCategory)) {
+            $this->productCategory->add($productCategory);
             $productCategory->addBrandCategory($this);
         }
 
@@ -110,7 +110,7 @@ class BrandCategory
 
     public function removeProductCategory(ProductCategory $productCategory): self
     {
-        if ($this->productCategories->removeElement($productCategory)) {
+        if ($this->productCategory->removeElement($productCategory)) {
             $productCategory->removeBrandCategory($this);
         }
 

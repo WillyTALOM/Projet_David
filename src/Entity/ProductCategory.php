@@ -15,19 +15,19 @@ class ProductCategory
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $bags = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $shoes = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $clothe = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $watch = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $accessory = null;
 
     #[ORM\OneToMany(mappedBy: 'productCategory', targetEntity: Product::class)]
@@ -56,7 +56,7 @@ class ProductCategory
         return $this->bags;
     }
 
-    public function setBags(string $bags): self
+    public function setBags(?string $bags): self
     {
         $this->bags = $bags;
 
@@ -68,7 +68,7 @@ class ProductCategory
         return $this->shoes;
     }
 
-    public function setShoes(string $shoes): self
+    public function setShoes(?string $shoes): self
     {
         $this->shoes = $shoes;
 
@@ -80,7 +80,7 @@ class ProductCategory
         return $this->clothe;
     }
 
-    public function setClothe(string $clothe): self
+    public function setClothe(?string $clothe): self
     {
         $this->clothe = $clothe;
 
@@ -92,7 +92,7 @@ class ProductCategory
         return $this->watch;
     }
 
-    public function setWatch(string $watch): self
+    public function setWatch(?string $watch): self
     {
         $this->watch = $watch;
 
@@ -104,7 +104,7 @@ class ProductCategory
         return $this->accessory;
     }
 
-    public function setAccessory(string $accessory): self
+    public function setAccessory(?string $accessory): self
     {
         $this->accessory = $accessory;
 

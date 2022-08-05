@@ -256,9 +256,9 @@ class Product
     /**
      * @return Collection<int, BrandCategory>
      */
-    public function getBrandCategories(): Collection
+    public function getBrandCategory(): Collection
     {
-        return $this->brandCategories;
+        return $this->brandCategory;
     }
 
     public function addBrandCategory(BrandCategory $brandCategory): self
