@@ -18,6 +18,7 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    
     #[Route('/femme', name: 'femme')]
     public function femme(CategoryRepository $categoryRepository): Response
     {

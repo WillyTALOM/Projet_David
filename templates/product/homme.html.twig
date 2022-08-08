@@ -1,51 +1,49 @@
+
 {% extends 'base.html.twig' %}
 
-{% block description %}Liste des vetements pou Homme{% endblock %}
+{% block description %}{{ product.description|u.truncate(70,'...', false) }}{% endblock %}
 
-{% block title %}Vetements Homme{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
-{% block h1 %}Vetements{% endblock %}
+{% block h1 %}{{ product.name }}{% endblock %}
 
 {% block body %}
 
-{<div class = "col">
-    <div class = "row" >
-        <div  class="d-flex ">
-            <img id = "img1"  class="col-6 col-md-6 col-lg-6 mb-4" src = "{{ asset('img/sapeF.jpeg') }}" alt = "">
-            <img id = "img2"  class="col-6 col-md-6 col-lg-6 mb-4 "src = "{{ asset('img/sapeHH.jpeg') }}" alt = "">
-        </div>
-    </div>
-</div>
-</div>
-<div id="section_1">
+{# <div class="d-flex"> #}
 
-<h3><strong>Découvrez nos top catégories</strong></h3>
-
-</div>
-
-<div class="row">
-
-{% for product in products %}
-<div class="col-3">
+<div class="col-6">
     <div class="card">
       <div class="card-img-top">
-        <img src="https://via.placeholder.com/360x360.jpg/CCCCC" class="img-fluid mx-auto d-block" alt="Card image cap">
+        <img src="https://res.cloudinary.com/videdressing/image/upload/t_p_237/v1633010561/products/12706512-7.jpg" class="img-fluid mx-auto d-block" alt="Card image cap">
       </div>
       <div class="card-body text-center">
         <h4 class="card-title">
           <a href="" class=" font-weight-bold text-dark"> {{ product.name }}</a>
         </h4>
-        <h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
+        <h6 id="text-des">{{ product.description|u.truncate(200,'...', false) }}</h6>
         <h5 class="card-price small ">
           <i class="text-danger">
             <s class="text-secondary">{{product.price}} €</s> {{product.reduction}} €</i>
         </h5>
+        <div>
+            <a href="#" class="card-link"><i class="btn btn-success">Acheter</i></a>
+        </div>
       </div>
     </div>
 </div>
 
- 
-{% endfor %}    
+{# <div class="col-2"> 
+    <h5 class="card-price small ">
+        <i class="text-danger">
+          <s class="text-secondary">{{product.price}} €</s> {{product.reduction}} €</i>
+      </h5>
+      <div>
+          <a href="#" class="card-link"><i class="btn btn-success">Acheter</i></a>
+      </div>#}
 
-</div> 
-{% endblock %}
+</div>
+
+</div>
+
+
+    {% endblock %}
