@@ -43,22 +43,13 @@ class Product
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
-
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class)]
     private Collection $images;
 
     #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: OrderDetails::class)]
     private Collection $orderDetails;
 
-    #[ORM\ManyToMany(targetEntity: BrandCategory::class, mappedBy: 'product')]
-    private Collection $brandCategories;
-
-    #[ORM\ManyToOne(inversedBy: 'product')]
-    private ?ProductCategory $productCategory = null;
-
+   
    
 
     public function __construct()
@@ -181,17 +172,7 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, Image>
@@ -253,45 +234,7 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, BrandCategory>
-     */
-    public function getBrandCategory(): Collection
-    {
-        return $this->brandCategory;
-    }
-
-    public function addBrandCategory(BrandCategory $brandCategory): self
-    {
-        if (!$this->brandCategories->contains($brandCategory)) {
-            $this->brandCategories->add($brandCategory);
-            $brandCategory->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBrandCategory(BrandCategory $brandCategory): self
-    {
-        if ($this->brandCategories->removeElement($brandCategory)) {
-            $brandCategory->removeProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function getProductCategory(): ?ProductCategory
-    {
-        return $this->productCategory;
-    }
-
-    public function setProductCategory(?ProductCategory $productCategory): self
-    {
-        $this->productCategory = $productCategory;
-
-        return $this;
-    }
-
+    
     
 
    
