@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use Faker\Factory;
+use App\Entity\Sexe;
+use App\Entity\Brand;
 use App\Entity\Product;
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
@@ -38,10 +40,47 @@ class AppFixtures extends Fixture
 
         $manager->flush(); // ce flush est nécessaire pour envoyer les catégories en base de données car on en aura besoin juste après pour alimenter les produits
 
+        $marque = new Brand();
+        $marque->setName('Adidas');
+        $manager->persist($marque);
+
+        $marque = new Brand();
+        $marque->setName('Nike');
+        $manager->persist($marque);
+
+        $marque = new Brand();
+        $marque->setName('Puma');
+        $manager->persist($marque);
+
+        $manager->flush();
+        
+       
+
+        $sexe = new Sexe();
+        $sexe->setName('homme');
+        $manager->persist($sexe);
+
+        $sexe = new Sexe();
+        $sexe->setName('femme');
+        $manager->persist($sexe);
+
+        $sexe = new Sexe();
+        $sexe->setName('enfant');
+        $manager->persist($sexe);
+
+        $manager->flush();
+        
+
+        
+
+
+
+
         $faker = Factory::create();
 
         $categories = $manager->getRepository(Category::class)->findAll(); // récupère les catégories en base de données
-
+        $sexes= $manager->getRepository(Sexe::class)->findAll();
+        $marques= $manager->getRepository(Brand::class)->findAll();
         $slugger = new AsciiSlugger();
 
         for ($i = 1; $i <= 20; $i++) {
@@ -55,11 +94,18 @@ class AppFixtures extends Fixture
             $product->setPriceSolde($faker->randomFloat(2, 4, 200));
             $product->setReduction($faker->randomFloat(2, 4, 200));
             $product->setCreatedAt(new \DateTimeImmutable());
+            
+            $indexS = array_rand($sexes, 1); // renvoit un index aléatoire du tableau contenant les catégories
+            $sexe = $sexes[$indexS];
+
+            $indexB = array_rand($marques, 1); // renvoit un index aléatoire du tableau contenant les catégories
+            $marque = $marques[$indexB];
 
             $index = array_rand($categories, 1); // renvoit un index aléatoire du tableau contenant les catégories
             $category = $categories[$index]; // récupère la valeur liée à cet index
             $product->setCategory($category); // définit la catégorie récupérer à la ligne précédente
-
+            $product->setBrand($marque);
+            $product->setSexe($sexe);
             $manager->persist($product);
         }
 
