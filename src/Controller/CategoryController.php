@@ -22,6 +22,7 @@ class CategoryController extends AbstractController
             'categories' =>  $categories,
         ]);
     }
+    
     #[Route('/admin/category/create', name: 'create_category')]
     public function create(Request $request, CategoryRepository $categoryRepository, ManagerRegistry $managerRegistry): Response
     {
