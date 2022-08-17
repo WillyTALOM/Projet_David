@@ -95,8 +95,7 @@ class AppFixtures extends Fixture
             $product->setReduction($faker->randomFloat(2, 4, 200));
             $product->setCreatedAt(new \DateTimeImmutable());
             
-            $indexS = array_rand($sexes, 1); // renvoit un index aléatoire du tableau contenant les catégories
-            $sexe = $sexes[$indexS];
+
 
             $indexB = array_rand($marques, 1); // renvoit un index aléatoire du tableau contenant les catégories
             $marque = $marques[$indexB];
