@@ -84,14 +84,13 @@ class ProductType extends AbstractType
                 'expanded' => true
             ])
 
-            /*->add('sexe', EntityType::class, [
+            ->add('sexe', EntityType::class, [
                 'class' => Sexe::class,
                 'choice_label' => 'name',
-                'multiple' => true,
                 'expanded' => true
             ])
 
-             ->add('image', EntityType::class, [
+             /*->add('image', EntityType::class, [
                 'class' => Image::class,
                 'choice_label' => 'name',
                 'multiple' => true,
@@ -106,7 +105,7 @@ class ProductType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+             'data_class' => Product::class,
         ]);
     }
 }
