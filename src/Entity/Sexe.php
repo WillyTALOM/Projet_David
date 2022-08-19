@@ -19,8 +19,13 @@ class Sexe
     #[ORM\Column(length: 45)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     #[ORM\OneToMany(mappedBy: 'sexe', targetEntity: Product::class)]
     private Collection $products;
+
+
 
     public function __construct()
     {
@@ -70,6 +75,18 @@ class Sexe
                 $product->setSexe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

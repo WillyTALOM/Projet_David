@@ -1,49 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}accueil{% endblock %}
+{% block title %}accueil
+{% endblock %}
 
-{% block description %}VDM - votre nouvelle boutique de ventes de ventements en ligne{% endblock %}
+{% block description %}VDM - votre nouvelle boutique de ventes de ventements en ligne
+{% endblock %}
 
 {% block body %}
 
-<div class = "col">
-    <div class = "row" >
-        <div  class="d-flex ">
-            <img id = "img1"  class="col-6 col-md-6 col-lg-6 mb-4" src = "{{ asset('img/sapeF.jpeg') }}" alt = "">
-            <img id = "img2"  class="col-6 col-md-6 col-lg-6 mb-4 "src = "{{ asset('img/sapeHH.jpeg') }}" alt = "">
-        </div>
-    </div>
-</div>
-</div>
-<div id="section_1">
-
-<h3><strong>Découvrez nos top produits</strong></h3>
-
-</div>
-
-<div class="row">
-
-{% for product in products %}
-<div class="col-3">
-    <div class="card">
-      <div class="card-img-top">
-        <img src="https://via.placeholder.com/360x360.jpg/CCCCC" class="img-fluid mx-auto d-block" alt="Card image cap">
-      </div>
-      <div class="card-body text-center">
-        <h4 class="card-title">
-          <a href="" class=" font-weight-bold text-dark"> {{ product.name }}</a>
-        </h4>
-        <h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
-        <h5 class="card-price small ">
-          <i class="text-danger">
-            <s class="text-secondary">{{product.price}} €</s> {{product.PriceSolde}} €</i>
-        </h5>
-      </div>
-    </div>
-</div>
-
- 
-{% endfor %}    
+	<div class="col">
+		<div class="row">
+			<div class="d-flex ">
+				<img id="img1" class="col-6 col-md-6 col-lg-6 mb-4" src="{{ asset('img/sapeF.jpeg') }}" alt="">
+				<img id="img2" class="col-6 col-md-6 col-lg-6 mb-4 " src="{{ asset('img/sapeHH.jpeg') }}" alt="">
+			</div>
+		</div>
+	</div>
 
 
+	<div id="section_1">
+
+		<h3>
+			<strong>Découvrez nos derniers produits</strong>
+		</h3>
+	</div>
+
+
+	<div class="col-12">
+		<div class="row">
+			{% for product in products %}
+
+				<div class="col-md-6 col-lg-4 col-xl-3 p-3">
+
+
+					<div class="card h-50">
+
+						<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Nouveauté</div>
+						<img class="card-img-top" src="https://via.placeholder.com/360x360.jpg/CCCCC" alt="produit de {{ product.name }}"/>
+						<div class="card-body p-4">
+							<div class="text-center">
+								<h5 class="fw-bolder">{{ product.name }}</h5>
+								<h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
+								<span class="text-muted text-decoration-line-through">{{product.price}}
+									€
+								</span>
+								{{product.PriceSolde}}
+								€
+							</div>
+						</div>
+						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+							<div class="text-center">
+								<a href="{#{{ path('product_show', {'slug': product.slug}) }}#}" class="card-link btn btn-outline-primary">Détails</a>
+								<a href="#" class="card-link btn btn-{{ product.quantity != 0 ? 'success' : 'danger disabled' }}">
+									<i class="bi bi-cart-plus-fill"></i>
+								</a>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

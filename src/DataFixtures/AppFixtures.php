@@ -15,6 +15,8 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $slugger = new AsciiSlugger();
+        $faker = Factory::create('fr_FR');
         // $product = new Product();
         // $manager->persist($product);
 
@@ -53,35 +55,37 @@ class AppFixtures extends Fixture
         $manager->persist($marque);
 
         $manager->flush();
-        
-       
+
+
 
         $sexe = new Sexe();
         $sexe->setName('homme');
+        $sexe->setSlug(strtolower($slugger->slug($sexe->getName())));
         $manager->persist($sexe);
 
         $sexe = new Sexe();
         $sexe->setName('femme');
+        $sexe->setSlug(strtolower($slugger->slug($sexe->getName())));
         $manager->persist($sexe);
 
         $sexe = new Sexe();
         $sexe->setName('enfant');
+        $sexe->setSlug(strtolower($slugger->slug($sexe->getName())));
         $manager->persist($sexe);
-
         $manager->flush();
-        
-
-        
 
 
 
 
-        $faker = Factory::create();
+
+
+
+
 
         $categories = $manager->getRepository(Category::class)->findAll(); // récupère les catégories en base de données
-        $sexes= $manager->getRepository(Sexe::class)->findAll();
-        $marques= $manager->getRepository(Brand::class)->findAll();
-        $slugger = new AsciiSlugger();
+        $sexes = $manager->getRepository(Sexe::class)->findAll();
+        $marques = $manager->getRepository(Brand::class)->findAll();
+
 
         for ($i = 1; $i <= 20; $i++) {
             $product = new Product();
@@ -94,8 +98,9 @@ class AppFixtures extends Fixture
             $product->setPriceSolde($faker->randomFloat(2, 4, 200));
             $product->setReduction($faker->randomFloat(2, 4, 200));
             $product->setCreatedAt(new \DateTimeImmutable());
-            
 
+            $indexS = array_rand($sexes, 1);
+            $sexe = $sexes[$indexS];
 
             $indexB = array_rand($marques, 1); // renvoit un index aléatoire du tableau contenant les catégories
             $marque = $marques[$indexB];
