@@ -20,12 +20,12 @@ class CategoryController extends AbstractController
     #[Route('/admin/category', name: 'admin_category')]
     public function index(CategoryRepository $categoryRepository): Response
     {
-        $categories = $categoryRepository->findAll(); 
+        $categories = $categoryRepository->findAll();
         return $this->render('category/categoryAdmin.html.twig', [
             'categories' =>  $categories,
         ]);
     }
-    
+
     #[Route('/admin/category/create', name: 'create_category')]
     public function create(Request $request, CategoryRepository $categoryRepository, ManagerRegistry $managerRegistry): Response
     {
@@ -33,16 +33,15 @@ class CategoryController extends AbstractController
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isvalid())
-        {
+        if ($form->isSubmitted() && $form->isvalid()) {
             $categories = $categoryRepository->findAll();
             $categoryNames = [];
 
-            foreach ($categories as $categorie){
-                $categoryNames [] = $categorie->getName();
+            foreach ($categories as $categorie) {
+                $categoryNames[] = $categorie->getName();
             }
 
-            $img = $form['img']->getData();
+            /* $img = $form['img']->getData();
             if ($img === null) {
                 $this->addFlash('danger', 'Pas d\'image trouvée');
                 return $this->redirectToRoute('admin_category');
@@ -51,41 +50,40 @@ class CategoryController extends AbstractController
             $nomImg = time() . '-1.'.$extensionImg;
             $img->move($this->getParameter('category_image_dir'), $nomImg);
 
-            $category->setImg($nomImg);
-
+            $category->setImg($nomImg);*/
             $slugger = new AsciiSlugger();
             $category->setSlug(strtolower($slugger->slug($form['name']->getData())));
 
-            
+
 
             $manager = $managerRegistry->getManager();
             $manager->persist($category);
             $manager->flush();
 
-            $this->addFlash('success', 'La categorie a bien été créé'); 
+            $this->addFlash('success', 'La categorie a bien été créé');
             return $this->redirectToRoute('admin_category');
-
         }
 
         return $this->render('category/form.html.twig', [
             'categoryForm' => $form->createView()
         ]);
-
     }
 
     #[Route('/admin/category/update/{id}', name: 'category_update')]
-    public function update(Category $category,CategoryRepository $categoryRepository, Request $request, ManagerRegistry $managerRegistry): Response
+    public function update(Category $category, CategoryRepository $categoryRepository, Request $request, ManagerRegistry $managerRegistry): Response
     {
-        $form = $this->createForm(CategoryType::class,
-        $category);
+        $form = $this->createForm(
+            CategoryType::class,
+            $category
+        );
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $categories =  $categoryRepository->findAll();
             $categoryName = [];
 
-            foreach ($categories as $categorie){
+            foreach ($categories as $categorie) {
 
                 $categoryName[] = $categorie->getName();
             }
@@ -100,29 +98,28 @@ class CategoryController extends AbstractController
                     unlink($oldImgPath);
                 }
 
-                $extensionImg = $img->guessExtension(); 
-                $nomImg = time() . '-1.'.$extensionImg;
+                $extensionImg = $img->guessExtension();
+                $nomImg = time() . '-1.' . $extensionImg;
                 $img->move($this->getParameter('category_image_dir'), $nomImg);
                 $category->setImg($nomImg);
 
-            $slugger = new AsciiSlugger();
-            $categorie->setSlug(strtolower($slugger->slug($form['name']->getData())));
+                $slugger = new AsciiSlugger();
+                $categorie->setSlug(strtolower($slugger->slug($form['name']->getData())));
 
-            $manager = $managerRegistry->getManager();
-            $manager->persist($category);
-            $manager->flush();
+                $manager = $managerRegistry->getManager();
+                $manager->persist($category);
+                $manager->flush();
 
-            $this->addFlash('success', 'La category a bien été modifié');
-            return $this->redirectToRoute('admin_category');
+                $this->addFlash('success', 'La category a bien été modifié');
+                return $this->redirectToRoute('admin_category');
             }
-    
         }
 
         return $this->render('category/form.html.twig', [
             'categoryForm' => $form->createView()
         ]);
-    } 
-    
+    }
+
     #[Route('/admin/category/delete/{id}', name: 'category_delete')]
     public function delete(Category $category, ManagerRegistry $managerRegistry): Response
     {
@@ -130,16 +127,11 @@ class CategoryController extends AbstractController
         if (file_exists($imgpath)) {
             unlink($imgpath);
         }
-       
+
         $manager = $managerRegistry->getManager();
         $manager->remove($category);
         $manager->flush();
         $this->addFlash('success', 'La categorie a bein été supprimé');
-        return $this->redirectToRoute
-        ('admin_category');
-
+        return $this->redirectToRoute('admin_category');
     }
-    
-
-    
 }

@@ -8,13 +8,16 @@ use App\Entity\Image;
 use App\Entity\Product;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class ProductType extends AbstractType
 {
@@ -90,12 +93,16 @@ class ProductType extends AbstractType
                 'expanded' => true
             ])
 
-             /*->add('image', EntityType::class, [
-                'class' => Image::class,
-                'choice_label' => 'name',
-                'multiple' => true,
-                'expanded' => true
-            ])*/
+            ->add('images', CollectionType::class, [
+                'entry_type' => FileType::class,
+                'allow_add' => true,
+                'required' => false,
+                'mapped' => false,
+                'help' => 'png, jpg, jpeg, jp2 ou webp - 1 Mo maximum',
+    
+            ])
+                
+           
 
 
             

@@ -15,23 +15,23 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('name', TextType::class, [
-            'attr' => [
-                'maxLenght' => 45
-            ]
-        ])
-            
-        ->add('img', FileType::class, [
+            ->add('name', TextType::class, [
+                'attr' => [
+                    'maxLenght' => 45
+                ]
+            ])
+
+            /* ->add('img', FileType::class, [
             'required' => false,
             'mapped' => false,
-            'help' => 'png, jpg, jpeg, jp2 ou webp - 1 Mo maximum'])
-            
-            ->add('description' , TextareaType::class,[
+            'help' => 'png, jpg, jpeg, jp2 ou webp - 1 Mo maximum'])*/
+
+            ->add('description', TextareaType::class, [
+                'required' => false,
                 'attr' => [
                     'maxLength' => 65535
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

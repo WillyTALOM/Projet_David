@@ -63,7 +63,7 @@ class ProductController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Le produit a bien été créé'); 
-            return $this->redirectToRoute('admin_category');
+            return $this->redirectToRoute('admin_products');
 
         }
 
