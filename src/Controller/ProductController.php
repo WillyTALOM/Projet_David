@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use App\Repository\SexeRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/products' , name: 'admin_products')]
+    #[Route('/admin/products', name: 'admin_products')]
     public function adminList(ProductRepository $productRepository): Response
     {
         $products = $productRepository->findAll();
@@ -34,8 +35,8 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/product/create' , name: 'create_product')]
-    public function create(Request $request, ProductRepository $productRepository, ManagerRegistry $managerRegistry):Response
+    #[Route('/admin/product/create', name: 'create_product')]
+    public function create(Request $request, ProductRepository $productRepository, ManagerRegistry $managerRegistry): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
@@ -62,9 +63,8 @@ class ProductController extends AbstractController
             $manager->persist($product);
             $manager->flush();
 
-            $this->addFlash('success', 'Le produit a bien été créé'); 
+            $this->addFlash('success', 'Le produit a bien été créé');
             return $this->redirectToRoute('admin_products');
-
         }
 
         return $this->render('product/form.html.twig', [
@@ -72,17 +72,17 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/product/update/{id}',name:'update_product')]
+    #[Route('/admin/product/update/{id}', name: 'update_product')]
     public function update(Request $request, ProductRepository $productRepository, ManagerRegistry $managerRegistry, Product $product): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $products = $productRepository->findAll();
             $productNames = [];
-            foreach ($products as $product){
+            foreach ($products as $product) {
                 $productNames[] = $product->getName();
             }
 
@@ -99,7 +99,6 @@ class ProductController extends AbstractController
 
             $this->addFlash('success', 'Le produit a bien été modifié');
             return $this->redirectToRoute('admin_products');
-
         }
 
         return $this->render('product/form.html.twig', [
@@ -119,5 +118,12 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('admin_products');
     }
 
-
+    #[Route('/{sexe}', name: 'products_by_sexe')]
+    public function getProduitsPourHomme(string $sexe, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
+    {
+        $sexe = $sexeRepository->findOneBy(['name' => $sexe]);
+        return $this->render('product/sexe.html.twig', [
+            'products' => $productRepository->findBy(['sexe' => $sexe])
+        ]);
+    }
 }

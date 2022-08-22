@@ -11,14 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SexeController extends AbstractController
 {
-    #[Route('/{slug}', name: 'sexe')]
-    public function index($slug, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
-    {
-        $sexe = $sexeRepository->findAll();
-        $produits = $productRepository->findAll();
-        return $this->render('sexe/index.html.twig', [
-            'sexe' => $sexe,
-            'products' => $produits
-        ]);
-    }
+    // #[Route('/{slug}', name: 'sexe')]
+    // public function index($slug, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
+    // {
+    //     $sexe = $sexeRepository->findAll();
+    //     $produits = $productRepository->findAll();
+    //     return $this->render('sexe/index.html.twig', [
+    //         'sexe' => $sexe,
+    //         'products' => $produits
+    //     ]);
+    // }
 }

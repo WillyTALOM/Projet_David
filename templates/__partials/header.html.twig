@@ -1,36 +1,35 @@
-{% block stylesheets %} <link rel="stylesheet" href="{{ asset('css/header.css')}}"> {% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/header.css')}}">
+{% endblock %}
 
 
-<header
-      id="header1" class="container-fluid d-flex flex-row justify-content-between bg-secondary "
-    >
-      <div id="logo" >LOGO</div>
-{# je dois ajouter des liens #}
-      <nav class="nav">
-        <a id="icon1" href="linkk" class="nav-link text-black">
-            <i class="bi bi-person"></i>
-        </a>
-        <a id="icon1" href="linkk" class="nav-link text-black">
-            <i class="bi bi-suit-heart-fill"></i>
-        </a>
-        <a id="icon1" href="linkk" class="nav-link text-black">
-            <i class="bi bi-cart4"></i>
-        </a>
-        
-      </nav>
-    </header>
+<header id="header1" class="container-fluid d-flex flex-row justify-content-between bg-secondary ">
+	<div id="logo">LOGO</div>
+	{# je dois ajouter des liens #}
+	<nav class="nav">
+		<a id="icon1" href="linkk" class="nav-link text-black">
+			<i class="bi bi-person"></i>
+		</a>
+		<a id="icon1" href="linkk" class="nav-link text-black">
+			<i class="bi bi-suit-heart-fill"></i>
+		</a>
+		<a id="icon1" href="linkk" class="nav-link text-black">
+			<i class="bi bi-cart4"></i>
+		</a>
 
-    <header  id="header2" class="container-fluid d-flex flex-row justify-content-between bg-dark ">
-    <div></div>
+	</nav>
+</header>
 
-    <nav class="nav">
-      <a id = "icon2" href="{{path('home')}}" class="nav-link text-white">ACCUEIL</a>
-      <a id = "icon2" href="{{path('products')}}" class="nav-link text-white">FEMME</a>
-      <a id = "icon2" href="{{path('products')}}" class="nav-link text-white">HOMME</a>
-      <a id = "icon2" href="{{path('products')}}" class="nav-link text-white">ENFANT</a>
-      <a id = "icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
-      <a id = "icon2" href="#" class="nav-link text-white">CONNEXION</a>
-    </nav>
+<header id="header2" class="container-fluid d-flex flex-row justify-content-between bg-dark ">
+	<div></div>
 
-  </header>
-  
+	<nav class="nav">
+		<a id="icon2" href="{{path('home')}}" class="nav-link text-white">ACCUEIL</a>
+		<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'femme'})}}" class="nav-link text-white">FEMME</a>
+		<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="nav-link text-white">HOMME</a>
+		<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="nav-link text-white">ENFANT</a>
+		<a id="icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
+		<a id="icon2" href="#" class="nav-link text-white">CONNEXION</a>
+	</nav>
+
+</header>
