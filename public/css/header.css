@@ -1,23 +1,27 @@
-#header1{
-    height: 4rem;
+#header1 {
+  height: 4rem;
 }
 
-#header2{
-    height: 5rem;
-    
+#header2 {
+  height: 5rem;
+  height: 4rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
-#icon1{
-    font-size: 30px;
+#icon1 {
+  font-size: 30px;
 }
 
-#icon2{
-    font-size: 20px;
-    padding-top: 1.5rem;
+#icon2 {
+  font-size: 20px;
+  padding-top: 1.5rem;
 }
 
-#logo{
-    font-size: 30px;
-    color: rgba(91, 1, 1, 0.488);
-    font-weight: 900;
+#logo {
+  font-size: 30px;
+  color: rgba(91, 1, 1, 0.488);
+  font-weight: 900;
 }

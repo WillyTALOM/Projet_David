@@ -1,47 +1,56 @@
 {% extends "baseAdmin.html.twig" %}
 
-{% block title %}produits{% endblock %}
+{% block title %}produits
+{% endblock %}
 
 {% block body %}
 
-    <h1 class="pb-5 text-center">Liste des produits</h1>
+	<h1 class="pb-5 text-center">Liste des produits</h1>
 
-    <table class="table table-hover table-sm texxt-center align-middle">
-        <thead>
-            <tr>
-                <th>N°</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>reductions</th>
-                <th>Prix Soldé</th>
-                <th>Catégorie</th>
-                <th>Marques</th>
-                <th>Sexe</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products|reverse %}
-                <tr>
-                    <td>{{ loop.revindex }}</td>
-                    <td><img src="" alt="image principale du jeu {{ product.name }}" class="pe-3"> {{ product.name }}</td>
-                    <td>{{ product.price|number_format(2, ',', ' ') }} €</td>
-                    <td>{{ product.reduction }}</td>
-                    <td>{{ product.priceSolde }}</td>
-                    <td>{{ product.category.name }}</td>
-                    <td>{{ product.brand.name }}</td>
-                    <td>{{ product.sexe.name }}</td>                   
-                    <td>
-                        <a href="{{ path('update_product', {'id': product.id}) }}"><i class="bi bi-pencil-square text-primary"></i></a>
-                        <a href="{{ path('delete_product', {'id': product.id}) }}"><i class="bi bi-trash3 text-danger"></i></a>
-                    </td>
-                </tr>
-            {% endfor %}    
-        </tbody>
-    </table>
+	<table class="table table-hover table-sm texxt-center align-middle">
+		<thead>
+			<tr>
+				<th>N°</th>
+				<th>Nom</th>
+				<th>Prix</th>
+				<th>Réference</th>
+				<th>reductions</th>
+				<th>Prix Soldé</th>
+				<th>Catégorie</th>
+				<th>Marques</th>
+				<th>Sexe</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in products|reverse %}
+				<tr>
+					<td>{{ loop.revindex }}</td>
+					<td><img src="" alt="image principale du jeu {{ product.name }}" class="pe-3">
+						{{ product.name }}</td>
+					<td>{{ product.price|number_format(2, ',', ' ') }}
+						€</td>
+					<td>{{ product.reference }}</td>
+					<td>{{ product.reduction }}</td>
+					<td>{{ product.priceSolde }}</td>
+					<td>{{ product.category.name }}</td>
+					<td>{{ product.brand.name }}</td>
+					<td>{{ product.sexe.name }}</td>
+					<td>
+						<a href="{{ path('update_product', {'id': product.id}) }}">
+							<i class="bi bi-pencil-square text-primary"></i>
+						</a>
+						<a href="{{ path('delete_product', {'id': product.id}) }}">
+							<i class="bi bi-trash3 text-danger"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <div class="text-end mt-4">
-        <a href="{{ path('create_product') }}" class="btn btn-success">Ajouter un produit</a>
-    </div>
-    
+	<div class="text-end mt-4">
+		<a href="{{ path('create_product') }}" class="btn btn-success">Ajouter un produit</a>
+	</div>
+
 {% endblock %}

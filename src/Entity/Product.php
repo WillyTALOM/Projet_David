@@ -18,7 +18,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-        private ?string $name = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 100, unique: true)]
     private ?string $slug = null;
@@ -41,6 +41,9 @@ class Product
     #[ORM\Column]
     private ?int $reduction = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reference = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -59,16 +62,12 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Sexe $sexe = null;
 
-  
 
-   
-   
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
-        
     }
 
     public function getId(): ?int
@@ -184,7 +183,7 @@ class Product
         return $this;
     }
 
-   
+
 
     /**
      * @return Collection<int, Image>
@@ -282,8 +281,15 @@ class Product
         return $this;
     }
 
-    
-    
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
 
-   
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
+
+        return $this;
+    }
 }

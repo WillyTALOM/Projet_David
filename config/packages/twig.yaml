@@ -1,14 +1,15 @@
 twig:
-    default_path: '%kernel.project_dir%/templates'
-    form_themes: ['bootstrap_5_layout.html.twig']
-    globals :
-         contact_company: 'Vente de Vetements'
-         contact_address: '11 Boulevard Vicor Schoelcher'
-         contact_zip : '77127'
-         contact_city : 'LIEUSAINT'
-         contact_phone: '06 76 75 76 65'
-         contact_email: 'vdv@domaine.com'
-
+  default_path: "%kernel.project_dir%/templates"
+  form_themes: ["bootstrap_5_layout.html.twig"]
+  globals:
+    contact_company: "Vente de Vetements"
+    contact_address: "11 Boulevard Vicor Schoelcher"
+    contact_zip: "77127"
+    contact_city: "LIEUSAINT"
+    contact_phone: "06 76 75 76 65"
+    contact_email: "vdv@domaine.com"
+  paths:
+    "public/img": images
 when@test:
-    twig:
-        strict_variables: true
+  twig:
+    strict_variables: true

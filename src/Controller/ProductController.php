@@ -17,12 +17,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ProductController extends AbstractController
 {
 
-    #[Route('/products', name: 'products')]
-    public function index(ProductRepository $productRepository): Response
+
+    #[Route('/product/{slug}', name: 'product_show')]
+    public function show($slug, ProductRepository $productRepository): Response
     {
-        $products = $productRepository->findAll();
-        return $this->render('product/index.html.twig', [
-            'products' =>  $products,
+        $produits = $productRepository->findAll();
+        $product = $productRepository->findOneBy(['slug' => $slug]);
+        return $this->render('product/productShow.html.twig', [
+            'product' => $product,
+            'products' => $produits
         ]);
     }
 
@@ -118,7 +121,7 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('admin_products');
     }
 
-    #[Route('/{sexe}', name: 'products_by_sexe')]
+    #[Route('/products/{sexe}', name: 'products_by_sexe')]
     public function getProduitsPourHomme(string $sexe, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
     {
         $sexe = $sexeRepository->findOneBy(['name' => $sexe]);

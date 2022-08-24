@@ -11,92 +11,112 @@
 
 
 			<ul>
-				<li>
-					<a href="{{path('home')}}">Accueil<a></li>
-						<li>
-							<a href="#">Femme</a>
-						</li>
-						<li>
-							<a href="#">Homme</a>
-						</li>
-						<li>
-							<a href="#">Enfant</a>
-						</li>
-						<li>
-							<a href="{{path('contact')}}">Contact</a>
-						</li>
-						<li>
-							<a href="">FAQ</a>
-						</li>
-					</ul>
-				</li>
-			</div>
-
-
-			<div class="col-3">
-				<h5>COORDONNES</h5>
-				<hr class="m-3 ">
-				<p>{{contact_company}}</p>
-				<p>{{contact_address}}</p>
-				<p>{{contact_zip ~' '~ contact_city}}</p>
-				<p>{{contact_phone}}</p>
-				<p>{{contact_email}}</p>
-			</div>
-
-			<div class="col-3">
-
-				<h5>RESEAUX SOCIAUX</h5>
-				<hr class="m-3">
-				<ul>
+				<div>
 					<li>
-						<span>
-							<i class="bi bi-facebook"></i>
-						</span>
-					</li>
-					<li>
-						<span>
-							<i class="bi bi-instagram"></i>
-						</span>
-					</li>
-					<li>
-						<span>
-							<i class="bi bi-snapchat"></i>
-						</span>
-					</li>
-					<li>
-						<span>
-							<i class="bi bi-tiktok"></i>
-						</span>
-					</li>
+						<a href="{{path('home')}}">Accueil<a></li>
+							<li>
+								<a href="{{path('products_by_sexe', {'sexe': 'femme'})}}">Femme</a>
 
+							</li>
+							<li>
+								<a href="{{path('products_by_sexe', {'sexe': 'homme'})}}">Homme</a>
+
+							</li>
+							<li>
+								<a href="{{path('products_by_sexe', {'sexe': 'enfant'})}}">Enfant</a>
+							</li>
+							<li>
+								<a href="{{path('contact')}}">Contact</a>
+							</li>
+							<li>
+								<a href="">FAQ</a>
+							</li>
+							<li>
+								{% if app.user %}
+									<a href="{{ path('logout') }}">Déconnexion</a>
+
+								{% else %}
+									<a href="{{ path('login') }}">Connexion</a>
+
+								{% endif %}
+
+							</li>
+							<li>
+								{% if is_granted('ROLE_ADMIN')%}
+									<a href="{{ path('admin') }}">Admin</a>
+
+								{% endif %}
+
+							</li>
+						</ul>
+					</li>
+				</div>
+
+
+				<div class="col-3">
+					<h5>COORDONNES</h5>
+					<hr class="m-3 ">
+					<p>{{contact_company}}</p>
+					<p>{{contact_address}}</p>
+					<p>{{contact_zip ~' '~ contact_city}}</p>
+					<p>{{contact_phone}}</p>
+					<p>{{contact_email}}</p>
 				</div>
 
 				<div class="col-3">
-					<h5>ASSISTANCE</h5>
+
+					<h5>RESEAUX SOCIAUX</h5>
 					<hr class="m-3">
 					<ul>
 						<li>
-							<a href="">Politique de Confidentialité</a>
+							<span>
+								<i class="bi bi-facebook"></i>
+							</span>
 						</li>
 						<li>
-							<a href="">Termes et Conditions
-							</a>
+							<span>
+								<i class="bi bi-instagram"></i>
+							</span>
 						</li>
-						<li></li>
-						<li></li>
-					</ul>
+						<li>
+							<span>
+								<i class="bi bi-snapchat"></i>
+							</span>
+						</li>
+						<li>
+							<span>
+								<i class="bi bi-tiktok"></i>
+							</span>
+						</li>
+
+					</div>
+
+					<div class="col-3">
+						<h5>ASSISTANCE</h5>
+						<hr class="m-3">
+						<ul>
+							<li>
+								<a href="">Politique de Confidentialité</a>
+							</li>
+							<li>
+								<a href="">Termes et Conditions
+								</a>
+							</li>
+							<li></li>
+							<li></li>
+						</ul>
+
+					</div>
+
 
 				</div>
 
+				<p>Copyright &copy;
+					{{ "now"|date("Y") }}
+					- Willy TALOM | Articles extraits du site
+					<a href="https://www.videdressing.com/" target="_blank">videdressing.com</a>
+				</p>
+
 
 			</div>
-
-			<p>Copyright &copy;
-				{{ "now"|date("Y") }}
-				- Willy TALOM | Articles extraits du site
-				<a href="https://www.videdressing.com/" target="_blank">videdressing.com</a>
-			</p>
-
-
 		</div>
-	</div>

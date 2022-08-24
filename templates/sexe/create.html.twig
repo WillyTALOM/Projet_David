@@ -1,0 +1,33 @@
+{% extends "baseAdmin.html.twig" %}
+
+{% block title %}création sexe
+{% endblock %}
+
+{% block body %}
+
+
+	{{ form_start(sexeForm) }}
+
+	<div class="row">
+		<div class="col-6">
+
+			{{ form_label(sexeForm.name, 'Nom') }}
+			{{ form_errors(sexeForm.name) }}
+			{{ form_widget(sexeForm.name, {
+                    'attr': {
+                        'placeholder': 'Ex.: Homme'
+                    }
+                }) }}
+			{{ form_help(sexeForm.name) }}
+		</div>
+
+		<div class="row">
+			<div class="col-12 text-end my-3">
+				<a href="{{ path('admin_sexe')}}" class="btn btn-outline-danger me-3">Annuler</a>
+				<button class="btn btn-success">Créer</button>
+			</div>
+		</div>
+
+		{{ form_end(sexeForm) }}
+
+	{% endblock %}

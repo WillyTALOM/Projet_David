@@ -3,33 +3,61 @@
 {% endblock %}
 
 
-<header id="header1" class="container-fluid d-flex flex-row justify-content-between bg-secondary ">
-	<div id="logo">LOGO</div>
-	{# je dois ajouter des liens #}
-	<nav class="nav">
-		<a id="icon1" href="linkk" class="nav-link text-black">
-			<i class="bi bi-person"></i>
-		</a>
-		<a id="icon1" href="linkk" class="nav-link text-black">
-			<i class="bi bi-suit-heart-fill"></i>
-		</a>
-		<a id="icon1" href="linkk" class="nav-link text-black">
-			<i class="bi bi-cart4"></i>
-		</a>
+<header class="col-12">
+	<div id="header1" class="container-fluid d-flex flex-row justify-content-between bg-secondary ">
 
-	</nav>
-</header>
+		<div id="logo">LOGO</div>
+		{# je dois ajouter des liens #}
+		<nav class="nav">
+			<a id="icon1" href="linkk" class="nav-link text-black">
+				<i class="bi bi-person"></i>
+			</a>
+			<a id="icon1" href="linkk" class="nav-link text-black">
+				<i class="bi bi-suit-heart-fill"></i>
+			</a>
+			<a id="icon1" href="linkk" class="nav-link text-black">
+				<i class="bi bi-cart4"></i>
+			</a>
 
-<header id="header2" class="container-fluid d-flex flex-row justify-content-between bg-dark ">
-	<div></div>
-
-	<nav class="nav">
-		<a id="icon2" href="{{path('home')}}" class="nav-link text-white">ACCUEIL</a>
-		<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'femme'})}}" class="nav-link text-white">FEMME</a>
-		<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="nav-link text-white">HOMME</a>
-		<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="nav-link text-white">ENFANT</a>
-		<a id="icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
-		<a id="icon2" href="#" class="nav-link text-white">CONNEXION</a>
-	</nav>
+		</nav>
+	</div>
 
 </header>
+
+<nav id="header2" class="navbar navbar-expand-lg bg-dark ">
+
+
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{{ path('home') }}"></a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+
+				<a id="icon2" href="{{path('home')}}" class="nav-link text-white">ACCUEIL</a>
+				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'femme'})}}" class="nav-link text-white">FEMME</a>
+				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="nav-link text-white">HOMME</a>
+				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="nav-link text-white">ENFANT</a>
+				<a id="icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
+				<a id="icon2" href="#" class="nav-link text-white">FAQ</a>
+				{% if app.user %}
+					<a id="icon2" class="nav-link text-white" href="{{ path('logout') }}">DECONNEXION</a>
+
+				{% else %}
+					<a id="icon2" class="nav-link text-white" href="{{ path('login') }}">CONNEXION</a>
+
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN')%}
+					<a id="icon2" class="nav-link text-white" href="{{ path('admin') }}">ADMIN</a>
+
+
+				{% endif %}
+			</div>
+		</div>
+
+
+	</div>
+
+</nav>

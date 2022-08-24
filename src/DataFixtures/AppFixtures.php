@@ -60,17 +60,14 @@ class AppFixtures extends Fixture
 
         $sexe = new Sexe();
         $sexe->setName('homme');
-        $sexe->setSlug(strtolower($slugger->slug($sexe->getName())));
         $manager->persist($sexe);
 
         $sexe = new Sexe();
         $sexe->setName('femme');
-        $sexe->setSlug(strtolower($slugger->slug($sexe->getName())));
         $manager->persist($sexe);
 
         $sexe = new Sexe();
         $sexe->setName('enfant');
-        $sexe->setSlug(strtolower($slugger->slug($sexe->getName())));
         $manager->persist($sexe);
         $manager->flush();
 
@@ -98,6 +95,7 @@ class AppFixtures extends Fixture
             $product->setPriceSolde($faker->randomFloat(2, 4, 200));
             $product->setReduction($faker->randomFloat(2, 4, 200));
             $product->setCreatedAt(new \DateTimeImmutable());
+            $product->setReference($faker->text(10));
 
             $indexS = array_rand($sexes, 1);
             $sexe = $sexes[$indexS];

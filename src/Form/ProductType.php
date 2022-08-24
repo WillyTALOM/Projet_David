@@ -4,8 +4,9 @@ namespace App\Form;
 
 use App\Entity\Sexe;
 use App\Entity\Brand;
-use App\Entity\Image;
+
 use App\Entity\Product;
+use App\Form\ImageType;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Doctrine\Common\Collections\Collection;
@@ -57,7 +58,7 @@ class ProductType extends AbstractType
                     'step' => 0.01
                 ]
             ])
-            
+
             ->add('priceSolde', NumberType::class, [
                 'attr' => [
                     'min' => 0,
@@ -74,11 +75,19 @@ class ProductType extends AbstractType
                 ]
             ])
 
+            ->add('reference', NumberType::class, [
+                'attr' => [
+                    'min' => 0,
+                    'max' => 9999.99,
+
+                ]
+            ])
+
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'expanded' => true
-               
+
             ])
 
             ->add('brand', EntityType::class, [
@@ -93,26 +102,18 @@ class ProductType extends AbstractType
                 'expanded' => true
             ])
 
-            ->add('images', CollectionType::class, [
-                'entry_type' => FileType::class,
-                'allow_add' => true,
-                'required' => false,
+            ->add('images', ImageType::class, [
+                'required' => true,
                 'mapped' => false,
-                'help' => 'png, jpg, jpeg, jp2 ou webp - 1 Mo maximum',
-    
-            ])
-                
-           
 
 
-            
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-             'data_class' => Product::class,
+            'data_class' => Product::class,
         ]);
     }
 }
