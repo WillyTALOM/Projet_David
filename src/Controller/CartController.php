@@ -27,7 +27,8 @@ class CartController extends AbstractController
         if ($request->headers->get('referer') === 'https://127.0.0.1:8000/cart') {
             return $this->redirectToRoute('cart');
         }
-        return $this->redirectToRoute('products');
+
+        return $this->redirectToRoute('cart');
     }
 
     #[Route('cart/remove/{id}', name: 'cart_remove')]

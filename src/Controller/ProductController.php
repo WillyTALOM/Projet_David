@@ -123,20 +123,12 @@ class ProductController extends AbstractController
             $products = $productRepository->findAll();
             $productNames = [];
             $productReference = [];
-            foreach ($products as $newproduct) {
-                $productNames[] = $newproduct->getName();
-                $productReference[] = $newproduct->getReference();
+            foreach ($products as $newProduct) {
+                $productNames[] = $newProduct->getName();
+                $productReference[] = $newProduct->getReference();
             }
 
-            if (in_array($form['name']->getData(), $productNames)) {
-                $this->addFlash('danger', 'Le produit n\'a pas pu être créé : le nom du produit est déjà utilisé');
-                return $this->redirectToRoute('admin_products');
-            }
 
-            if (in_array($form['reference']->getData(), $productReference)) {
-                $this->addFlash('danger', 'Le produit n\'a pas pu être créé : la référence du produit est déjà utilisée');
-                return $this->redirectToRoute('admin_products');
-            }
 
             $infoImage1 = $form['image1']->getData();
             if ($infoImage1 !== null) {

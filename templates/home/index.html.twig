@@ -13,19 +13,40 @@
 
 {% block body %}
 
-	<div class="col">
+	<div class="col-12">
 		<div class="row">
-			<div class="d-flex ">
-				<img id="img1" class="col-6 col-md-6 col-lg-6 mb-4" src="{{ asset('img/sapeF.jpeg') }}" alt="">
-				<img id="img2" class="col-6 col-md-6 col-lg-6 mb-4 " src="{{ asset('img/sapeHH.jpeg') }}" alt="">
+
+			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active" data-bs-interval="2500">
+
+						<img src="{{ asset('img/pexels-cottonbro-4004161.jpg') }}" class="d-block w-100" alt="...">
+
+
+					</div>
+					<div class="carousel-item active" data-bs-interval="2500">
+
+						<img src="{{ asset('img/pexels-kampus-production-8201163.jpg') }}" class="d-block w-100" alt="...">
+
+
+					</div>
+					<div class="carousel-item active" data-bs-interval="2500">
+
+						<img src="{{ asset('img/pexels-angela-roma-7319301.jpg') }}" class="d-block w-100" alt="...">
+
+
+					</div>
+				</div>
 			</div>
+
 		</div>
+
 	</div>
 
 
-	<div id="section_1">
+	<div class="my-5">
 
-		<h3>
+		<h3 class="text-center">
 			<strong>Découvrez nos derniers produits</strong>
 		</h3>
 	</div>
@@ -33,24 +54,47 @@
 
 	<div class="col-12">
 		<div class="row">
+
 			{% for product in products %}
 
-				<div class="col-md-6 col-lg-4 col-xl-3 p-3">
+
+				<div class="col-md-6 col-lg-5 col-xl-2 p-3">
 
 
 					<div class="card h-50">
 
 						<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Nouveauté</div>
-						<img class="card-img-top" src="https://via.placeholder.com/360x360.jpg/CCCCC" alt="produit de {{ product.name }}"/>
+						<img class="card-img-top" src="{{ asset('img/product/' ~ product.image1) }}" alt="produit de {{ product.name }}"/>
+
 						<div class="card-body p-4">
 							<div class="text-center">
 								<h5 class="fw-bolder">{{ product.name }}</h5>
-								<h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
-								<span class="text-muted text-decoration-line-through">{{product.price}}
-									€
-								</span>
-								{{product.PriceSolde}}
-								€
+								<h6 id="text-des">{{ product.description|u.truncate(40,'...', false) }}</h6>
+								{% if product.reduction == 0 %}
+
+									<span class="">{{product.price}}
+										€
+
+
+									</span>
+
+
+								{% else %}
+									<span class="text-decoration-line-through text-danger">{{product.price}}
+
+										€
+
+
+									</span>
+
+
+									<span>
+										{{product.PriceSolde}}
+										€
+									</span>
+
+								{% endif %}
+
 							</div>
 						</div>
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
@@ -64,6 +108,7 @@
 						</div>
 					</div>
 				</div>
+
 			{% endfor %}
 		</div>
 	</div>
