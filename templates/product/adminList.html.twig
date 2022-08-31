@@ -14,7 +14,7 @@
 				<th>Nom</th>
 				<th>Prix</th>
 				<th>Réference</th>
-				<th>reductions</th>
+				<th>reductions (%)</th>
 				<th>Prix Soldé</th>
 				<th>Catégorie</th>
 				<th>Marques</th>
@@ -32,7 +32,8 @@
 						€</td>
 					<td>{{ product.reference }}</td>
 					<td>{{ product.reduction }}</td>
-					<td>{{ product.priceSolde }}</td>
+					<td>{{ product.priceSolde|number_format(2, ',', ' ') }}
+						€</td>
 					<td>{{ product.category.name }}</td>
 					<td>{{ product.brand.name }}</td>
 					<td>{{ product.sexe.name }}</td>

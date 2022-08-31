@@ -35,20 +35,11 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column]
-    private ?float $priceSolde = null;
-
-    #[ORM\Column]
-    private ?int $reduction = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 100)]
     private ?string $reference = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
-
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class)]
-    private Collection $images;
 
     #[ORM\OneToMany(mappedBy: 'product_id', targetEntity: OrderDetails::class)]
     private Collection $orderDetails;
@@ -61,6 +52,21 @@ class Product
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Sexe $sexe = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $image1 = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $image2 = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $image3 = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $reduction = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $priceSolde = null;
 
 
 
@@ -147,29 +153,8 @@ class Product
         return $this;
     }
 
-    public function getPriceSolde(): ?float
-    {
-        return $this->priceSolde;
-    }
 
-    public function setPriceSolde(float $priceSolde): self
-    {
-        $this->priceSolde = $priceSolde;
 
-        return $this;
-    }
-
-    public function getReduction(): ?int
-    {
-        return $this->reduction;
-    }
-
-    public function setReduction(int $reduction): self
-    {
-        $this->reduction = $reduction;
-
-        return $this;
-    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -179,38 +164,6 @@ class Product
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
-
-        return $this;
-    }
-
-
-
-    /**
-     * @return Collection<int, Image>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images->add($image);
-            $image->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getProduct() === $this) {
-                $image->setProduct(null);
-            }
-        }
 
         return $this;
     }
@@ -289,6 +242,66 @@ class Product
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getImage1(): ?string
+    {
+        return $this->image1;
+    }
+
+    public function setImage1(string $image1): self
+    {
+        $this->image1 = $image1;
+
+        return $this;
+    }
+
+    public function getImage2(): ?string
+    {
+        return $this->image2;
+    }
+
+    public function setImage2(?string $image2): self
+    {
+        $this->image2 = $image2;
+
+        return $this;
+    }
+
+    public function getImage3(): ?string
+    {
+        return $this->image3;
+    }
+
+    public function setImage3(?string $image3): self
+    {
+        $this->image3 = $image3;
+
+        return $this;
+    }
+
+    public function getReduction(): ?int
+    {
+        return $this->reduction;
+    }
+
+    public function setReduction(?int $reduction): self
+    {
+        $this->reduction = $reduction;
+
+        return $this;
+    }
+
+    public function getPriceSolde(): ?float
+    {
+        return $this->priceSolde;
+    }
+
+    public function setPriceSolde(?float $priceSolde): self
+    {
+        $this->priceSolde = $priceSolde;
 
         return $this;
     }

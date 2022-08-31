@@ -97,12 +97,27 @@
                     'placeholder': '-- sélectionner --'
                 }) }}
 		</div>
-		{#<div class="col"> 
-				                {{ form_row(productForm.images, {
-				                    'label': 'image',
-				                    'placeholder': '-- sélectionner --'
-				                }) }}
-				            </div>#}
+		<div class="col">
+			{{ form_row(productForm.image1, {
+					'label': 'image 1 (obligatoire)',
+				}) }}
+		</div>
+
+		<div class="col">
+			{{ form_row(productForm.image2, {
+					'label': 'image 2 (optionnel)',
+
+				}) }}
+		</div>
+
+
+		<div class="col">
+			{{ form_row(productForm.image3, {
+					'label': 'image 3 (optionnel)',
+
+				}) }}
+		</div>
+
 
 		<div class="row">
 			<div class="col-12 text-end my-3">

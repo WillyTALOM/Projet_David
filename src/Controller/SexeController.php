@@ -34,8 +34,8 @@ class SexeController extends AbstractController
             $sexes = $sexeRepository->findAll();
             $sexeNames = [];
 
-            foreach ($sexes as $sexe) {
-                $sexeNames[] = $sexe->getName();
+            foreach ($sexes as $existingsexe) {
+                $sexeNames[] = $existingsexe->getName();
             }
 
 

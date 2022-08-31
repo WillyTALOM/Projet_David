@@ -41,7 +41,18 @@
 				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="nav-link text-white">HOMME</a>
 				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="nav-link text-white">ENFANT</a>
 				<a id="icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
-				<a id="icon2" href="#" class="nav-link text-white">FAQ</a>
+				<a
+					id="icon2" href="{{path('cart')}}" class="nav-link text-white">
+					{#panier#}
+					<i class="bi bi-cart4"></i>
+					{% if app.session.get('cart') is not empty %}
+						<span class="badge rounded-pill text-bg-secondary">
+							{{ render(controller('App\\Controller\\CartController::getNbProducts'))}}
+						</span>
+					{% endif %}
+
+				</a>
+
 				{% if app.user %}
 					<a id="icon2" class="nav-link text-white" href="{{ path('logout') }}">DECONNEXION</a>
 

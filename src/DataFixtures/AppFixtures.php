@@ -84,7 +84,7 @@ class AppFixtures extends Fixture
         $marques = $manager->getRepository(Brand::class)->findAll();
 
 
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
             $product = new Product();
             $product->setName($faker->text(35));
             $product->setSlug(strtolower($slugger->slug($product->getName())));
@@ -96,6 +96,7 @@ class AppFixtures extends Fixture
             $product->setReduction($faker->randomFloat(2, 4, 200));
             $product->setCreatedAt(new \DateTimeImmutable());
             $product->setReference($faker->text(10));
+            $product->setImage1($faker->imageUrl($width = 640, $height = 480));
 
             $indexS = array_rand($sexes, 1);
             $sexe = $sexes[$indexS];
