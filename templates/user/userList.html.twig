@@ -4,27 +4,30 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Utilisateurs</h1>
+	<h1>liste d'Utilisateurs</h1>
+
 
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
+				<th>Prénom</th>
+				<th>Nom</th>
 				<th>Email</th>
 				<th>Roles</th>
-				<th>Password</th>
-				<th>Last_name</th>
-				<th>First_name</th>
-				<th>Phone</th>
-				<th>Created_at</th>
-				<th>IsVerified</th>
-				<th>actions</th>
+				<th>Mot de passe</th>
+				<th>Téléphone</th>
+				<th>Date de création</th>
+				<th>Verifié</th>
+				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for user in users|reverse %}
 				<tr>
 					<td>{{loop.revindex }}</td>
+					<td>{{ user.firstName }}</td>
+					<td>{{ user.lastName }}</td>
 					<td>{{ user.email }}</td>
 					<td>
 						{% for role in user.roles %}
@@ -42,8 +45,6 @@
 					</td>
 
 					<td>{{ user.password }}</td>
-					<td>{{ user.lastName }}</td>
-					<td>{{ user.firstName }}</td>
 					<td>{{ user.phone }}</td>
 					<td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
 					<td>{{ user.isVerified ? 'Yes' : 'No' }}</td>

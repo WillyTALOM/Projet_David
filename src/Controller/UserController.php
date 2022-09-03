@@ -7,14 +7,15 @@ use App\Form\UserType;
 use DateTimeImmutable;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 
 class UserController extends AbstractController
 {
@@ -27,7 +28,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/admin/user/create', name: 'create_user')]
-    public function new(ManagerRegistry $managerRegistry, Request $request, UserRepository $userRepository): Response
+    public function new(ManagerRegistry $managerRegistry, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -45,6 +46,11 @@ class UserController extends AbstractController
                 $userRoles[] = $newUser->getRoles();
                 $userPassword[] = $newUser->getPassword();
             }
+
+            $user->setPassword($userPasswordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            ));
 
 
             $user->setCreatedAt(new DateTimeImmutable());
