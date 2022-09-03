@@ -1,14 +1,14 @@
 {% extends "baseAdmin.html.twig" %}
 
-{% block title %}
-	{{ app.request.attributes.get('_route') == 'create_user' ? 'création' : 'modification' }}
-	utilisateur
+{% block title %}Modifier un utilisateur
 {% endblock %}
 
 {% block body %}
 
-	{{ form_start(userForm) }}
+	<h1 class="mb-5">Modifier un utilisateur</h1>
 
+
+	{{ form_start(userForm) }}
 	<div class="row">
 		<div class="col-6">
 			{{ form_label(userForm.first_name, 'Prénom') }}
@@ -32,8 +32,11 @@
 		</div>
 		<div class="col-3">
 			{{ form_row(userForm.roles, {
-		                    'label': 'Roles'
-		                    
+		                    'label': 'Prix (en €)',
+		                    'attr': {
+		                        'class': 'form-choice-label'
+		
+		                    }
 		                }) }}
 		</div>
 		<div class="col-3">
@@ -80,4 +83,5 @@
 
 
 		{{ form_end(userForm) }}
+
 	{% endblock %}

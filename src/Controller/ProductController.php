@@ -5,14 +5,15 @@ namespace App\Controller;
 use DateTimeImmutable;
 use App\Entity\Product;
 use App\Form\ProductType;
-use App\Repository\ProductRepository;
 use App\Repository\SexeRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class ProductController extends AbstractController
 {
@@ -39,7 +40,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/product/create', name: 'create_product')]
-    public function create(Request $request, ProductRepository $productRepository, ManagerRegistry $managerRegistry): Response
+    public function create(Request $request, ProductRepository $productRepository, ManagerRegistry $managerRegistry,): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
