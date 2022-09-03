@@ -70,7 +70,7 @@ class UserController extends AbstractController
 
 
     #[Route('admin/user/update/{id}', name: 'update_user')]
-    public function edit(Request $request, User $user, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
+    public function edit(UserPasswordHasherInterface $userPasswordHasher, Request $request, User $user, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -88,6 +88,12 @@ class UserController extends AbstractController
                 $userRoles[] = $newUser->getRoles();
                 $userPassword[] = $newUser->getPassword();
             }
+            $user->setPassword($userPasswordHasher->hashPassword(
+                $user,
+                $form->get('password')->getData()
+            ));
+
+
             $manager = $managerRegistry->getManager();
             $manager->persist($user);
             $manager->flush();
