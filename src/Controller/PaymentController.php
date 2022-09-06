@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Repository\OrderRepository;
 use Stripe\StripeClient;
 use App\Service\CartService;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PaymentController extends AbstractController
 {
     #[Route('/payment', name: 'payment')]
-    public function index(Request $request, CartService $cartService): Response
+    public function index(Request $request, CartService $cartService, Order $order): Response
     {
         if ($request->headers->get('referer') !== 'https://127.0.0.1:8000/cart/validation') {
             return $this->redirectToRoute('cart');
@@ -38,6 +40,23 @@ class PaymentController extends AbstractController
             $stripeCart[] = $stripeElement;
         }
 
+        $carrier = $order->getCarrier();
+        $stripeElement = [
+            'quantity' => 1,
+            'price_data' => [
+                'currency' => 'EUR',
+                'unit_amount' => $carrier->getPrice() * 100,
+                'product_data' => [
+                    'name' => 'Livraison : ' . $carrier->getName(),
+                    'images' => [
+                        'https://127.0.0.1:8000/public/img/carrier/' . $carrier->getImg()
+                    ]
+                ]
+            ]
+        ];
+
+        $stripeCart[] = $stripeElement;
+
         $stripe = new StripeClient($this->getParameter('stripe_secret_key'));
 
         $stripeSession = $stripe->checkout->sessions->create([
@@ -55,14 +74,26 @@ class PaymentController extends AbstractController
         ]);
     }
 
-    #[Route('payment/success', name: 'payment_success')]
-    public function success(Request $request, CartService $cartService): Response
+    #[Route('payment/{order}/success', name: 'payment_success')]
+    public function success(Request $request, CartService $cartService, Order $order, ManagerRegistry $managerRegistry): Response
     {
         if ($request->headers->get('referer') !== 'https://checkout.stripe.com/') {
             return $this->redirectToRoute('cart');
         }
 
         $cartService->clear();
+        $order->setPaid(true);
+        $managerRegistry->getManager()->persist($order);
+        $managerRegistry->getManager();
+
+        foreach ($order->getOrderDetails() as $orderDetail) { // gestion des stocks restants en base de données
+            $product = $orderDetail->getProductId();
+            $product->setQuantity($product->getQuantity() - $orderDetail->getQuantity());
+            $managerRegistry->getManager()->persist($product);
+        }
+
+        $managerRegistry->getManager()->flush();
+
 
         return $this->render('payment/success.html.twig');
     }

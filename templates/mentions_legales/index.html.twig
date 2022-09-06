@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales - Vente de vetements
+
+{% endblock %}
+
+{% block body %}
+
+
+	<main>
+		<section class="container-fluid mentions_legales px-2">
+			<div class="card col-12" style="padding: 0;">
+				<h4 class="card-header">
+					<i class="fas fa-balance-scale"></i>
+					Mentions Légales :
+				</h4>
+				<hr>
+				<div class="card-body">
+					<h5 class="card-title">
+						<i class="fas fa-edit"></i>
+						Informations sur les contenus :</h5>
+					<br>
+					<p>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-tasks"></i>
+							Responsable des publications :
+							{{ contact_company }}</span>
+
+						<br>
+						<br>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-lock-open"></i>
+							Propriétée des images : Personnelles ou libres de droits</span>
+						<hr>
+						<h5 class="card-title">
+							<i class="fas fa-info-circle"></i>
+							Informations générales</h5>
+						<span style="margin-left: 0.7rem;">
+							<i class="far fa-envelope"></i>
+							{{ contact_email }}</span>
+
+						<br>
+						<br>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-phone-square-alt"></i>
+							Téléphone :
+							{{ contact_phone }}</span>
+
+						<br>
+						<br>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-map-marked-alt"></i>
+							Adresse :</span>
+						<br>
+						<span style="margin-left: 1.5rem;">{{ contact_company }}<br></span>
+
+						<span style="margin-left: 1.5rem;">{{ contact_address }}<br></span>
+
+						<span style="margin-left: 1.5rem;">{{ contact_zip ~ ' ' ~ contact_city }}</span>
+
+						<hr>
+						<h5 class="card-title">
+							<i class="fas fa-file-contract"></i>
+							Informations professionnelles :</h5>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-address-card"></i>
+							Numéro SIRET : N/A</span>
+						<br>
+						<hr>
+						<h5 class="card-title">
+							<i class="fas fa-database"></i>
+							Informations sur l'hébergeur du site :</h5>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-globe"></i>
+							Site professionnel :
+							<a target="blank" href="#">-------</a>
+						</span>
+						<br>
+						<hr>
+						<h5 class="card-title">
+							<i class="fas fa-laptop-code"></i>
+							Développeur web du site :</h5>
+						<span style="margin-left: 0.7rem;">
+							<i class="fab fa-linkedin"></i>
+							LinkedIn :
+							<a target="blank" href="www.linkedin.com/in/willytalom">Willy TALOM</a>
+
+						</span>
+						<br>
+						<span style="margin-left: 0.7rem;">
+							<i class="fas fa-code"></i>
+							Site Pro :
+							<a target="blank" href="#">-------------------</a>
+						</span>
+					</p>
+				</div>
+			</div>
+		</section>
+	</main>
+
+
+{% endblock %}

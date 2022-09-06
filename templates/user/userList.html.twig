@@ -14,6 +14,8 @@
 				<th>Prénom</th>
 				<th>Nom</th>
 				<th>Email</th>
+				<th>Adresse de livraison</th>
+				<th>Adresse de facturation</th>
 				<th>Roles</th>
 				<th>Mot de passe</th>
 				<th>Téléphone</th>
@@ -23,12 +25,16 @@
 			</tr>
 		</thead>
 		<tbody>
+
+
 			{% for user in users|reverse %}
 				<tr>
 					<td>{{loop.revindex }}</td>
 					<td>{{ user.firstName }}</td>
 					<td>{{ user.lastName }}</td>
 					<td>{{ user.email }}</td>
+					<td></td>
+					<td></td>
 					<td>
 						{% for role in user.roles %}
 							{% if role == "ROLE_USER" %}
@@ -63,11 +69,12 @@
 					<td colspan="10">Pas d'Utilisateurs trouvé</td>
 				</tr>
 			{% endfor %}
+
+
 		</tbody>
 	</table>
 
 	<div class="text-end mt-4">
 		<a href="{{ path('create_user') }}" class="btn btn-success">Ajouter un utilisateur</a>
 	</div>
-
 {% endblock %}

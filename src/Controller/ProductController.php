@@ -222,7 +222,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products/{sexe}', name: 'products_by_sexe')]
-    public function getProduitsPourHomme(string $sexe, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
+    public function getProduitsBySexe(string $sexe, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
     {
         $sexe = $sexeRepository->findOneBy(['name' => $sexe]);
         return $this->render('product/sexe.html.twig', [

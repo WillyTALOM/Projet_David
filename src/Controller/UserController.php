@@ -5,12 +5,15 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use DateTimeImmutable;
+use App\Entity\Address;
+use App\Form\AddressType;
 use App\Repository\UserRepository;
+use App\Repository\AddressRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
@@ -20,31 +23,51 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserController extends AbstractController
 {
     #[Route('/admin/users', name: 'admin_users')]
-    public function index(UserRepository $userRepository): Response
+    public function index(AddressRepository $addressRepository, UserRepository $userRepository): Response
     {
+
         return $this->render('user/userList.html.twig', [
             'users' => $userRepository->findAll(),
+            'addresses' => $addressRepository->findAll()
         ]);
     }
 
     #[Route('/admin/user/create', name: 'create_user')]
-    public function new(ManagerRegistry $managerRegistry, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository): Response
+    public function new(ManagerRegistry $managerRegistry, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository, AddressRepository $addressRepository): Response
     {
-        $user = new User();
+        $user = new User;
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
+
+        $address = new Address();
+        $formAddress = $this->createForm(AddressType::class, $address);
+        $formAddress->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $users = $userRepository->findAll();
             $userFirstNames = [];
             $userLastNames = [];
             $userRoles = [];
-            $userPassword = [];
+
             foreach ($users as $newUser) {
                 $userFirstNames[] = $newUser->getFirstName();
                 $userLastNames[] = $newUser->getLastName();
                 $userRoles[] = $newUser->getRoles();
-                $userPassword[] = $newUser->getPassword();
+            }
+
+            $addresses = $addressRepository->findAll();
+            $newAddress = [];
+            $addressAdditional = [];
+            $addressZip = [];
+            $addressCity = [];
+            $addressCountry = [];
+
+            foreach ($addresses as $existingAddress) {
+                $newAddress[] = $existingAddress->getAddress();
+                $addressAdditional[] = $existingAddress->getAdditional();
+                $addressZip[] = $existingAddress->getZip();
+                $addressCity[] = $existingAddress->getCity();
+                $addressCountry[] = $existingAddress->getCity();
             }
 
             $user->setPassword($userPasswordHasher->hashPassword(
@@ -55,8 +78,11 @@ class UserController extends AbstractController
 
             $user->setCreatedAt(new DateTimeImmutable());
 
+            $user->addAddress($address);
+
             $manager = $managerRegistry->getManager();
             $manager->persist($user);
+            $manager->persist($address);
             $manager->flush();
 
             $this->addFlash('success', 'L\'Utilisateur a bien été créé');
@@ -64,7 +90,8 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/form.html.twig', [
-            'userForm' => $form->createView()
+            'userForm' => $form->createView(),
+            'addressForm' => $formAddress->createView()
         ]);
     }
 
