@@ -32,6 +32,12 @@ class Carrier
         $this->orders = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->carrier; // Remplacer champ par une propriété "string" de l'entité
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

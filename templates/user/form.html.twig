@@ -1,119 +1,144 @@
 {% extends "baseAdmin.html.twig" %}
 
 {% block title %}
-	{{ app.request.attributes.get('_route') == 'create_user' ? 'création' : 'modification' }}
-	utilisateur
+{{ app.request.attributes.get('_route') == 'create_user' ? 'création' : 'modification' }}
+utilisateur
 {% endblock %}
 
 {% block body %}
-	{{ form_start(addressForm) }}
+{{ form_start(userForm) }}
 
-	{{ form_start(userForm) }}
-
-	<div class="row">
-		<div class="col-6">
-			{{ form_label(userForm.first_name, 'Prénom') }}
-			{{ form_errors(userForm.first_name) }}
-			{{ form_widget(userForm.first_name, {
-					                    'attr': {
-					                        'placeholder': 'Ex.: John'
-					                    }
-					                }) }}
-			{{ form_help(userForm.first_name) }}
-		</div>
-		<div class="col-6">
-			{{ form_label(userForm.last_name, 'Nom') }}
-			{{ form_errors(userForm.last_name) }}
-			{{ form_widget(userForm.last_name, {
-				'attr': {
-					     'placeholder': 'Ex.: Doe'
-					    }
-			}) }}
-			{{ form_help(userForm.last_name) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(userForm.roles, {
-				'label': 'Roles'
-							                    
-			}) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(userForm.email, {
-				'label': 'Email',
-				'attr': {
-					    	'placeholder': 'willytalom@yahoo.Fr'
-						}
-		    }) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(userForm.phone, {
-				'label': 'Numéro de téléphone',
-				'attr': {
-					    'placeholder': ''
-					    }
-			}) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(userForm.password, {
-				'label': 'Mot de passe',
-				'attr': {
-					    	'placeholder': ''
-					    }
-			}) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(addressForm.address, {
-				'label': 'Adresse postale',
-                'attr': {
-						'placeholder' : 'Ex: 8 rue de Lasoif '
-						}
-			}) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(addressForm.additional, {
-				'label': 'Adresse complémentaire',
-				'attr': {
-						'placeholder' : 'Ex: Residence impulsion '
-					    }
+<div class="row">
+	<div class="col-6">
+		{{ form_label(userForm.first_name, 'Prénom') }}
+		{{ form_errors(userForm.first_name) }}
+		{{ form_widget(userForm.first_name, {
+		'attr': {
+		'placeholder': 'Ex.: John'
+		}
 		}) }}
+		{{ form_help(userForm.first_name) }}
+	</div>
+	<div class="col-6">
+		{{ form_label(userForm.last_name, 'Nom') }}
+		{{ form_errors(userForm.last_name) }}
+		{{ form_widget(userForm.last_name, {
+		'attr': {
+		'placeholder': 'Ex.: Doe'
+		}
+		}) }}
+		{{ form_help(userForm.last_name) }}
+	</div>
+	<div class="col-3">
+		{{ form_row(userForm.roles, {
+		'label': 'Roles'
+
+		}) }}
+	</div>
+	<div class="col-3">
+		{{ form_row(userForm.email, {
+		'label': 'Email',
+		'attr': {
+		'placeholder': 'willytalom@yahoo.Fr'
+		}
+		}) }}
+	</div>
+	<div class="col-3">
+		{{ form_row(userForm.phone, {
+		'label': 'Numéro de téléphone',
+		'attr': {
+		'placeholder': ''
+		}
+		}) }}
+	</div>
+	<div class="col-3">
+		{{ form_row(userForm.password, {
+		'label': 'Mot de passe',
+		'attr': {
+		'placeholder': ''
+		}
+		}) }}
+	</div>
+
+
+	{% for address in userForm.addresses %}
+
+	<div class="col-3">
+		{{ form_row(address.address , {
+		'label': 'Adresse',
+		'attr': {
+		'placeholder': 'Ex: 2 Rue du Général Leclerc'
+		}
+		}) }}
+	</div>
+
+	<div class="col-3">
+		{{ form_row(address.additional , {
+		'label': 'Adresse complémentaire',
+		'attr': {
+		'placeholder': ''
+		}
+		}) }}
+	</div>
+
+	<div class="col-3">
+		{{ form_row(address.zip , {
+		'label': 'Code postale',
+		'attr': {
+		'placeholder': 'Ex: 75001'
+		}
+		}) }}
+
+	</div>
+
+	<div class="col-3">
+		{{ form_row(address.city , {
+		'label': 'Ville',
+		'attr': {
+		'placeholder': 'Ex: Paris'
+		}
+		}) }}
+	</div>
+
+	<div class="col-3">
+		{{ form_row(address.country , {
+		'label': 'Pays',
+		'attr': {
+		'placeholder': '--- Selectionné ---'
+		}
+		}) }}
+	</div>
+
+	{% endfor %}
+
+	{% for order in userForm.orders %}
+
+
+	{% endfor %}
+
+	<div>
+		<button type="button" class="btn btn-primary" id="new-order">New Order</button>
+		{{ form_row(userForm.orders) }}
+	</div>
+
+
+
+
+	<div class="col-3">
+		{{ form_row(userForm.isVerified, {
+		'label': 'Compte verifié',
+		'attr': {
+		'placeholder': ''
+		}
+		}) }}</div>
+	<div class="row">
+		<div class="col-12 text-end my-3">
+			<a href="{{ path('admin_users')}}" class="btn btn-outline-danger me-3">Annuler</a>
+			<button class="btn btn-success">{{ app.request.attributes.get('_route') == 'create_user' ? 'Créer' :
+				'Modifier' }}
+			</button>
 		</div>
-		<div class="col-3">
-			{{ form_row(addressForm.zip, {
-				'label': 'Code postale',
-				'attr': {
-						'placeholder' : 'Ex: 75001 '
-					    }
-			}) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(addressForm.city, {
-				'label': 'Ville',
-				'attr': {
-						'placeholder' : 'Ex: Paris '
-						}
-			}) }}</div>
-		<div class="col-3">
-			{{ form_row(addressForm.country, {
-				'label': 'Pays',
-				'attr': {
-						'placeholder' : 'Ex: France '
-						}
-			}) }}
-		</div>
-		<div class="col-3">
-			{{ form_row(userForm.isVerified, {
-				'label': 'Compte verifié',
-				'attr': {
-					    'placeholder': ''
-					    }
-			}) }}</div>
-		<div class="row">
-			<div class="col-12 text-end my-3">
-				<a href="{{ path('admin_users')}}" class="btn btn-outline-danger me-3">Annuler</a>
-				<button class="btn btn-success">{{ app.request.attributes.get('_route') == 'create_user' ? 'Créer' : 'Modifier' }}
-				</button>
-			</div>
-		</div>
-		{{ form_end(userForm) }}
-		{{ form_end(addressForm) }}
-	{% endblock %}
+	</div>
+</div>
+{{ form_end(userForm) }}
+{% endblock %}

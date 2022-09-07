@@ -3,13 +3,14 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Form\OrderType;
+use App\Form\AddressType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType
 {
@@ -27,10 +28,30 @@ class UserType extends AbstractType
                     ],
                 ],
             ])
-            ->add('password', PasswordType::class)
+            ->add('password', RepeatedType::class, [])
             ->add('last_name')
             ->add('first_name')
             ->add('phone')
+            ->add('orders', CollectionType::class, [
+                'entry_type' => OrderType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true
+
+            ])
+            ->add('addresses', CollectionType::class, [
+                'entry_type' => AddressType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true
+
+            ])
             ->add('isVerified');
     }
 

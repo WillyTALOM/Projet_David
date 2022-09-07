@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Order;
 use App\Form\UserType;
 use DateTimeImmutable;
 use App\Entity\Address;
+use App\Entity\Carrier;
 use App\Form\AddressType;
 use App\Repository\UserRepository;
 use App\Repository\AddressRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,16 +38,29 @@ class UserController extends AbstractController
     #[Route('/admin/user/create', name: 'create_user')]
     public function new(ManagerRegistry $managerRegistry, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserRepository $userRepository, AddressRepository $addressRepository): Response
     {
-        $user = new User;
+
+        $user = new User();
+        $address = new Address();
+        $order = new Order();
+        $carrier =  new Carrier();
+
+
+        $form = $this->createForm(UserType::class, $user);
+
+        $user->getAddresses()->add($address);
+        $user->getOrders()->add($order);
+        $carrier->getOrders()->add($order);
+
+
+
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        $address = new Address();
-        $formAddress = $this->createForm(AddressType::class, $address);
-        $formAddress->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $users = $userRepository->findAll();
+            $addresses = $addressRepository->findAll();
             $userFirstNames = [];
             $userLastNames = [];
             $userRoles = [];
@@ -71,6 +86,7 @@ class UserController extends AbstractController
                 $addressCountry[] = $existingAddress->getCity();
             }
 
+
             $user->setPassword($userPasswordHasher->hashPassword(
                 $user,
                 $form->get('password')->getData()
@@ -92,7 +108,8 @@ class UserController extends AbstractController
 
         return $this->render('user/form.html.twig', [
             'userForm' => $form->createView(),
-            'addressForm' => $formAddress->createView()
+
+
         ]);
     }
 
