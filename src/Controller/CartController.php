@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
-use App\Form\CartValidationType;
+use App\Entity\Order;
+use App\Entity\OrderDetails;
 use App\Service\CartService;
+use App\Form\CartValidationType;
 use App\Repository\ProductRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,15 +67,50 @@ class CartController extends AbstractController
 
 
     #[Route('/cart/validation', name: 'cart_validation')]
-    public function validate(CartService $cartService, ProductRepository $productRepository): Response
+    public function validate(Request $request, CartService $cartService, ManagerRegistry $managerRegistry): Response
     {
         $cartValidationForm = $this->createForm(CartValidationType::class);
-        // formulaire ppur gerer les info (adresse de livraison et facturation)
+        $cartValidationForm->handleRequest($request);
+
+        if ($cartValidationForm->isSubmitted() && $cartValidationForm->isValid()) {
+
+            $manager = $managerRegistry->getManager();
+            $carrier = $cartValidationForm['carrier']->getData();
+
+            $order = new Order(); // génère la commande en base de données
+            $order->setReference('O' . date_format(new \DateTime(), 'Ymdhis'));
+            $order->setAmount($cartService->getTotal() + $carrier->getPrice());
+            $order->setCreatedAt(new \DateTimeImmutable());
+            $order->setPaid(false);
+            $order->setUser($this->getUser());
+            $order->setBillingAddress($cartValidationForm['billing_address']->getData());
+            $order->setDeliveryAddress($cartValidationForm['delivery_address']->getData());
+            $order->setCarrier($carrier);
+
+            $manager->persist($order);
+
+            foreach ($cartService->getCart() as $line) {
+                $orderDetail = new OrderDetails();
+                $orderDetail
+                    ->setOrderId($order)
+                    ->setProductId($line['product'])
+                    ->setQuantity($line['quantity']);
+                $manager->persist($orderDetail);
+            }
+
+            $manager->flush();
+
+            // traite le transporteur comme un produit (± ajout au panier)
+
+            return $this->redirectToRoute('payment', [
+                'order' => $order->getId()
+            ]);
+        }
+
         return $this->render('cart/validation.html.twig', [
             'cart' => $cartService->getCart(),
             'total' => $cartService->getTotal(),
             'cartValidationForm' => $cartValidationForm->createView()
-
         ]);
     }
 

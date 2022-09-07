@@ -4,77 +4,82 @@
 {% endblock %}
 
 {% block body %}
-	<h1>liste d'Utilisateurs</h1>
+<h1>liste d'Utilisateurs</h1>
 
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Prénom</th>
-				<th>Nom</th>
-				<th>Email</th>
-				<th>Adresse de livraison</th>
-				<th>Adresse de facturation</th>
-				<th>Roles</th>
-				<th>Mot de passe</th>
-				<th>Téléphone</th>
-				<th>Date de création</th>
-				<th>Verifié</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Prénom</th>
+			<th>Nom</th>
+			<th>Email</th>
+			<th>Adresse</th>
+			<th>Roles</th>
+			<th>Mot de passe</th>
+			<th>Téléphone</th>
+			<th>Date de création</th>
+			<th>Verifié</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
 
 
-			{% for user in users|reverse %}
-				<tr>
-					<td>{{loop.revindex }}</td>
-					<td>{{ user.firstName }}</td>
-					<td>{{ user.lastName }}</td>
-					<td>{{ user.email }}</td>
-					<td></td>
-					<td></td>
-					<td>
-						{% for role in user.roles %}
-							{% if role == "ROLE_USER" %}
-								Utilisateur
-							{% elseif role == "ROLE_ADMIN" %}
-								Administrateur
+		{% for user in users|reverse %}
 
-							{% elseif role == "ROLE_SUPER_ADMIN" %}
-								Super Administrateur
+		<tr>
+			<td>{{loop.revindex }}</td>
+			<td>{{ user.firstName }}</td>
+			<td>{{ user.lastName }}</td>
+			<td>{{ user.email }}</td>
+
+			<td>
+
+			</td>
 
 
-							{% endif %}
-						{% endfor %}
-					</td>
+			<td>
+				{% for role in user.roles %}
+				{% if role == "ROLE_USER" %}
+				Utilisateur
+				{% elseif role == "ROLE_ADMIN" %}
+				Administrateur
 
-					<td>{{ user.password }}</td>
-					<td>{{ user.phone }}</td>
-					<td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-					<td>
-						<a href="{{ path('update_user', {'id': user.id}) }}">
-							<i class="bi bi-pencil-square text-primary"></i>
-						</a>
-						<a href="{{ path('delete_user', {'id': user.id}) }}">
-							<i class="bi bi-trash3 text-danger"></i>
-						</a>
-
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="10">Pas d'Utilisateurs trouvé</td>
-				</tr>
-			{% endfor %}
+				{% elseif role == "ROLE_SUPER_ADMIN" %}
+				Super Administrateur
 
 
-		</tbody>
-	</table>
+				{% endif %}
+				{% endfor %}
+			</td>
 
-	<div class="text-end mt-4">
-		<a href="{{ path('create_user') }}" class="btn btn-success">Ajouter un utilisateur</a>
-	</div>
-{% endblock %}
+			<td>{{ user.password }}</td>
+			<td>{{ user.phone }}</td>
+			<td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+			<td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+			<td>
+				<a href="{{ path('update_user', {'id': user.id}) }}">
+					<i class="bi bi-pencil-square text-primary"></i>
+				</a>
+				<a href="{{ path('delete_user', {'id': user.id}) }}">
+					<i class="bi bi-trash3 text-danger"></i>
+				</a>
+
+			</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan="10">Pas d'Utilisateurs trouvé</td>
+		</tr>
+
+		{% endfor %}
+
+
+	</tbody>
+
+</table>
+
+<div class="text-end mt-4">
+	<a href="{{ path('create_user') }}" class="btn btn-success">Ajouter un utilisateur</a>
+</div>{% endblock %}

@@ -12,78 +12,79 @@
 
 {% block body %}
 
-	<div class="col-6 my-5">
-		<h2>Votre panier</h2>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>NOM</th>
-					<th>QTE</th>
-					<th>SOUS-TOTAL</th>
-				</tr>
-			</thead>
-			<tbody>
+<div class="col-6 my-5">
+	<h2>Votre panier</h2>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>NOM</th>
+				<th>QTE</th>
+				<th>SOUS-TOTAL</th>
+			</tr>
+		</thead>
+		<tbody>
 
-				{% for line in cart %}
-					<tr>
-						<td><img src="{{ asset('img/product/' ~ line.product.image1) }}" alt="image principale {{ line.product.name }}">
-							{{ line.product.name }}
-						</td>
-						<td>{{line.quantity}}</td>
-						<td>{{(line.product.price * line.quantity)|number_format(2,',', '')}}
-							€</td>
+			{% for line in cart %}
+			<tr>
+				<td><img src="{{ asset('img/product/' ~ line.product.image1) }}"
+						alt="image principale {{ line.product.name }}">
+					{{ line.product.name }}
+				</td>
+				<td>{{line.quantity}}</td>
+				<td>{{(line.product.price * line.quantity)|number_format(2,',', '')}}
+					€</td>
 
-					</tr>
-				{% endfor %}
-
-
-			</tbody>
-			<tfoot>
-				<tr>
-					<th colspan="2">TOTAL</th>
-					<th>{{total|number_format(2,',', '')}}
-						€</th>
-
-				</tr>
-			</tfoot>
-			{{ form_start(cartValidationForm)}}
-
-			<tfoot>
-				<tr>
-					<th>{{ form_row(cartValidationForm.carrier, {
-			'label': 'Transporteur'		
-			})}}</th>
-
-					<TH></TH>
-					<th>{{total|number_format(2,',', '')}}
-						€</th>
-
-				</tr>
-			</tfoot>
-
-		</table>
-	</div>
-
-	<div class="col-6 p-4 ">
-		<h2>
-			Livraison
-
-		</h2>
+			</tr>
+			{% endfor %}
 
 
-		{{ form_row(cartValidationForm.billing_address, {
-			'label': 'Adresse de facturation'		
-			})}}
-		{{ form_row(cartValidationForm.delivery_address, {
-			'label': 'Adresse de livraison'		
-			})}}
-		<h2>Ajouter une adresse</h2>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th colspan="2">TOTAL</th>
+				<th>{{total|number_format(2,',', '')}}
+					€</th>
 
-		<div class="row text-end">
-			<div class="col-12">
-				<a href="{{ path('payment') }}" class="btn btn-success">Payer</a>
-			</div>
+			</tr>
+		</tfoot>
+		{{ form_start(cartValidationForm)}}
+
+		<tfoot>
+			<tr>
+				<th>{{ form_row(cartValidationForm.carrier, {
+					'label': 'Transporteur'
+					})}}</th>
+
+				<TH></TH>
+				<th>{{total|number_format(2,',', '')}}
+					€</th>
+
+			</tr>
+		</tfoot>
+
+	</table>
+</div>
+
+<div class="col-6 p-4 ">
+	<h2>
+		Livraison
+
+	</h2>
+
+
+	{{ form_row(cartValidationForm.billing_address, {
+	'label': 'Adresse de facturation'
+	})}}
+	{{ form_row(cartValidationForm.delivery_address, {
+	'label': 'Adresse de livraison'
+	})}}
+	<h2>Ajouter une adresse</h2>
+
+	<div class="row text-end">
+		<div class="col-12">
+			<button type="submit" class="btn btn-success">Payer</button>
 		</div>
 	</div>
-	{{ form_end(cartValidationForm)}}
+</div>
+{{ form_end(cartValidationForm)}}
 {% endblock %}

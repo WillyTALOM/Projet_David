@@ -27,29 +27,7 @@ class OrderController extends AbstractController
         $orderDetails = $orderDetailsRepository->findAll();
 
         return $this->render('order/index.html.twig', [
-            'orderDetailss' => $orderDetails,
-        ]);
-    }
-
-    #[Route('/orders', name: 'orders')]
-    public function orders(OrderRepository $orderRepository, CartService $cartService): Response
-    {
-        $user = $this->getUser();
-        $cartProducts = $cartService->getCart();
-
-        if (empty($cartProducts['products'])) {
-            return $this->redirectToRoute('products');
-        }
-
-        $form = $this->createForm(OrderType::class, null, [
-            'user' => $user     //Permet de passer l'utilisateur courant dans le tableau d'options du OrderType
-        ]);
-
-
-        return $this->renderForm('order/index.html.twig', [
-            'form' => $form,
-            'cart' => $cartProducts,
-            'totalPrice' => $cartProducts['totals']['price']
+            'orderDetails' => $orderDetails,
         ]);
     }
 }

@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PaymentController extends AbstractController
 {
-    #[Route('/payment', name: 'payment')]
+    #[Route('/payment/{order}', name: 'payment')]
     public function index(Request $request, CartService $cartService, Order $order): Response
     {
         if ($request->headers->get('referer') !== 'https://127.0.0.1:8000/cart/validation') {
@@ -62,7 +62,7 @@ class PaymentController extends AbstractController
         $stripeSession = $stripe->checkout->sessions->create([
             'line_items' => $stripeCart,
             'mode' => 'payment',
-            'success_url' => 'https://127.0.0.1:8000/payment/success',
+            'success_url' => 'https://127.0.0.1:8000/payment/' . $order->getId() . '/success',
             'cancel_url' => 'https://127.0.0.1:8000/payment/cancel',
             'payment_method_types' => ['card']
         ]);
@@ -70,7 +70,7 @@ class PaymentController extends AbstractController
 
         return $this->render('payment/index.html.twig', [
             'sessionId' => $stripeSession->id,
-            // 'order' => $order->getId()
+            'order' => $order->getId()
         ]);
     }
 

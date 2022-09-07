@@ -25,10 +25,11 @@ class UserController extends AbstractController
     #[Route('/admin/users', name: 'admin_users')]
     public function index(AddressRepository $addressRepository, UserRepository $userRepository): Response
     {
-
+        $addresses = $addressRepository->findAll();
+        $users =  $userRepository->findAll();
         return $this->render('user/userList.html.twig', [
-            'users' => $userRepository->findAll(),
-            'addresses' => $addressRepository->findAll()
+            'users' => $users,
+            'addresses' => $addresses
         ]);
     }
 

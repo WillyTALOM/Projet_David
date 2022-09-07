@@ -1,13 +1,29 @@
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/header.css')}}">
+<link rel="stylesheet" href="{{ asset('css/header.css')}}">
 {% endblock %}
+
+
+
+<nav class="nav">
+	<a id="icon1" href="linkk" class="nav-link text-black">
+		<i class="bi bi-person"></i>
+	</a>
+	<a id="icon1" href="linkk" class="nav-link text-black">
+		<i class="bi bi-suit-heart-fill"></i>
+	</a>
+	<a id="icon1" href="linkk" class="nav-link text-black">
+		<i class="bi bi-cart4"></i>
+	</a>
+
+</nav>
 
 <nav id="header2" class="navbar navbar-expand-lg bg-dark ">
 
 
 	<div class="container-fluid">
 		<a class="navbar-brand" href="{{ path('home') }}"></a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+			aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
@@ -15,34 +31,41 @@
 			<div class="navbar-nav">
 
 				<a id="icon2" href="{{path('home')}}" class="nav-link text-white">ACCUEIL</a>
-				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'femme'})}}" class="nav-link text-white">FEMME</a>
-				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="nav-link text-white">HOMME</a>
-				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="nav-link text-white">ENFANT</a>
+				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'femme'})}}"
+					class="nav-link text-white">FEMME</a>
+				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'homme'})}}"
+					class="nav-link text-white">HOMME</a>
+				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}"
+					class="nav-link text-white">ENFANT</a>
 				<a id="icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
-				<a
-					id="icon2" href="{{path('cart')}}" class="nav-link text-white">
+				<a id="icon2" href="linkk" class="nav-link text-white">
+					<i class="bi bi-suit-heart-fill"></i>
+				</a>
+				<a id="icon2" href="{{path('cart')}}" class="nav-link text-white">
 					{#panier#}
 					<i class="bi bi-cart4"></i>
 					{% if app.session.get('cart') is not empty %}
-						<span class="badge rounded-pill text-bg-secondary">
-							{{ render(controller('App\\Controller\\CartController::getNbProducts'))}}
-						</span>
+					<span class="badge rounded-pill text-bg-secondary">
+						{{ render(controller('App\\Controller\\CartController::getNbProducts'))}}
+					</span>
 					{% endif %}
 
 				</a>
+				<a id="icon2" href="linkk" class="nav-link text-white">
+					<i class="bi bi-person"></i>
 
-				{% if app.user %}
+					{% if app.user %}
 					<a id="icon2" class="nav-link text-white" href="{{ path('logout') }}">DECONNEXION</a>
 
-				{% else %}
+					{% else %}
 					<a id="icon2" class="nav-link text-white" href="{{ path('login') }}">CONNEXION</a>
 
-				{% endif %}
-				{% if is_granted('ROLE_ADMIN')%}
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN')%}
 					<a id="icon2" class="nav-link text-white" href="{{ path('admin') }}">ADMIN</a>
 
 
-				{% endif %}
+					{% endif %}
 			</div>
 		</div>
 
