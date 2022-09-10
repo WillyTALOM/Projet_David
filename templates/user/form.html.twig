@@ -31,7 +31,11 @@ utilisateur
 	</div>
 	<div class="col-3">
 		{{ form_row(userForm.roles, {
-		'label': 'Roles'
+		'label': 'Roles',
+		'attr': {
+		'class': 'form-choice-label'
+
+		}
 
 		}) }}
 	</div>
@@ -43,7 +47,7 @@ utilisateur
 		}
 		}) }}
 	</div>
-	<div class="col-3">
+	<div class="col-6">
 		{{ form_row(userForm.phone, {
 		'label': 'Numéro de téléphone',
 		'attr': {
@@ -51,14 +55,23 @@ utilisateur
 		}
 		}) }}
 	</div>
-	<div class="col-3">
-		{{ form_row(userForm.password, {
+	<div class="col-4">
+		{{ form_row(userForm.password.first, {
 		'label': 'Mot de passe',
 		'attr': {
 		'placeholder': ''
 		}
 		}) }}
 	</div>
+	<div class="col-4">
+		{{ form_row(userForm.password.second, {
+		'label': 'Répétez le mot de passe',
+		'attr': {
+		'placeholder': ''
+		}
+		}) }}
+	</div>
+
 
 
 	{% for address in userForm.addresses %}
@@ -110,19 +123,6 @@ utilisateur
 	</div>
 
 	{% endfor %}
-
-	{% for order in userForm.orders %}
-
-
-	{% endfor %}
-
-	<div>
-		<button type="button" class="btn btn-primary" id="new-order">New Order</button>
-		{{ form_row(userForm.orders) }}
-	</div>
-
-
-
 
 	<div class="col-3">
 		{{ form_row(userForm.isVerified, {

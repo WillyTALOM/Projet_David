@@ -3,22 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Entity\Order;
 use App\Form\UserType;
 use DateTimeImmutable;
 use App\Entity\Address;
-use App\Entity\Carrier;
-use App\Form\AddressType;
 use App\Repository\UserRepository;
 use App\Repository\AddressRepository;
-
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bridge\Doctrine\ManagerRegistry as DoctrineManagerRegistry;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
@@ -40,17 +34,11 @@ class UserController extends AbstractController
     {
 
         $user = new User();
+
         $address = new Address();
-        $order = new Order();
-        $carrier =  new Carrier();
 
-
-        $form = $this->createForm(UserType::class, $user);
 
         $user->getAddresses()->add($address);
-        $user->getOrders()->add($order);
-        $carrier->getOrders()->add($order);
-
 
 
 
@@ -60,16 +48,20 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $users = $userRepository->findAll();
-            $addresses = $addressRepository->findAll();
             $userFirstNames = [];
             $userLastNames = [];
             $userRoles = [];
+
+
+
 
             foreach ($users as $newUser) {
                 $userFirstNames[] = $newUser->getFirstName();
                 $userLastNames[] = $newUser->getLastName();
                 $userRoles[] = $newUser->getRoles();
             }
+
+
 
             $addresses = $addressRepository->findAll();
             $newAddress = [];
@@ -87,6 +79,7 @@ class UserController extends AbstractController
             }
 
 
+
             $user->setPassword($userPasswordHasher->hashPassword(
                 $user,
                 $form->get('password')->getData()
@@ -95,7 +88,7 @@ class UserController extends AbstractController
 
             $user->setCreatedAt(new DateTimeImmutable());
 
-            $user->addAddress($address);
+            $address->setUser($user);
 
             $manager = $managerRegistry->getManager();
             $manager->persist($user);
@@ -115,7 +108,7 @@ class UserController extends AbstractController
 
 
     #[Route('admin/user/update/{id}', name: 'update_user')]
-    public function edit(UserPasswordHasherInterface $userPasswordHasher, Request $request, User $user, UserRepository $userRepository, ManagerRegistry $managerRegistry): Response
+    public function edit(UserPasswordHasherInterface $userPasswordHasher, Request $request, User $user, UserRepository $userRepository, ManagerRegistry $managerRegistry, AddressRepository $addressRepository): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -133,7 +126,22 @@ class UserController extends AbstractController
                 $userRoles[] = $newUser->getRoles();
                 $userPassword[] = $newUser->getPassword();
             }
-            $user->setPassword($userPasswordHasher->hashPassword(
+
+            $addresses = $addressRepository->findAll();
+            $newAddress = [];
+            $addressAdditional = [];
+            $addressZip = [];
+            $addressCity = [];
+            $addressCountry = [];
+
+            foreach ($addresses as $existingAddress) {
+                $newAddress[] = $existingAddress->getAddress();
+                $addressAdditional[] = $existingAddress->getAdditional();
+                $addressZip[] = $existingAddress->getZip();
+                $addressCity[] = $existingAddress->getCity();
+                $addressCountry[] = $existingAddress->getCity();
+            }
+            $user->getPassword($userPasswordHasher->hashPassword(
                 $user,
                 $form->get('password')->getData()
             ));
