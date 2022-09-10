@@ -41,10 +41,6 @@ class Address
         $this->orders = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return $this->address; // Remplacer champ par une propriété "string" de l'entité
-    }
 
     public function getId(): ?int
     {

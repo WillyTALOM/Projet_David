@@ -21,12 +21,12 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/order/details', name: 'admin_orders_details')]
+    #[Route('/order/details', name: 'admin_order_details')]
     public function orderDetails(OrderDetailsRepository $orderDetailsRepository): Response
     {
         $orderDetails = $orderDetailsRepository->findAll();
 
-        return $this->render('order/index.html.twig', [
+        return $this->render('order/orderDetails.html.twig', [
             'orderDetails' => $orderDetails,
         ]);
     }
