@@ -39,28 +39,43 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Order[] Returns an array of Order objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('o.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Order[] Returns an array of Order objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('o.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Order
+    //    {
+    //        return $this->createQueryBuilder('o')
+    //            ->andWhere('o.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
+
+    /*
+     * findSuccessOrders()
+     * Permet d'afficher les commandes dans l'espace membre de l'utilisateur
+     */
+    public function findSuccessOrders($user)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.paid > 0')
+            ->andWhere('o.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('o.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

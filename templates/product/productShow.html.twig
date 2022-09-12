@@ -2,84 +2,90 @@
 
 {% block body %}
 
-	<section class="py-5">
-		<div class="container px-4 px-lg-5 my-5">
-			<div class="row gx-4 gx-lg-5 align-items-center">
-				<div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ asset('img/product/' ~ product.image1) }}" alt="..."/></div>
+<section class="py-5">
+	<div class="container px-4 px-lg-5 my-5">
+		<div class="row gx-4 gx-lg-5 align-items-center">
+			<div class="col-md-6"><img class="card-img-top mb-5 mb-md-0"
+					src="{{ asset('img/product/' ~ product.image1) }}" alt="..." /></div>
 
 
-				<div class="col-md-6">
-					<div class="small mb-1">{{product.reference}}</div>
-					<h1 class="display-5 fw-bolder">
-						{{product.name}}</h1>
-					<div class="fs-5 mb-5">
-						{% if product.reduction == 0 %}
+			<div class="col-md-6">
+				<div class="small mb-1">{{product.reference}}</div>
+				<h1 class="display-5 fw-bolder">
+					{{product.name}}</h1>
+				<div class="fs-5 mb-5">
+					{% if product.reduction == 0 %}
 
-							<span class="">{{product.price }}
-								€</span>
+					<span class="">{{product.price }}
+						€</span>
 
-						{% else %}
+					{% else %}
 
-							<span class="text-decoration-line-through text-danger">{{product.price}}
-								€</span>
-							<span>{{product.PriceSolde }}
-								€</span>
+					<span class="text-decoration-line-through text-danger">{{product.price}}
+						€</span>
+					<span>{{product.PriceSolde }}
+						€</span>
 
-						{% endif %}
+					{% endif %}
 
+
+				</div>
+				<p class="lead">{{product.abstract}}</p>
+				<div class="d-flex">
+					<input class="form-control text-center me-3" id="inputQuantity" type="num"
+						value="{{product.quantity}}" style="max-width: 3rem" />
+					<button class="btn btn-success flex-shrink-0" type="button">
+						<a href="{{path('cart_add', {'id':product.id})}}"
+							class="card-link btn btn-{{ product.quantity != 0 ? 'success' : 'danger disabled' }}">
+							<i class="bi bi-cart-plus-fill"></i> Acheter
+						</a>
+
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="py-5 bg-light">
+	<div class="container px-4 px-lg-5 mt-5">
+		<h2 class="fw-bolder mb-4">Autres produits</h2>
+	</div>
+
+	<div class="row">
+
+		{% for product in products|slice(0,4) %}
+
+
+		<div class="col-md-6 col-lg-4 col-xl-3 p-3">
+
+			<div class="card h-100">
+				<img class="card-img-top" src="{{ asset('img/product/' ~ product.image1) }}" alt="..." />
+
+
+				<div class="card-body p-4">
+					<div class="text-center">
+						<h5 class="fw-bolder">{{product.name}}</h5>
 
 					</div>
-					<p class="lead">{{product.abstract}}</p>
-					<div class="d-flex">
-						<input class="form-control text-center me-3" id="inputQuantity" type="num" value="{{product.quantity}}" style="max-width: 3rem"/>
-						<button class="btn btn-outline-dark flex-shrink-0" type="button">
-							<i class="bi-cart-fill me-1"></i>
-							Acheter
-						</button>
+
+				</div>
+				<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+					<div class="text-center">
+						<a class="btn btn-outline-dark mt-auto"
+							href="{{ path('product_show', {'slug': product.slug}) }}">Détail</a>
+
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-
-	<section class="py-5 bg-light">
-		<div class="container px-4 px-lg-5 mt-5">
-			<h2 class="fw-bolder mb-4">Autres produits</h2>
-		</div>
-
-		<div class="row">
-
-			{% for product in products|slice(0,4) %}
+		{% endfor %}
 
 
-				<div class="col-md-6 col-lg-4 col-xl-3 p-3">
+</section>
 
-					<div class="card h-100">
-						<img class="card-img-top" src="{{ asset('img/product/' ~ product.image1) }}" alt="..."/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="js/scripts.js"></script>
 
-						<div class="card-body p-4">
-							<div class="text-center">
-								<h5 class="fw-bolder">{{product.name}}</h5>
-
-							</div>
-
-						</div>
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" href="{{ path('product_show', {'slug': product.slug}) }}">Détail</a>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			{% endfor %}
-
-
-		</section>
-
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-		<script src="js/scripts.js"></script>
-
-	{% endblock %}
+{% endblock %}

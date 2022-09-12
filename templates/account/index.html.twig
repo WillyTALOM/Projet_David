@@ -8,55 +8,72 @@
 {% endif %}
 Bienvenue {{ app.user.lastname }} dans votre compte.<br />
 C'est dans cet espace que vous allez pouvoir gérer toutes vos informations personnelles.
+
+<a href="{#{{ path('account_address_add') }}#}" class="btn btn-info btn-sm float-right">Ajouter une adresse</a>
+
+<hr>
+
 <hr>
 <div class="row">
-    <div class="col-md-4">
+
+    <div class="col-md-4 text-center">
+        <h1>Mot de passe</h1>
+        <br />
         <div class="account-item text-center">
             <img src="{{ asset('assets/img/password.png') }}" alt="Modifier mon mot de passe"><br />
-            {# <a href="{{ path('account_password') }}">Modifier mon mot de passe</a> #}
+            <a href="{#{{ path('account_password') }}#}">Modifier mon mot de passe</a>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="account-item text-center">
-            <img src="{{ asset('assets/img/address-book.png') }}" alt="Gérer mes adresses"><br />
-            {# <a href="{{ path('account_address') }}">Gérer mes adresses</a> #}
-        </div>
-    </div>
-    <div class="col-md-4">
-        {# <div class="account-item text-center">
-            <img src="{{ asset('assets/img/purchase.png') }}" alt="Mes commandes"><br />
-            <a href="{{ path('account_order') }}">Mes commandes</a>
-        </div> #}
-    </div>
-</div>
-<hr>
-{# <a href="{{ path('account_address_add') }}" class="btn btn-info btn-sm float-right">Ajouter une adresse</a> #}
-<h1>Mes adresses</h1>
-C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses.<br />
-{# <a href="{{ path('account') }}">Retour</a> #}
-<hr>
-{% if app.user.addresses|length == 0 %}
-<p class="text-center">
-    Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a {#
-        href="{{ path('account_address_add') }}">cliquer ici</a>. #}
-</p>
-{% else %}
-<div class="row">
-    {# {% for address in app.user.addresses %}
-    <div class="col-md-4">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{ address.name }}</h5>
-                <p class="card-text">
-                    {{ address.address }},<br />
-                    {{ address.postal }} - {{ address.city }} - {{ address.country }}
-                </p>
-                {# <a href="{{ path('account_address_edit', { 'id' : address.id }) }}">Modifier</a> | <a
-                    href="{{ path('account_address_delete', { 'id' : address.id }) }}">Supprimer</a>
+
+
+    <div class="col-md-4 text-center">
+        <h1>Mes adresses</h1>
+        <br />
+        {% if app.user.addresses|length == 0 %}
+        <p class="text-center">
+            Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a
+                href="{#{{ path('account_address_add') }}#}">cliquer ici</a>.
+        </p>
+        {% else %}
+        <div class="row text-center">
+            {% for address in app.user.addresses %}
+            <div>
+                {{address.address ~ ' ' ~ address.additional ~ ' ' ~ address.zip ~ ' ' ~ address.country}}
+
             </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="account-item text-center">
+
+            <a href="{#{{ path('account_address') }}#}">Gérer mes adresses</a>
         </div>
     </div>
-    {% endfor %} #}
+
+
+    <div class="col-md-4 text-center">
+        <h1>Mes commandes</h1>
+        <br />
+        {% if app.user.orders|length == 0 %}
+        <p class="text-center">
+            Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a
+                href="{#{{ path('account_address_add') }}#}">cliquer ici</a>.
+        </p>
+        {% else %}
+        <div class="row text-center">
+            {% for order in app.user.orders %}
+            <div>
+                {{order.reference ~ ' ' ~ order.amount }}
+
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="account-item text-center">
+            <a href="{#{{ path('account_order') }}#}">Mes commandes</a>
+        </div>
+    </div>
+
 </div>
-{% endif %}
+<hr>
 {% endblock %}
