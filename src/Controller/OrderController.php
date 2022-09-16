@@ -47,7 +47,6 @@ class OrderController extends AbstractController
     public function show($reference, OrderRepository $orderRepository, OrderDetailsRepository $orderDetailsRepository, ProductRepository $productRepository)
     {
         $order = $orderRepository->findOneByReference($reference);
-        $orderDetails = $orderDetailsRepository->findAll();
 
         $product = $productRepository->findOneByReference($reference);
 
@@ -59,7 +58,7 @@ class OrderController extends AbstractController
         return $this->render('account/order_details.html.twig', [
             'product' => $product,
             'order' => $order,
-            'orderDetails' => $orderDetails
+
         ]);
     }
 }

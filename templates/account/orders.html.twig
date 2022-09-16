@@ -4,10 +4,12 @@
 
 {% block body %}
 <div class="text-center my-4">
-    <h1>Mes commandes</h1>
-    C'est dans cet espace que vous allez pouvoir gérer toutes vos commandes.<br />
+    <h1>Mes commandes
+        <p>C'est dans cet espace que vous allez pouvoir gérer toutes vos commandes.</p>
+    </h1>
+
 </div>
-{# <a href="{{ path('account') }}">Retour</a> #}
+
 {% if orders|length == 0 %}
 <hr>
 <p class="text-center">
@@ -41,7 +43,7 @@
             <td>{{ order.createdAt|date('d/m/Y') }}</td>
             <td>{{ order.orderDetails|length }}</td>
             <td>{{order.billingAddress}}</td>
-            <td>{{ (order.carrier.price + order.getAmount)|number_format(2, ',', '.') }} €</td>
+            <td>{{ order.getAmount|number_format(2, ',', '.') }} €</td>
             <td class="text-right"><a
                     href="{{ path('user_account_order_details', { 'reference' : order.reference }) }} ">Voir
                     ma
@@ -50,7 +52,9 @@
         {% endfor %}
     </tbody>
 </table>
-
+<div>
+    <a class="btn btn-dark" href="{{ path('user_account') }}">Retour</a>
+</div>
 
 {% endif %}
 {% endblock %}

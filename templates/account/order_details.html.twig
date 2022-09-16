@@ -30,21 +30,23 @@ La commande est annulée
         </tr>
     </thead>
     <tbody>
-        {% for product in orderDetails %}
+
+        {% for orderDetail in order.orderDetails %}
+
         <tr>
-            <td>{{ product.Id }}</td>
-            <td>x{{ product.quantity }}</td>
-            {# <td>{{ (product.price / 100)|number_format(2, ',', '.') }} €</td>
-            <td>{{ (product.total / 100)|number_format(2, ',', '.') }} €</td> #}
+            <td>{{ orderDetail.productId.name }}</td>
+            <td>{{ orderDetail.quantity }}</td>
+            <td>{{ (orderDetail.productId.price|number_format(2, ',', '.') ) }} €</td>
+            <td>{{ (orderDetail.productId.price * orderDetail.quantity)|number_format(2, ',', '.') }} €</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
 <div class="text-right">
-    <strong>Sous-total :</strong> {{ (order.getAmount|number_format(2, ',', '.')) }} €<br />
+    <strong>Sous-total :</strong> {{ (order.getAmount - order.carrier.price)|number_format(2, ',', '.') }} €<br />
     <strong>Livraison :</strong> {{ (order.carrier.price|number_format(2, ',', '.')) }} €<br />
-    <strong>Total : </strong> {{ (order.carrier.price + order.getAmount)|number_format(2, ',', '.') }} €
+    <strong>Total : </strong> {{ order.getAmount|number_format(2, ',', '.') }} €
 </div>
 
 <a href="{{ path('user_account_orders') }}">Retour</a>

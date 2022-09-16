@@ -1,0 +1,45 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+<div class="text-center py-5">
+	<h1>Ajouter une adresses</h1>
+</div>
+
+{{ form_start(addressform) }}
+<div class="row">
+
+	<div class="col-md-6">{{ form_row(addressform.address,{
+		'label': 'Adresse',
+		}
+		) }}</div>
+	<div class="col-md-6">{{ form_row(addressform.additional ,{
+		'label': 'Adresse complémentaire',
+		}) }}</div>
+	<div class="col-md-6">{{ form_row(addressform.zip ,{
+		'label': 'Code postale',
+		}) }}</div>
+	<div class="col-md-6">{{ form_row(addressform.city ,{
+		'label': 'Ville',
+		}) }}</div>
+	<div class="col-md-6">{{ form_row(addressform.country, {
+		'label': 'Pays',
+		'attr': {
+		'placeholder': '--Selectioné--'
+		}
+		}) }}</div>
+
+</div>
+
+<div>
+	<button type="submit">Créer</button>
+
+	<a href="{#{{ path('user_account_address') }} #}">Créer</a>
+	<a href="{{ path('user_account_address') }}">Annuler</a>
+
+</div>
+{{ form_end(addressform) }}
+{% endblock %}
