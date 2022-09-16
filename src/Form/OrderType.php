@@ -16,13 +16,30 @@ class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('reference')
             ->add('amount')
             ->add('created_at')
             ->add('paid')
-            ->add('delivery_address', TextType::class)
-            ->add('billing_address', TextType::class)
+            ->add('delivery_address', TextType::class, [
+                'label' => false,
+                'required' => true,
+                'class' => Order::class,
+                'choice_label' => function (Order $delivery_address) {
+                    return $delivery_address->getDeliveryAddress();
+                }
+
+            ])
+            ->add('billing_address', TextType::class, [
+                'label' => false,
+                'required' => true,
+                'class' => Order::class,
+                'choice_label' => function (Order $billing_address) {
+                    return $billing_address->getBillingAddress();
+                }
+
+            ])
             ->add('carrier', EntityType::class, [
                 'class' => Carrier::class,
                 'choice_label' => function (Carrier $carrier) {

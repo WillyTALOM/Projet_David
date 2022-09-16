@@ -47,15 +47,15 @@ class Order
     #[ORM\OneToMany(mappedBy: 'order_id', targetEntity: OrderDetails::class, orphanRemoval: true)]
     private Collection $orderDetails;
 
+    #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'orders')]
+    private Collection $product;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
+        $this->product = new ArrayCollection();
     }
 
-    public function __toString()
-    {
-        return $this->order; // Remplacer champ par une propriété "string" de l'entité
-    }
 
     public function getId(): ?int
     {
@@ -184,6 +184,30 @@ class Order
                 $orderDetail->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProduct(): Collection
+    {
+        return $this->product;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->product->contains($product)) {
+            $this->product->add($product);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        $this->product->removeElement($product);
 
         return $this;
     }

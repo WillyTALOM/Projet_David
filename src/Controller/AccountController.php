@@ -20,28 +20,4 @@ class AccountController extends AbstractController
             'addresses' => $addresses
         ]);
     }
-
-    #[Route('/account/orders', name: 'user_account_orders')]
-    public function orders(OrderRepository $orderRepository)
-    {
-        $orders = $orderRepository->findSuccessOrders($this->getUser());
-
-        return $this->render('account/order.html.twig', [
-            'orders' => $orders
-        ]);
-    }
-
-    #[Route('/account/orders/{reference}', name: 'user_account_order_details')]
-    public function show($reference, OrderRepository $orderRepository)
-    {
-        $order = $orderRepository->findOneByReference($reference);
-
-        if (!$order || $order->getUser() != $this->getUser()) {
-            return $this->redirectToRoute('account_order');
-        }
-
-        return $this->render('account/order_show.html.twig', [
-            'order' => $order
-        ]);
-    }
 }

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/base.css') }}">
+<link rel="stylesheet" href="{{ asset('css/base.css') }}">
 {% endblock %}
 
 
@@ -13,105 +13,110 @@
 
 {% block body %}
 
-	<div class="col-12">
-		<div class="row">
+<div class="col-12">
+	<div class="row">
 
-			<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-				<div class="carousel-inner">
-					<div class="carousel-item active" data-bs-interval="2500">
+		<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active" data-bs-interval="2500">
 
-						<img src="{{ asset('img/pexels-cottonbro-4004161.jpg') }}" class="d-block w-100" alt="...">
+					<img src="{{ asset('img/pexels-cottonbro-4004161.jpg') }}" class="d-block w-100" alt="...">
 
+
+				</div>
+				<div class="carousel-item active" data-bs-interval="2500">
+
+					<img src="{{ asset('img/pexels-kampus-production-8201163.jpg') }}" class="d-block w-100" alt="...">
+
+
+				</div>
+				<div class="carousel-item active" data-bs-interval="2500">
+
+					<img src="{{ asset('img/pexels-angela-roma-7319301.jpg') }}" class="d-block w-100" alt="...">
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+
+<div class="my-5">
+
+	<h3 class="text-center">
+		<strong>Découvrez nos derniers produits</strong>
+	</h3>
+</div>
+
+
+<div class="col-12">
+	<div class="row">
+
+		{% for product in products|slice(0,12) %}
+
+
+		<div class="col-md-6 col-lg-5 col-xl-2 p-3">
+
+
+			<div class="card h-100">
+				{% if product.createdAt|date('Y-m-d') >= 'now'|date_modify('-20 days')|date('Y-m-d') %}
+				<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Nouveauté
+				</div>
+				{% endif %}
+				<img class="card-img-top" src="{{ asset('img/product/' ~ product.image1) }}"
+					alt="produit de {{ product.name }}" />
+
+				<div class="card-body p-4">
+					<div class="text-center">
+						<h5 class="fw-bolder">{{ product.name }}</h5>
+						<h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
+						{% if product.reduction == 0 %}
+
+						<span class="">{{product.price|number_format(2, ',', ' ')}}
+							€
+
+
+						</span>
+
+
+						{% else %}
+						<span class="text-decoration-line-through text-danger">{{product.price|number_format(2, ',', '
+							')}}
+
+							€
+
+
+						</span>
+
+
+						<span>
+							{{product.PriceSolde|number_format(2, ',', ' ')}}
+							€
+						</span>
+
+						{% endif %}
 
 					</div>
-					<div class="carousel-item active" data-bs-interval="2500">
+				</div>
+				<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+					<div class="text-center">
+						<a href="{{ path('product_show', {'slug': product.slug}) }}"
+							class="card-link btn btn-outline-primary">Détails</a>
+						<a href="{{path('cart_add', {'id':product.id})}}"
+							class="card-link btn btn-{{ product.quantity != 0 ? 'success' : 'danger disabled' }}">
 
-						<img src="{{ asset('img/pexels-kampus-production-8201163.jpg') }}" class="d-block w-100" alt="...">
-
-
-					</div>
-					<div class="carousel-item active" data-bs-interval="2500">
-
-						<img src="{{ asset('img/pexels-angela-roma-7319301.jpg') }}" class="d-block w-100" alt="...">
-
+							<i class="bi bi-cart-plus-fill"></i>
+						</a>
 
 					</div>
 				</div>
 			</div>
-
 		</div>
 
+		{% endfor %}
 	</div>
-
-
-	<div class="my-5">
-
-		<h3 class="text-center">
-			<strong>Découvrez nos derniers produits</strong>
-		</h3>
-	</div>
-
-
-	<div class="col-12">
-		<div class="row">
-
-			{% for product in products|slice(0,12) %}
-
-
-				<div class="col-md-6 col-lg-5 col-xl-2 p-3">
-
-
-					<div class="card h-100">
-						{% if product.createdAt|date('Y-m-d') >= 'now'|date_modify('-20 days')|date('Y-m-d') %}
-							<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Nouveauté</div>
-						{% endif %}
-						<img class="card-img-top" src="{{ asset('img/product/' ~ product.image1) }}" alt="produit de {{ product.name }}"/>
-
-						<div class="card-body p-4">
-							<div class="text-center">
-								<h5 class="fw-bolder">{{ product.name }}</h5>
-								<h6 id="text-des">{{ product.description|u.truncate(70,'...', false) }}</h6>
-								{% if product.reduction == 0 %}
-
-									<span class="">{{product.price}}
-										€
-
-
-									</span>
-
-
-								{% else %}
-									<span class="text-decoration-line-through text-danger">{{product.price}}
-
-										€
-
-
-									</span>
-
-
-									<span>
-										{{product.PriceSolde}}
-										€
-									</span>
-
-								{% endif %}
-
-							</div>
-						</div>
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a href="{{ path('product_show', {'slug': product.slug}) }}" class="card-link btn btn-outline-primary">Détails</a>
-								<a href="{{path('cart_add', {'id':product.id})}}" class="card-link btn btn-{{ product.quantity != 0 ? 'success' : 'danger disabled' }}">
-
-									<i class="bi bi-cart-plus-fill"></i>
-								</a>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-			{% endfor %}
-		</div>
-	</div>
+</div>
 {% endblock %}

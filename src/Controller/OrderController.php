@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\OrderDetails;
 use App\Repository\OrderDetailsRepository;
 use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
 use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +30,36 @@ class OrderController extends AbstractController
 
         return $this->render('order/orderDetails.html.twig', [
             'orderDetails' => $orderDetails,
+        ]);
+    }
+
+    #[Route('/account/orders', name: 'user_account_orders')]
+    public function orders(OrderRepository $orderRepository)
+    {
+        $orders = $orderRepository->findSuccessOrders($this->getUser());
+
+        return $this->render('account/orders.html.twig', [
+            'orders' => $orders
+        ]);
+    }
+
+    #[Route('/account/orders/{reference}', name: 'user_account_order_details')]
+    public function show($reference, OrderRepository $orderRepository, OrderDetailsRepository $orderDetailsRepository, ProductRepository $productRepository)
+    {
+        $order = $orderRepository->findOneByReference($reference);
+        $orderDetails = $orderDetailsRepository->findAll();
+
+        $product = $productRepository->findOneByReference($reference);
+
+
+        if (!$order || $order->getUser() != $this->getUser()) {
+            return $this->redirectToRoute('user_account_orders');
+        }
+
+        return $this->render('account/order_details.html.twig', [
+            'product' => $product,
+            'order' => $order,
+            'orderDetails' => $orderDetails
         ]);
     }
 }

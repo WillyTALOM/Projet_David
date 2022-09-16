@@ -68,12 +68,16 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?float $priceSolde = null;
 
+    #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'product')]
+    private Collection $orders;
+
 
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -302,6 +306,33 @@ class Product
     public function setPriceSolde(?float $priceSolde): self
     {
         $this->priceSolde = $priceSolde;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Order>
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders->add($order);
+            $order->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->removeElement($order)) {
+            $order->removeProduct($this);
+        }
 
         return $this;
     }
