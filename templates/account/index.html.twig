@@ -18,16 +18,16 @@
 <hr>
 <div class="row">
 
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 text-center account-item ">
         <h1>Mot de passe</h1>
         <br />
-        <div class="account-item text-center">
+        <div class="text-center">
             <a href="{#{{ path('account_password') }}#}">Modifier mon mot de passe</a>
         </div>
     </div>
 
 
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 text-center account-item ">
         <h1>Mes adresses</h1>
         <br />
         {% if app.user.addresses|length == 0 %}
@@ -45,7 +45,7 @@
             {% endfor %}
         </div>
         {% endif %}
-        <div class="account-item text-center">
+        <div class="text-center">
 
             <a href="{{ path('user_account_address') }}">Gérer mes adresses</a>
         </div>
@@ -53,7 +53,7 @@
     </div>
 
 
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 text-center account-item ">
         <h1>Mes commandes</h1>
         <br />
         {% if app.user.orders|length == 0 %}
@@ -71,7 +71,7 @@
             {% endfor %}
         </div>
         {% endif %}
-        <div class="account-item text-center">
+        <div class="text-center">
             <a href="{{ path('user_account_orders') }}">Mes commandes</a>
         </div>
     </div>

@@ -25,9 +25,11 @@ class AddressController extends AbstractController
     }
 
     #[Route('/account/ajouter-une-adresse', name: 'user_account_address_add')]
-    public function addAddress(Request $request, AddressRepository $addressRepository, ManagerRegistry $managerRegistry,  $user): Response
+    public function addAddress(Request $request, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
     {
         $address = new Address();
+
+
 
 
 
@@ -51,11 +53,11 @@ class AddressController extends AbstractController
                 $addressCity[] = $existingAddress->getCity();
                 $addressCountry[] = $existingAddress->getCity();
             }
-            $user->getAddresses()->add($address);
+
+            $address->setUser($this->getUser());
 
             $manager = $managerRegistry->getManager();
             $manager->persist($address);
-            $manager->persist($user);
             $manager->flush();
 
             $this->addFlash('success', 'L\'Adresse a bien été créé');
@@ -67,43 +69,58 @@ class AddressController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/compte/modifier-une-adresse/{id}", name="account_address_edit")
-     */
-    public function edit(Request $request, $id)
+
+    #[Route('/account/modifier-une-adresse/{id}', name: 'user_account_address_update')]
+    public function addressUpdate(Request $request,  Address $address, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
     {
-        $address = $this->entityManager->getRepository(Address::class)->findOneById($id);
-
-        if (!$address || $address->getUser() != $this->getUser()) {
-            return $this->redirectToRoute('account_address');
-        }
-
         $form = $this->createForm(AddressType::class, $address);
-
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            return $this->redirectToRoute('account_address');
+        if (!$address || $address->getUser() != $this->getUser()) {
+            return $this->redirectToRoute('user_account_address');
         }
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $addresses = $addressRepository->findAll();
+            $newAddress = [];
+            $addressAdditional = [];
+            $addressZip = [];
+            $addressCity = [];
+            $addressCountry = [];
+
+            foreach ($addresses as $existingAddress) {
+                $newAddress[] = $existingAddress->getAddress();
+                $addressAdditional[] = $existingAddress->getAdditional();
+                $addressZip[] = $existingAddress->getZip();
+                $addressCity[] = $existingAddress->getCity();
+                $addressCountry[] = $existingAddress->getCity();
+            }
+
+            $address->setUser($this->getUser());
+
+            $manager = $managerRegistry->getManager();
+            $manager->persist($address);
+            $manager->flush();
+
+            $this->addFlash('success', 'L\'Adresse a bien été modifier');
+            return $this->redirectToRoute('user_account_address');
+        }
+
+
         return $this->render('account/address_form.html.twig', [
-            'form' => $form->createView()
+            'addressform' => $form->createView()
         ]);
     }
 
-    /**
-     * @Route("/compte/supprimer-une-adresse/{id}", name="account_address_delete")
-     */
-    public function delete($id)
+
+    #[Route('/account/supprimer-une-adresse/{id}', name: 'user_account_address_delete')]
+    public function addressDelete(Address $address, ManagerRegistry $managerRegistry): Response
     {
-        $address = $this->entityManager->getRepository(Address::class)->findOneById($id);
+        $manager = $managerRegistry->getManager();
+        $manager->remove($address);
+        $manager->flush();
 
-        if ($address && $address->getUser() == $this->getUser()) {
-            $this->entityManager->remove($address);
-            $this->entityManager->flush();
-        }
-
-        return $this->redirectToRoute('account_address');
+        $this->addFlash('success', 'L\'Adresse a bein été supprimé');
+        return $this->redirectToRoute('user_account_address');
     }
 }
