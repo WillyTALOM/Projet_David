@@ -38,9 +38,17 @@
 				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}"
 					class="nav-link text-white">ENFANT</a>
 				<a id="icon2" href="{{path('contact')}}" class="nav-link text-white">CONTACT</a>
-				<a id="icon2" href="linkk" class="nav-link text-white">
+
+
+				<a id="icon2" href="{{path('favoris')}}" class="nav-link text-white">
 					<i class="bi bi-suit-heart-fill"></i>
+					{% if app.session.get('favoris') is not empty %}
+					<span>{{render(controller('App\\Controller\\FavorisController::getNbFavoris'))}}</span>
+
+					{% endif %}
 				</a>
+
+
 				<a id="icon2" href="{{path('cart')}}" class="nav-link text-white">
 					{#panier#}
 					<i class="bi bi-cart4"></i>
@@ -51,6 +59,8 @@
 					{% endif %}
 
 				</a>
+
+
 				<a id="icon2" href="{{path('user_account')}}" class="nav-link text-white">
 					<i class="bi bi-person"></i>
 

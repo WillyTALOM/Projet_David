@@ -71,6 +71,9 @@ class Product
     #[ORM\ManyToMany(targetEntity: Order::class, mappedBy: 'product')]
     private Collection $orders;
 
+    #[ORM\ManyToMany(targetEntity: Favoris::class, mappedBy: 'product')]
+    private Collection $favoris;
+
 
 
     public function __construct()
@@ -78,6 +81,7 @@ class Product
         $this->images = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->favoris = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -332,6 +336,33 @@ class Product
     {
         if ($this->orders->removeElement($order)) {
             $order->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Favoris>
+     */
+    public function getFavoris(): Collection
+    {
+        return $this->favoris;
+    }
+
+    public function addFavori(Favoris $favori): self
+    {
+        if (!$this->favoris->contains($favori)) {
+            $this->favoris->add($favori);
+            $favori->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavori(Favoris $favori): self
+    {
+        if ($this->favoris->removeElement($favori)) {
+            $favori->removeProduct($this);
         }
 
         return $this;
