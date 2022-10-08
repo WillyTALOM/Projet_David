@@ -33,7 +33,7 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/account/orders', name: 'user_account_orders')]
+    #[Route('/account/{id}/orders', name: 'user_account_orders')]
     public function orders(OrderRepository $orderRepository)
     {
         $orders = $orderRepository->findSuccessOrders($this->getUser());

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Favoris;
 use App\Entity\Product;
+use App\Repository\FavorisRepository;
+use App\Repository\ProductRepository;
 use
     Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Service\FavorisService;
@@ -14,11 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class FavorisController extends AbstractController
 {
     #[Route('/favoris', name: 'favoris')]
-    public function index(FavorisService $favorisService): Response
+    public function index(ProductRepository $productRepository, FavorisService $favorisService, FavorisRepository $favorisRepository): Response
     {
         return $this->render('favoris/index.html.twig', [
-            'cart' => $favorisService->getFavoris(),
-            'total' => $favorisService->getTotal()
+            'favories' => $favorisService->getFavoris(),
+            'total' => $favorisService->getTotal(),
+            'favoris' => $favorisRepository->findAll(),
+            'products' => $productRepository->findAll()
         ]);
     }
 
@@ -27,7 +31,7 @@ class FavorisController extends AbstractController
     public function add(FavorisService $favorisService, int $id, ManagerRegistry $managerRegistry, Product $product): Response
     {
         $favorisService->add($id);
-        $this->addFlash('success', 'L\'article a bien été ajouté dans votre panier');
+        $this->addFlash('success', 'L\'article a bien été ajouté dans vos favoris');
 
         $favoris = new Favoris();
 
@@ -65,7 +69,7 @@ class FavorisController extends AbstractController
     public function clear(FavorisService $favorisSevice): Response
     {
         $favorisSevice->clear();
-        $this->addFlash('success', 'Votre panier a bien été vidé');
+        $this->addFlash('success', 'Votre panier favoris a bien été vidé');
         return $this->redirectToRoute('favoris');
     }
 

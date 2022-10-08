@@ -1,46 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vos favoris - FlockYou{% endblock %}
+{% block title %}Vos favoris {% endblock %}
 
 {% block body %}
 
-<div class="container">
-    <h2 class="deepshadow">Vos favoris</h2>
-    <div class="login-form bg-light py-3 px-3">
-        {# {% if products | length > 0 %}
-        {% for product in products %} #}
-        <div class="fav row">
-            <div class="image col-2">
-                <a href="#">
+
+<h2 class=" py-5 text-center">Vos favoris</h2>
+
+<table class="table table-hover table-sm align-middle">
+    <thead>
+        <tr>
+            <th>N°</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Réference</th>
+            <th>reductions (%)</th>
+            <th>Prix Soldé</th>
+            <th>Catégorie</th>
+            <th>Marques</th>
+            <th>Sexe</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for favoris in products|reverse %}
+        <tr>
+            <td>{{ loop.revindex }}</td>
+            <td class="text-start"><img src="{#{{ asset('img/product/' ~ favoris.name.image1) }}#}"
+                    alt="{# image principale du produit {{ favoris.name }}#}" class="pe-3">{{ favoris.name }}
+            </td>
+            <td>{{ favoris.price|number_format(2, ',', ' ') }}
+                €</td>
+            <td>{{ favoris.reference }}</td>
+            <td>{{ favoris.reduction }}</td>
+            <td>{{ favoris.priceSolde|number_format(2, ',', ' ') }}
+                €</td>
+            <td>{{ favoris.category.name }}</td>
+            <td>{{ favoris.brand.name }}</td>
+            <td>{{ favoris.sexe.name }}</td>
+            <td>
+                {# <a href="{{ path('update_product', {'id': product.id}) }}">
+                    <i class="bi bi-pencil-square text-primary"></i>
                 </a>
-            </div>
-            <div class="info col-8">
-                <h4></h4>
-                <h5 class="price mt-2"> €</h5>
+                <a href="{{ path('delete_product', {'id': product.id}) }}">
+                    <i class="bi bi-trash3 text-danger"></i>
+                </a> #}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-                <span class="stock mt-2">
-                    <i class="fas fa-exclamation-circle mr-2"></i>Seulement restants
-                </span>
 
-                <span class="stock mt-2">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>Seulement restant
-                </span>
-
-                <span class="stock mt-2">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>Produit indisponible
-                </span>
-
-            </div>
-            <div class="action col-2">
-                <a href="#" style="color: red"><i class="suppr far fa-times-circle pull-right"></i></a>
-            </div>
-        </div>
-        <hr>
-        <div class="alert alert-danger">
-            Vous n'avez aucun favoris...
-        </div>
-
-        </ul>
-    </div>
-</div>
 {% endblock %}

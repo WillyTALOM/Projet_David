@@ -1,43 +1,43 @@
-{% extends 'baseAdmin.html.twig' %}
+{% extends 'admin/baseAdmin.html.twig' %}
 
 {% block title %}catégories
 {% endblock %}
 
 {% block body %}
 
-	<h1 class="pb-5 text-center">Liste de sexes</h1>
+<h1 class="pb-5 text-center">Liste de sexes</h1>
 
-	<table width="100%">
-		<thead>
-			<tr>
-				<th>N°</th>
-				<th>Nom</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for sexe in sexes|reverse %}
-				<tr>
-					<td>{{ loop.revindex }}</td>
-					<td>
+<table width="100%">
+	<thead>
+		<tr>
+			<th>N°</th>
+			<th>Nom</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for sexe in sexes|reverse %}
+		<tr>
+			<td>{{ loop.revindex }}</td>
+			<td>
 
-						{{ sexe.name }}</td>
-					<td>
-						<a href="{{ path('sexe_update', {'id': sexe.id}) }}">
-							<i class="bi bi-pencil-square text-primary"></i>
-						</a>
-						<a href="{{ path('sexe_delete', {'id': sexe.id}) }}">
-							<i class="bi bi-trash3 text-danger"></i>
-						</a>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+				{{ sexe.name }}</td>
+			<td>
+				<a href="{{ path('sexe_update', {'id': sexe.id}) }}">
+					<i class="bi bi-pencil-square text-primary"></i>
+				</a>
+				<a href="{{ path('sexe_delete', {'id': sexe.id}) }}">
+					<i class="bi bi-trash3 text-danger"></i>
+				</a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 
 
-	<div class="text-end mt-4">
-		<a href="{{ path('create_sexe') }}" class="btn btn-success">Créér une catégorie</a>
-	</div>
+<div class="text-end mt-4">
+	<a href="{{ path('create_sexe') }}" class="btn btn-success">Créér une catégorie</a>
+</div>
 
 {% endblock %}

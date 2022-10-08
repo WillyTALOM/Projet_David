@@ -1,4 +1,4 @@
-{% extends "baseAdmin.html.twig" %}
+{% extends "admin/baseAdmin.html.twig" %}
 
 {% block title %}
 {{ app.request.attributes.get('_route') == 'create_user' ? 'création' : 'modification' }}

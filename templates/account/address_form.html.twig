@@ -37,8 +37,7 @@
 <div>
 	<button type="submit">Créer</button>
 
-	<a href="{#{{ path('user_account_address') }} #}">Créer</a>
-	<a href="{{ path('user_account_address') }}">Annuler</a>
+	<a href="{{ path('user_account_address' , {'id': app.user.id}) }}">Annuler</a>
 
 </div>
 {{ form_end(addressform) }}

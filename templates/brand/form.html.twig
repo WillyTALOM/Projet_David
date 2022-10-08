@@ -1,38 +1,40 @@
-{% extends "baseAdmin.html.twig" %}
+{% extends "admin/baseAdmin.html.twig" %}
 
-{% block title %}{{ app.request.attributes.get('_route') == 'create_brand' ? 'création' : 'modification' }} category{% endblock %}
+{% block title %}{{ app.request.attributes.get('_route') == 'create_brand' ? 'création' : 'modification' }} category{%
+endblock %}
 
 {% block body %}
 
-    <h1 class="mb-5">{{ app.request.attributes.get('_route') == 'create_brand' ? 'Créer' : 'Modifier' }} une marque</h1>
+<h1 class="mb-5">{{ app.request.attributes.get('_route') == 'create_brand' ? 'Créer' : 'Modifier' }} une marque</h1>
 
-   
 
-    {{ form_start(brandForm) }}
 
-        <div class="row">
-            <div class="col-6">
-                
-                {{ form_label(brandForm.name, 'Nom') }}
-                {{ form_errors(brandForm.name) }}
-                {{ form_widget(brandForm.name, {
-                    'attr': {
-                        'placeholder': 'Ex.: Adidas'
-                    }
-                }) }}
-                {{ form_help(brandForm.name) }}
-            </div>
-    
+{{ form_start(brandForm) }}
+
+<div class="row">
+    <div class="col-6">
+
+        {{ form_label(brandForm.name, 'Nom') }}
+        {{ form_errors(brandForm.name) }}
+        {{ form_widget(brandForm.name, {
+        'attr': {
+        'placeholder': 'Ex.: Adidas'
+        }
+        }) }}
+        {{ form_help(brandForm.name) }}
+    </div>
+
 
     <div class="row">
         <div class="col-12 text-end my-3">
             <a href="{{ path('admin_brand')}}" class="btn btn-outline-danger me-3">Annuler</a>
-            <button class="btn btn-success">{{ app.request.attributes.get('_route') == 'create_brand' ? 'Créer' : 'Modifier' }} </button>
+            <button class="btn btn-success">{{ app.request.attributes.get('_route') == 'create_brand' ? 'Créer' :
+                'Modifier' }} </button>
         </div>
     </div>
 
 
     {{ form_end(brandForm) }}
-    
 
-{% endblock %}
+
+    {% endblock %}

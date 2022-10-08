@@ -55,10 +55,6 @@ class ProductController extends AbstractController
                 $productReference[] = $newproduct->getReference();
             }
 
-            if (in_array($form['name']->getData(), $productNames)) {
-                $this->addFlash('danger', 'Le produit n\'a pas pu être créé : le nom du produit est déjà utilisé');
-                return $this->redirectToRoute('admin_products');
-            }
 
             if (in_array($form['reference']->getData(), $productReference)) {
                 $this->addFlash('danger', 'Le produit n\'a pas pu être créé : la référence du produit est déjà utilisée');

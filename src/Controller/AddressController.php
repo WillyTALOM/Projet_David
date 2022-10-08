@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AddressController extends AbstractController
 {
-    #[Route('/account/address', name: 'user_account_address')]
+    #[Route('/account/addresses/{id}', name: 'user_account_address')]
     public function index(AddressRepository $addressRepository): Response
     {
         $addresses = $addressRepository->findAll();
@@ -24,15 +24,10 @@ class AddressController extends AbstractController
         ]);
     }
 
-    #[Route('/account/ajouter-une-adresse', name: 'user_account_address_add')]
+    #[Route('/account/{id}/ajouter-une-adresse', name: 'user_account_address_add')]
     public function addAddress(Request $request, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
     {
         $address = new Address();
-
-
-
-
-
 
         $form = $this->createForm(AddressType::class, $address);
 

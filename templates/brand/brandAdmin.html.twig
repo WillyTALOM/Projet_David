@@ -1,4 +1,4 @@
-{% extends 'baseAdmin.html.twig' %}
+{% extends 'admin/baseAdmin.html.twig' %}
 
 {% block title %}Marque{% endblock %}
 
@@ -16,14 +16,15 @@
     </thead>
     <tbody>
         {% for brand in brands|reverse %}
-            <tr>
-                <td>{{ loop.revindex }}</td>
-                <td>{{ brand.name }}</td>
-                <td>
-                    <a href="{{ path('update_brand', {'id': brand.id}) }}"><i class="bi bi-pencil-square text-primary"></i></a>
-                        <a href="{{ path('delete_brand', {'id': brand.id}) }}"><i class="bi bi-trash3 text-danger"></i></a>
-                </td>
-            </tr>
+        <tr>
+            <td>{{ loop.revindex }}</td>
+            <td>{{ brand.name }}</td>
+            <td>
+                <a href="{{ path('update_brand', {'id': brand.id}) }}"><i
+                        class="bi bi-pencil-square text-primary"></i></a>
+                <a href="{{ path('delete_brand', {'id': brand.id}) }}"><i class="bi bi-trash3 text-danger"></i></a>
+            </td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

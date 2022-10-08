@@ -58,14 +58,6 @@ class ProductType extends AbstractType
                 ]
             ])
 
-            ->add('priceSolde', NumberType::class, [
-                'attr' => [
-                    'min' => 0,
-                    'max' => 9999.99,
-                    'step' => 0.01
-                ]
-            ])
-
             ->add('reduction', IntegerType::class, [
                 'attr' => [
                     'min' => 0,

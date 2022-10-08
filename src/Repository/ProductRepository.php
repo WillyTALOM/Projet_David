@@ -43,11 +43,11 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @return Product[] Returns an array of Product objects
      */
-    public function LastFifteen(): array
+    public function LastSixtheen(): array
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.id ', 'DESC')
-            ->setMaxResults(10)
+            ->setMaxResults(16)
             ->getQuery()
             ->getResult();
     }

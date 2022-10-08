@@ -13,7 +13,7 @@
 {% if app.user.addresses|length == 0 %}
 <p class="text-center">
     Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a
-        href="{{ path('user_account_address_add') }}">cliquer ici</a>.
+        href="{{ path('user_account_address_add', { 'id' : app.user.id }) }}">cliquer ici</a>.
 </p>
 {% else %}
 <div class="row">
@@ -37,7 +37,8 @@
 </div>
 {% endif %}
 <div class="py-5">
-    <a href="{{ path('user_account_address_add') }}" class="btn btn-success ">Ajouter une adresse</a>
-    <a class="btn btn-dark" href="{{ path('user_account') }}">Retour</a>
+    <a href="{{ path('user_account_address_add', { 'id' : app.user.id }) }}" class="btn btn-success ">Ajouter une
+        adresse</a>
+    <a class="btn btn-dark" href="{{ path('user_account',{ 'id' : app.user.id }) }}">Retour</a>
 </div>
 {% endblock %}

@@ -88,45 +88,42 @@ class CategoryController extends AbstractController
                 $categoryName[] = $categorie->getName();
             }
 
-            $img = $form['img']->getData();
+            // $img = $form['img']->getData();
 
-            if ($img !== null) {
-                $oldImg = $category->getImg();
-                $oldImgPath = $this->getParameter('category_image_dir') . '/' . $oldImg;
+            // if ($img !== null) {
+            //     $oldImg = $category->getImg();
+            //     $oldImgPath = $this->getParameter('category_image_dir') . '/' . $oldImg;
 
-                if (file_exists($oldImgPath)) {
-                    unlink($oldImgPath);
-                }
+            //     if (file_exists($oldImgPath)) {
+            //         unlink($oldImgPath);
+            //     }
 
-                $extensionImg = $img->guessExtension();
-                $nomImg = time() . '-1.' . $extensionImg;
-                $img->move($this->getParameter('category_image_dir'), $nomImg);
-                $category->setImg($nomImg);
+            //     $extensionImg = $img->guessExtension();
+            //     $nomImg = time() . '-1.' . $extensionImg;
+            //     $img->move($this->getParameter('category_image_dir'), $nomImg);
+            //     $category->setImg($nomImg);
 
-                $slugger = new AsciiSlugger();
-                $categorie->setSlug(strtolower($slugger->slug($form['name']->getData())));
+            $slugger = new AsciiSlugger();
+            $categorie->setSlug(strtolower($slugger->slug($form['name']->getData())));
 
-                $manager = $managerRegistry->getManager();
-                $manager->persist($category);
-                $manager->flush();
+            $manager = $managerRegistry->getManager();
+            $manager->persist($category);
+            $manager->flush();
 
-                $this->addFlash('success', 'La category a bien été modifié');
-                return $this->redirectToRoute('admin_category');
-            }
+            $this->addFlash('success', 'La category a bien été modifié');
+            return $this->redirectToRoute('admin_category');
+
+
+            return $this->render('category/form.html.twig', [
+                'categoryForm' => $form->createView()
+            ]);
         }
-
-        return $this->render('category/form.html.twig', [
-            'categoryForm' => $form->createView()
-        ]);
     }
 
     #[Route('/admin/category/delete/{id}', name: 'category_delete')]
     public function delete(Category $category, ManagerRegistry $managerRegistry): Response
     {
-        $imgpath = $this->getParameter('category_image_dir') . '/' . $category->getImg();
-        if (file_exists($imgpath)) {
-            unlink($imgpath);
-        }
+
 
         $manager = $managerRegistry->getManager();
         $manager->remove($category);
