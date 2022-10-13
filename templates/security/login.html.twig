@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!
+{% block title %}Connectez-vous!
 {% endblock %}
 
 {% block body %}
@@ -66,7 +66,12 @@
 
 			<div class="buttons">
 				<button class="btn" type="submit">Connexion</button>
+				<div class="buttons">
+
+					<button class="btn"><a href="{{ path('reset_password')}}">Mot de passe perdu?</a></button>
+				</div>
 			</div>
+
 
 		</form>
 	</div>

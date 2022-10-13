@@ -55,6 +55,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Favoris::class, mappedBy: 'user')]
     private Collection $favoris;
 
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $resetToken = null;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -284,6 +287,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->favoris->removeElement($favori)) {
             $favori->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }
