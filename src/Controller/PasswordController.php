@@ -41,8 +41,8 @@ class PasswordController extends AbstractController
             $manager->persist($user);
             $manager->flush();
             $email = (new TemplatedEmail())
-                ->from(new Address('no-reply@vdv.fr'))
-                ->to($user->getEmail())
+                ->from(new Address($this->getParameter('contact_email'), 'no-reply@vdv.fr'))
+                ->to(new Address($user->getEmail(), $user->getfirstName(), $user->getlastName()))
                 ->subject('VDV - Confirmation de modification de mot de passe')
                 ->htmltemplate('password/password_change.html.twig')
                 ->context([
@@ -97,7 +97,7 @@ class PasswordController extends AbstractController
 
                 // envoi du mail
                 $email = (new TemplatedEmail())
-                    ->from(new Address('no-reply@vdv.fr'))
+                    ->from(new Address($this->getParameter('contact_email'), 'no-reply@vdv.fr'))
                     ->to($form['email']->getData())
                     ->subject('VDV - Réinitialisation mot de passe')
                     ->htmltemplate('password/password_forgot.html.twig')

@@ -8,7 +8,7 @@ parameters:
   product_image_dir: "%kernel.project_dir%/public/img/product"
   carrier_image_dir: "%kernel.project_dir%/public/img/carrier"
   stripe_secret_key: "%env(STRIPE_SK)%"
-  contact_email: '%env(CONTACT_EMAIL)%'
+  contact_email: "%env(CONTACT_EMAIL)%"
 services:
   # default configuration for services in *this* file
   _defaults:

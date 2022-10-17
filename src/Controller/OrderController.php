@@ -18,7 +18,7 @@ class OrderController extends AbstractController
     {
         $orders = $orderRepository->findAll();
 
-        return $this->render('order/index.html.twig', [
+        return $this->render('admin/order/index.html.twig', [
             'orders' => $orders,
         ]);
     }
@@ -37,6 +37,7 @@ class OrderController extends AbstractController
     public function orders(OrderRepository $orderRepository)
     {
         $orders = $orderRepository->findSuccessOrders($this->getUser());
+
 
         return $this->render('account/orders.html.twig', [
             'orders' => $orders

@@ -15,6 +15,7 @@ class AccountController extends AbstractController
     {
         $addresses = $addressRepository->findAll($this->getUser());
         $orders = $orderRepository->findSuccessOrders($this->getUser());
+
         return $this->render('account/index.html.twig', [
             'orders' => $orders,
             'addresses' => $addresses

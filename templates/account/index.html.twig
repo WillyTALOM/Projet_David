@@ -56,13 +56,13 @@
     <div class="col-md-4 text-center account-item ">
         <h1>Mes commandes</h1>
         <br />
-        {% if app.user.orders|length == 0 %}
+        {% if orders|length == 0 %}
         <p class="text-center">
             Vous n'avez pas encore commandé chez nous
         </p>
         {% else %}
         <div class="row text-center">
-            {% for order in app.user.orders|slice(0,5) %}
+            {% for order in orders|slice(0,5) %}
             <div>
                 {{order.reference ~ ' ' ~ order.billingAddress}}
 
