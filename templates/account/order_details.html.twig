@@ -49,5 +49,8 @@ La commande est annulée
     <strong>Total : </strong> {{ order.getAmount|number_format(2, ',', '.') }} €
 </div>
 
-<a href="{{ path('user_account_orders', {'id': app.user.id}) }}">Retour</a>
+<div class="mb-4">
+    <a class="btn btn-dark" href="{{ path('user_account_orders', {'id': app.user.id}) }}">Retour</a>
+</div>
+
 {% endblock %}
