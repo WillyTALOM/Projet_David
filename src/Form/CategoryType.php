@@ -19,25 +19,13 @@ class CategoryType extends AbstractType
                 'attr' => [
                     'maxLenght' => 45
                 ]
-            ])
-
-            /* ->add('img', FileType::class, [
-            'required' => false,
-            'mapped' => false,
-            'help' => 'png, jpg, jpeg, jp2 ou webp - 1 Mo maximum'])*/
-
-            ->add('description', TextareaType::class, [
-                'required' => false,
-                'attr' => [
-                    'maxLength' => 65535
-                ]
             ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Category::class,
+            // 'data_class' => Category::class,
         ]);
     }
 }

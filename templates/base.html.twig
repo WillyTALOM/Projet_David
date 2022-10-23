@@ -36,17 +36,49 @@
 		{% include "__partials/header.html.twig" %}
 
 	</header>
-	<main>
 
-		{% for label, messages in app.flashes %}
-		{% for message in messages %}
-		<div class="flash-{{ label }} bg-{{ label }} text-light p-3 rounded mb-5">
-			{{ message }}
+
+
+
+	{% if app.request.attributes.get('_route') == 'home' %}
+	<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active" data-bs-interval="2500">
+				<img src="{{ asset('img/pexels-cottonbro-4004161.jpg') }}" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item active" data-bs-interval="2500">
+				<img src="{{ asset('img/pexels-kampus-production-8201163.jpg') }}" class="d-block w-100" alt="...">
+			</div>
+			<div class="carousel-item active" data-bs-interval="2500">
+				<img src="{{ asset('img/pexels-angela-roma-7319301.jpg') }}" class="d-block w-100" alt="...">
+			</div>
 		</div>
-		{% endfor %}
-		{% endfor %}
+		{% include "home/index.html.twig" %}
 
-		{% block h1 %}{% endblock %}
+	</div>
+	{% endif %}
+
+
+	<main class="container">
+
+		<div class="row">
+			<div class="col-12">
+				{% for label, messages in app.flashes %}
+				{% for message in messages %}
+				<div class="flash-{{ label }} bg-{{ label }} text-light p-3 rounded mb-5 mt-3">
+					{{ message }}
+				</div>
+				{% endfor %}
+				{% endfor %}
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="my-5">{% block h1 %}{% endblock %}</h1>
+			</div>
+		</div>
 
 
 		{% block body %}{% endblock %}
@@ -65,6 +97,7 @@
 		crossorigin="anonymous"></script>
 
 	<script src="{{ asset('js/base.js') }}"></script>
+	<script src="{{ asset('js/script.js') }}"></script>
 
 	{% block javascripts %}{% endblock %}
 

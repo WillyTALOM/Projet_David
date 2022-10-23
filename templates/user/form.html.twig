@@ -6,6 +6,8 @@ utilisateur
 {% endblock %}
 
 {% block body %}
+<h1>{{ app.request.attributes.get('_route') == 'create_user' ? 'création' : 'modification' }} d'un
+	utilisateur</h1>
 {{ form_start(userForm) }}
 
 <div class="row">

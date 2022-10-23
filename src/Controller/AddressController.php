@@ -18,14 +18,16 @@ class AddressController extends AbstractController
     #[Route('/account/addresses/{id}', name: 'user_account_address')]
     public function index(AddressRepository $addressRepository): Response
     {
+
         $addresses = $addressRepository->findAll();
         return $this->render('account/address.html.twig', [
-            "addresses" => $addresses
+            "addresses" => $addresses,
+
         ]);
     }
 
     #[Route('/account/{id}/ajouter-une-adresse', name: 'user_account_address_add')]
-    public function addAddress(Request $request, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
+    public function addAddress(int $id = null, Request $request, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
     {
         $address = new Address();
 
@@ -56,7 +58,9 @@ class AddressController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'L\'Adresse a bien été créé');
-            return $this->redirectToRoute('user_account_address');
+            return $this->redirectToRoute('user_account_address', [
+                'id' => $id
+            ]);
         }
 
         return $this->render('account/address_form.html.twig', [
@@ -66,7 +70,7 @@ class AddressController extends AbstractController
 
 
     #[Route('/account/modifier-une-adresse/{id}', name: 'user_account_address_update')]
-    public function addressUpdate(Request $request,  Address $address, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
+    public function addressUpdate(int $id = null, Request $request,  Address $address, AddressRepository $addressRepository, ManagerRegistry $managerRegistry): Response
     {
         $form = $this->createForm(AddressType::class, $address);
         $form->handleRequest($request);
@@ -98,7 +102,9 @@ class AddressController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'L\'Adresse a bien été modifier');
-            return $this->redirectToRoute('user_account_address');
+            return $this->redirectToRoute('user_account_address', [
+                'id' => $id
+            ]);
         }
 
 
@@ -109,13 +115,15 @@ class AddressController extends AbstractController
 
 
     #[Route('/account/supprimer-une-adresse/{id}', name: 'user_account_address_delete')]
-    public function addressDelete(Address $address, ManagerRegistry $managerRegistry): Response
+    public function addressDelete(int $id = null, Address $address, ManagerRegistry $managerRegistry): Response
     {
         $manager = $managerRegistry->getManager();
         $manager->remove($address);
         $manager->flush();
 
         $this->addFlash('success', 'L\'Adresse a bein été supprimé');
-        return $this->redirectToRoute('user_account_address');
+        return $this->redirectToRoute('user_account_address', [
+            'id' => $id
+        ]);
     }
 }

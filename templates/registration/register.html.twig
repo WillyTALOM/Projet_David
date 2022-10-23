@@ -3,76 +3,93 @@
 {% block title %}S'inscrire
 {% endblock %}
 
+{% block h1 %}Inscrivez-vous
+{% endblock %}
 
 {% block body %}
-	{% for flash_error in app.flashes('verify_email_error') %}
-		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-	{% endfor %}
+{% for flash_error in app.flashes('verify_email_error') %}
+<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+{% endfor %}
 
-	<h1 class="mt-3 mb-3 offset-1">Inscrivez-vous</h1>
-	{{ form_start(registrationForm) }}
 
-	<div class="row">
-		<div class="col-4 offset-2">
-			{{ form_row(registrationForm.first_name) }}
+{{ form_start(registrationForm) }}
 
-		</div>
+<div class="row">
+	<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+		{{ form_row(registrationForm.first_name, {
+		label: 'Prénom'
+		}) }}
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+		{{ form_row(registrationForm.last_name, {
+		label: 'Nom'
+		}) }}
+
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+		{{ form_row(registrationForm.phone, {
+		label: 'Numéro de téléphone'
+		}) }}
+
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+		{{ form_row(registrationForm.email) }}
+
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+		{{ form_row(registrationForm.plainPassword.first, {
+		label: 'Mot de passe'
+		}) }}
+
+
 	</div>
 	<div class="row">
-		<div class="col-4 offset-2">
-			{{ form_row(registrationForm.last_name) }}
+		<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+			{{ form_row(registrationForm.plainPassword.second, {
+			label: 'Répétez mot de passe'
+			}) }}
 
 
 		</div>
+
 	</div>
 	<div class="row">
-		<div class="col-4 offset-2">
-			{{ form_row(registrationForm.phone) }}
-
+		<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+			{{ form_row(registrationForm.showPassword, {
+			'label': 'afficher le mot de passe'
+			}) }}
 
 		</div>
+
 	</div>
-	<div class="row">
-		<div class="col-4 offset-2">
-			{{ form_row(registrationForm.email) }}
 
-
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-4 offset-2">
-			{{ form_row(registrationForm.plainPassword.first, {
-            label: 'Mot de passe'
-        }) }}
-
-
-		</div>
-		<div class="row">
-			<div class="col-4 offset-2">
-				{{ form_row(registrationForm.plainPassword.second, {
-            label: 'Répétez mot de passe'
-        }) }}
-
-
-			</div>
-
-		</div>
-
-		<div class="row">
-			<div class="col-4 offset-2">
-				{{ form_row(registrationForm.agreeTerms, {
+	<div class="row mb-5">
+		<div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+			{{ form_row(registrationForm.agreeTerms, {
 			label: 'J\'accepte les Conditions Générales d\'Utilisation'
 
-				}) }}
+			}) }}
 
-				<button type="submit" class="btn btn-success">S'inscrire</button>
+			<button type="submit" class="btn btn-success">S'inscrire</button>
 
 
-			</div>
 		</div>
+	</div>
 
 
-		{{ form_end(registrationForm) }}
+	{{ form_end(registrationForm) }}
 
 
 	{% endblock %}

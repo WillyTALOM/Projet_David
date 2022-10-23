@@ -2,18 +2,21 @@
 
 {% block title %}Mes adresses{% endblock %}
 
-{% block body %}
-<div>
-    <h1 class="text-center">Mes addresses
-        <p>C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses.</p>
-    </h1>
+{% block h1 %}Mes adresses{% endblock %}
 
-</div>
+{% block body %}
+
+
+<p>C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses.</p>
+
+
+
 
 {% if app.user.addresses|length == 0 %}
 <p class="text-center">
     Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez <a
         href="{{ path('user_account_address_add', { 'id' : app.user.id }) }}">cliquer ici</a>.
+
 </p>
 {% else %}
 <div class="row">
@@ -34,11 +37,11 @@
         </div>
     </div>
     {% endfor %}
+    <div class="py-5">
+        <a href="{{ path('user_account_address_add', { 'id' : app.user.id }) }}" class="btn btn-success ">Créer</a>
+        <a class="btn btn-dark" href="{{ path('user_account',{ 'id' : app.user.id }) }}">Retour</a>
+    </div>
 </div>
 {% endif %}
-<div class="py-5">
-    <a href="{{ path('user_account_address_add', { 'id' : app.user.id }) }}" class="btn btn-success ">Ajouter une
-        adresse</a>
-    <a class="btn btn-dark" href="{{ path('user_account',{ 'id' : app.user.id }) }}">Retour</a>
-</div>
+
 {% endblock %}

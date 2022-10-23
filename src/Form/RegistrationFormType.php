@@ -46,7 +46,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Merci d\'accepter les générales d\'utilisation.',
                     ]),
                 ],
             ])
@@ -60,7 +60,7 @@ class RegistrationFormType extends AbstractType
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Merci d\'entrer un mot de passe',
                         ]),
                         // new Length([
                         //     'min' => 6,
@@ -85,6 +85,10 @@ class RegistrationFormType extends AbstractType
                     ]
                 ]
 
+            ])
+            ->add('showPassword', CheckboxType::class, [
+                'required' => false,
+                'mapped' => false
             ]);
     }
 

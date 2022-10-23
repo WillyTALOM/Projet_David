@@ -1,102 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mentions Légales - Vente de vetements
+{% block description %}Mentions légales {{ contact_company }}{% endblock %}
 
-{% endblock %}
+{% block title %}mentions légales{% endblock %}
+
+{% block h1 %}{% endblock %}
 
 {% block body %}
 
+<div></div>
+<div class="col-10 offset-1">
+	<p>
+	<h2 class="mt-5 mb-3">Mentions légales {{ contact_company }}</h2>
+	L'entreprise {{ contact_company }} est une SARL au capital variable de 100 000 € située à {{ contact_city }},
+	enregistrée au RCS de {{ contact_city }} ({{ contact_country }})
+	</p>
+	<p>
+	<h2 class="mt-5 mb-3">Présentation du site</h2>
+	En vertu de l’article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique, il est
+	précisé aux utilisateurs du site {{ contact_website }} l’identité des différents intervenants dans le cadre de
+	sa réalisation et de son suivi :
+	</p>
+	<p>
+	<h3 class="my-3">Éditeur et propriétaire</h3>
 
-	<main>
-		<section class="container-fluid mentions_legales px-2">
-			<div class="card col-12" style="padding: 0;">
-				<h4 class="card-header">
-					<i class="fas fa-balance-scale"></i>
-					Mentions Légales :
-				</h4>
-				<hr>
-				<div class="card-body">
-					<h5 class="card-title">
-						<i class="fas fa-edit"></i>
-						Informations sur les contenus :</h5>
-					<br>
-					<p>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-tasks"></i>
-							Responsable des publications :
-							{{ contact_company }}</span>
+	{{ contact_company }}<br>
+	SARL au capital variable de 100 000 €<br>
+	SIRET : {{ contact_siret }}<br>
+	APE : 1234A<br>
+	Adresse : {{ contact_address ~ ' - ' ~ contact_city ~ ' ' ~ contact_zip ~ ' - ' ~ contact_country }}
+	</p>
+	<p>
+	<h3 class="my-3">Directeur de la publication</h3>
 
-						<br>
-						<br>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-lock-open"></i>
-							Propriétée des images : Personnelles ou libres de droits</span>
-						<hr>
-						<h5 class="card-title">
-							<i class="fas fa-info-circle"></i>
-							Informations générales</h5>
-						<span style="margin-left: 0.7rem;">
-							<i class="far fa-envelope"></i>
-							{{ contact_email }}</span>
+	Willy TALOM<br>
+	willytalom@gmail.com<br>
+	{{ contact_phone }}
+	</p>
+	<p>
+	<h3 class="my-3">Hébergeur</h3>
 
-						<br>
-						<br>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-phone-square-alt"></i>
-							Téléphone :
-							{{ contact_phone }}</span>
+	o2switch<br>
+	SAS au capital de 100 000€<br>
+	Opérateur Télécom déclaré ARCEP - 09/2989 – AS50474<br>
+	Siret : 510 909 807 00024<br>
+	RCS Clermont Ferrand<br>
+	+33 (0) 4 44 44 60 40<br>
+	<a href="https://www.o2switch.fr/" target="_blank">www.o2switch.fr</a>
+	</p>
+</div>
 
-						<br>
-						<br>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-map-marked-alt"></i>
-							Adresse :</span>
-						<br>
-						<span style="margin-left: 1.5rem;">{{ contact_company }}<br></span>
 
-						<span style="margin-left: 1.5rem;">{{ contact_address }}<br></span>
-
-						<span style="margin-left: 1.5rem;">{{ contact_zip ~ ' ' ~ contact_city }}</span>
-
-						<hr>
-						<h5 class="card-title">
-							<i class="fas fa-file-contract"></i>
-							Informations professionnelles :</h5>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-address-card"></i>
-							Numéro SIRET : N/A</span>
-						<br>
-						<hr>
-						<h5 class="card-title">
-							<i class="fas fa-database"></i>
-							Informations sur l'hébergeur du site :</h5>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-globe"></i>
-							Site professionnel :
-							<a target="blank" href="#">-------</a>
-						</span>
-						<br>
-						<hr>
-						<h5 class="card-title">
-							<i class="fas fa-laptop-code"></i>
-							Développeur web du site :</h5>
-						<span style="margin-left: 0.7rem;">
-							<i class="fab fa-linkedin"></i>
-							LinkedIn :
-							<a target="blank" href="www.linkedin.com/in/willytalom">Willy TALOM</a>
-
-						</span>
-						<br>
-						<span style="margin-left: 0.7rem;">
-							<i class="fas fa-code"></i>
-							Site Pro :
-							<a target="blank" href="#">-------------------</a>
-						</span>
-					</p>
-				</div>
-			</div>
-		</section>
-	</main>
 
 
 {% endblock %}

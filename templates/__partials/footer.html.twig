@@ -1,99 +1,100 @@
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/footer.css')}}">
+<link rel="stylesheet" href="{{ asset('css/footer.css')}}">
 {% endblock %}
 
 <div class="container-fluid bg-dark text-light">
 	<div class="row text-center p-5">
 		<div class="col-md-6 col-lg-4 order-2 order-md-1 pb-5 pb-md-0">
 			<h5>QUELQUES LIENS</h5>
-			<hr class="m-3"></hr>
-		<ul>
-			<li>
-				<a href="{{ path('home') }}" class="text-light">Accueil</a>
-			</li>
-			<li>
-				<a href="{{path('products_by_sexe', {'sexe': 'femme'})}}" class="text-light">Femme</a>
+			<hr class="m-3">
+			</hr>
+			<ul>
+				<li>
+					<a href="{{ path('home') }}" class="text-light">Accueil</a>
+				</li>
+				<li>
+					<a href="{{path('products_by_sexe', {'sexe': 'femme'})}}" class="text-light">Femme</a>
 
 
-			</li>
-			<li>
-				<a href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="text-light">Homme</a>
+				</li>
+				<li>
+					<a href="{{path('products_by_sexe', {'sexe': 'homme'})}}" class="text-light">Homme</a>
 
 
-			</li>
-			<li>
-				<a href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="text-light">Enfant</a>
+				</li>
+				<li>
+					<a href="{{path('products_by_sexe', {'sexe': 'enfant'})}}" class="text-light">Enfant</a>
 
 
-			</li>
-			<li>
-				<a href="{{path('contact')}}" class="text-light">Contact</a>
+				</li>
+				<li>
+					<a href="{{path('contact')}}" class="text-light">Contact</a>
 
-			</li>
+				</li>
 
 
-			{% if app.user %}
+				{% if app.user %}
 				<li>
 					<a href="{{ path('logout') }}" class="text-light">Déconnexion</a>
 				</li>
-			{% else %}
+				{% else %}
 				<li>
 					<a href="{{ path('login') }}" class="text-light">Connexion</a>
 				</li>
-			{% endif %}
-			<li>
-				<a href="{{ path('cart') }}" class="text-light">Panier</a>
-			</li>
-		</ul>
+				{% endif %}
+				<li>
+					<a href="{{ path('cart') }}" class="text-light">Panier</a>
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-6 col-lg-4 order-3 order-md-2 order-lg-3 py-5 py-md-0">
+
+			<h5>RESEAUX SOCIAUX</h5>
+			<hr class="m-3">
+			<ul>
+				<li>
+					<span>
+						<i class="bi bi-facebook"></i>
+					</span>
+				</li>
+				<li>
+					<span>
+						<i class="bi bi-instagram"></i>
+					</span>
+				</li>
+				<li>
+					<span>
+						<i class="bi bi-snapchat"></i>
+					</span>
+				</li>
+				<li>
+					<span>
+						<i class="bi bi-tiktok"></i>
+					</span>
+				</li>
+
+			</ul>
+
+
+		</div>
+		<div class="col-md-6 col-lg-4 order-3 order-md-2 order-lg-3 py-5 py-md-0">
+			<h5>COORDONNÉES</h5>
+			<hr class="m-3">
+			<p>{{ contact_company }}</p>
+			<p>{{ contact_address }}</p>
+			<p>{{ contact_zip ~ ' ' ~ contact_city }}</p>
+			<p>{{ contact_phone }}</p>
+			<p>{{ contact_email }}</p>
+		</div>
 	</div>
-	<div class="col-md-6 col-lg-4 order-3 order-md-2 order-lg-3 py-5 py-md-0">
+	<div class="row" id="copyright">
+		<div class="col-12 text-center">
+			<p>Copyright &copy; 2022 - Willy TALOM |
+				<a href="{{path('mentions_legales')}}" class="text-light">mentions légales</a>
 
-		<h5>RESEAUX SOCIAUX</h5>
-		<hr class="m-3">
-		<ul>
-			<li>
-				<span>
-					<i class="bi bi-facebook"></i>
-				</span>
-			</li>
-			<li>
-				<span>
-					<i class="bi bi-instagram"></i>
-				</span>
-			</li>
-			<li>
-				<span>
-					<i class="bi bi-snapchat"></i>
-				</span>
-			</li>
-			<li>
-				<span>
-					<i class="bi bi-tiktok"></i>
-				</span>
-			</li>
+				-
+				<a href=" {{path('cgu')}} " class=" text-light">CGV</a>
 
-		</ul>
-
-
+			</p>
+		</div>
 	</div>
-	<div class="col-md-6 col-lg-4 order-3 order-md-2 order-lg-3 py-5 py-md-0">
-		<h5>COORDONNÉES</h5>
-		<hr class="m-3">
-		<p>{{ contact_company }}</p>
-		<p>{{ contact_address }}</p>
-		<p>{{ contact_zip ~ ' ' ~ contact_city }}</p>
-		<p>{{ contact_phone }}</p>
-		<p>{{ contact_email }}</p>
-	</div>
-</div>
-<div class="row" id="copyright">
-	<div class="col-12 text-center">
-		<p>Copyright &copy; 2022 - Willy TALOM |
-			<a href="{{path('mentions_legales')}}" class="text-light">mentions légales</a>
-
-			-
-			<a href=" {{path('mentions_legales')}} " class=" text-light">CGV</a>
-
-		</p>
-	</div>
-</div>

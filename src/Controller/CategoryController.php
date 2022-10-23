@@ -112,12 +112,10 @@ class CategoryController extends AbstractController
 
             $this->addFlash('success', 'La category a bien été modifié');
             return $this->redirectToRoute('admin_category');
-
-
-            return $this->render('category/form.html.twig', [
-                'categoryForm' => $form->createView()
-            ]);
         }
+        return $this->render('category/form.html.twig', [
+            'categoryForm' => $form->createView()
+        ]);
     }
 
     #[Route('/admin/category/delete/{id}', name: 'category_delete')]

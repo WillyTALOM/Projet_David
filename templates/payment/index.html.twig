@@ -13,11 +13,11 @@
 
 {% block javascripts %}
 
-	<script src="https://js.stripe.com/v3/"></script>
+<script src="https://js.stripe.com/v3/"></script>
 
-	<script>
-		var stripe = Stripe('pk_test_51Le0dIKhOJnU8RJKTxlD1GSQbBISYxcCnW8ErpW8x7YgDUO6pNoa59STGjXtyIe6z9XiEbmhhFSLrlFE30W7yxnK005y1q1ots'); // initialise Stripe
-stripe.redirectToCheckout({sessionId: '{{ sessionId }}'})
-	</script>
+<script>
+	var stripe = Stripe('pk_test_51Le0XpE3RfWxSpj1buehnJDmhWQgwMHQTS7bYsSgGnlljXRlHY8o6bJF1WJWsBg9mtUcWBhofpTHZg82n9z57rMB006ezyxS3y'); // initialise Stripe
+	stripe.redirectToCheckout({ sessionId: '{{ sessionId }}' })
+</script>
 
 {% endblock %}

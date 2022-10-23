@@ -3,11 +3,10 @@
 {% block title %}Connectez-vous!
 {% endblock %}
 
-{% block body %}
+{% block h1 %}Connexion
+{% endblock %}
 
-<div class="title">
-	<h1>Connexion</h1>
-</div>
+{% block body %}
 
 <div class="container my-4">
 	{% if error %}
@@ -66,12 +65,8 @@
 
 			<div class="buttons">
 				<button class="btn" type="submit">Connexion</button>
-				<div class="buttons">
 
-					<button class="btn"><a href="{{ path('reset_password')}}">Mot de passe perdu?</a></button>
-				</div>
 			</div>
-
 
 		</form>
 	</div>
@@ -82,6 +77,11 @@
 		</div>
 		<div class="my-3 text-center">
 			<p>Pas encore de compte ? <a href="{{ path('register') }}">Inscrivez-vous</a> !</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="my-3 text-center">
+			<p>Mot de passe perdu?<a href="{{ path('reset_password')}}">Réinitialiser votre mot de passe</a> !</p>
 		</div>
 	</div>
 

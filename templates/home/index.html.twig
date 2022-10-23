@@ -3,45 +3,11 @@
 {% block title %}accueil
 {% endblock %}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/base.css') }}">
-{% endblock %}
-
 
 {% block description %}VDM - votre nouvelle boutique de ventes de ventements en ligne
 {% endblock %}
 
 {% block body %}
-
-<div class="col-12 ">
-	<div class="row">
-
-		<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner">
-				<div class="carousel-item active" data-bs-interval="2500">
-
-					<img src="{{ asset('img/pexels-cottonbro-4004161.jpg') }}" class="d-block w-100" alt="...">
-
-
-				</div>
-				<div class="carousel-item active" data-bs-interval="2500">
-
-					<img src="{{ asset('img/pexels-kampus-production-8201163.jpg') }}" class="d-block w-100" alt="...">
-
-
-				</div>
-				<div class="carousel-item active" data-bs-interval="2500">
-
-					<img src="{{ asset('img/pexels-angela-roma-7319301.jpg') }}" class="d-block w-100" alt="...">
-
-
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-</div>
 
 
 <div class="my-5">
@@ -111,7 +77,9 @@
 							<i class="bi bi-cart-plus-fill"></i>
 						</a>
 
-						<a href=""><i class="bi bi-suit-heart-fill"></i></a>
+						<a href="{{ path('favorite_add', {'id': product.id }) }}" class="card-link btn btn-danger"> <i
+								class="bi bi-heart-fill"></i></a>
+
 
 					</div>
 				</div>

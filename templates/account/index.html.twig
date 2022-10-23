@@ -4,22 +4,22 @@
 
 {% block title %}Mon Compte{% endblock %}
 
+{% block h1 %}Bienvenue {{ app.user.firstname }} dans votre compte.{% endblock %}
 {% block body %}
 {% if is_granted('ROLE_ADMIN') %}
 <small><a href="{{path('admin')}}">Vous êtes un administrateur, accéder à l'espace administrateur </a></small><br />
 {% endif %}
 
 <div class="text-center">
-    <h1>Bienvenue {{ app.user.firstname }} dans votre compte.<br />C'est dans cet espace que vous allez pouvoir gérer
-        toutes vos informations personnelles.</h1>
+    <p>C'est dans cet espace que vous allez pouvoir gérer toutes vos informations personnelles.</p>
 </div>
 <hr>
 
 <hr>
-<div class="row">
+<div class="row mb-3">
 
     <div class="col-md-4 text-center account-item ">
-        <h1>Mot de passe</h1>
+        <h3>Mot de passe</h3>
         <br />
         <div class="text-center">
             <a href="{{ path('account_password') }}">Modifier mon mot de passe</a>
@@ -28,7 +28,7 @@
 
 
     <div class="col-md-4 text-center account-item ">
-        <h1>Mes adresses</h1>
+        <h3>Mes adresses</h3>
         <br />
         {% if app.user.addresses|length == 0 %}
         <p class="text-center">
@@ -37,24 +37,23 @@
         </p>
         {% else %}
         <div class="row text-center">
-            {% for address in app.user.addresses|slice(0,8) %}
+            {% for address in app.user.addresses|slice(0,2) %}
             <div>
                 {{address.address ~ ' ' ~ address.additional ~ ' ' ~ address.zip ~ ' ' ~ address.country}}
 
             </div>
             {% endfor %}
         </div>
-        {% endif %}
         <div class="text-center">
 
             <a href="{{ path('user_account_address', {'id' : app.user.id}) }}">Gérer mes adresses</a>
         </div>
-
+        {% endif %}
     </div>
 
 
     <div class="col-md-4 text-center account-item ">
-        <h1>Mes commandes</h1>
+        <h3>Mes commandes</h3>
         <br />
         {% if orders|length == 0 %}
         <p class="text-center">
@@ -62,9 +61,9 @@
         </p>
         {% else %}
         <div class="row text-center">
-            {% for order in orders|slice(0,5) %}
+            {% for order in orders|slice(0,2) %}
             <div>
-                {{order.reference ~ ' ' ~ order.billingAddress}}
+                {{ order.reference }}
 
             </div>
             {% endfor %}

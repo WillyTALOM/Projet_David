@@ -3,17 +3,29 @@
 namespace App\Controller;
 
 use App\Entity\Order;
-use App\Repository\OrderRepository;
 use Stripe\StripeClient;
 use App\Service\CartService;
+use App\Repository\OrderRepository;
+use Symfony\Component\Mime\Address;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
 
 class PaymentController extends AbstractController
 {
+    #[Route('payment/cancel', name: 'payment_cancel')]
+    public function cancel(Request $request): Response
+    {
+        if ($request->headers->get('referer') !== 'https://checkout.stripe.com/') {
+            return $this->redirectToRoute('cart');
+        }
+        return $this->render('payment/cancel.html.twig');
+    }
+
     #[Route('/payment/{order}', name: 'payment')]
     public function index(Request $request, CartService $cartService, Order $order): Response
     {
@@ -75,8 +87,13 @@ class PaymentController extends AbstractController
     }
 
     #[Route('payment/{order}/success', name: 'payment_success')]
-    public function success(Request $request, CartService $cartService, Order $order, ManagerRegistry $managerRegistry): Response
-    {
+    public function success(
+        MailerInterface $mailer,
+        Request $request,
+        CartService $cartService,
+        Order $order,
+        ManagerRegistry $managerRegistry
+    ): Response {
         if ($request->headers->get('referer') !== 'https://checkout.stripe.com/') {
             return $this->redirectToRoute('cart');
         }
@@ -85,6 +102,30 @@ class PaymentController extends AbstractController
         $order->setPaid(true);
         $managerRegistry->getManager()->persist($order);
         $managerRegistry->getManager();
+
+        $email = (new TemplatedEmail()) // email pour informer l'admin de la nouvelle commande à expédier
+            ->from(new Address($this->container->get('twig')->getGlobals()['contact_email'], 'VDV'))
+            ->to(new Address($this->container->get('twig')->getGlobals()['contact_email']))
+            ->replyTo(new Address($this->container->get('twig')->getGlobals()['contact_email'], 'VDV'))
+            ->subject('VDV - nouvelle commande')
+            ->htmlTemplate('email/order_new.html.twig')
+            ->context([
+                'order' => $order,
+                'orderDetails' => $order->getOrderDetails()
+            ]);
+        $mailer->send($email);
+
+        $email = (new TemplatedEmail()) // email récapitulatif pour le client
+            ->from(new Address($this->container->get('twig')->getGlobals()['contact_email'], 'VDV'))
+            ->to(new Address($order->getUser()->getEmail(), $order->getUser()->getFirstName() . " " . strtoupper($order->getUser()->getLastName())))
+            ->replyTo(new Address($this->container->get('twig')->getGlobals()['contact_email'], 'VDV'))
+            ->subject('VDV- récapitulatif de commande')
+            ->htmlTemplate('email/order_confirmation.html.twig')
+            ->context([
+                'order' => $order,
+                'orderDetails' => $order->getOrderDetails()
+            ]);
+        $mailer->send($email);
 
         foreach ($order->getOrderDetails() as $orderDetail) { // gestion des stocks restants en base de données
             $product = $orderDetail->getProductId();
@@ -96,15 +137,5 @@ class PaymentController extends AbstractController
 
 
         return $this->render('payment/success.html.twig');
-    }
-
-
-    #[Route('payment/cancel', name: 'payment_cancel')]
-    public function cancel(Request $request): Response
-    {
-        if ($request->headers->get('referer') !== 'https://checkout.stripe.com/') {
-            return $this->redirectToRoute('cart');
-        }
-        return $this->render('payment/cancel.html.twig');
     }
 }

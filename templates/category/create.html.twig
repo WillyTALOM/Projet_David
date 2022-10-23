@@ -9,42 +9,28 @@
 {{ form_start(categoryForm) }}
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-3">
 
         {{ form_label(categoryForm.name, 'Nom') }}
         {{ form_errors(categoryForm.name) }}
         {{ form_widget(categoryForm.name, {
         'attr': {
-        'placeholder': 'Ex.: Strategie'
+        'placeholder': 'Ex.: Montres'
         }
         }) }}
         {{ form_help(categoryForm.name) }}
     </div>
-    <div class="col-3">
-        {{ form_row(categoryForm.description, {
-        'label': 'Description',
-        'attr': {
-        'placeholder': 'Ex.: Description'
-        }
-        }) }}
-    </div>
-    {# <div class="col-3">
-        {{ form_row(categoryForm.img, {
-        'label': 'Description',
-        'attr': {
-        'placeholder': 'Ex.: Image'
-        }
-        }) }}
-    </div>#}
+
 
 
     <div class="row">
-        <div class="col-12 text-end my-3">
+        <div class="my-3 text-center">
             <a href="{{ path('admin_category')}}" class="btn btn-outline-danger me-3">Annuler</a>
             <button class="btn btn-success">Créer</button>
         </div>
     </div>
 
-    {{ form_end(categoryForm) }}
+</div>
+{{ form_end(categoryForm) }}
 
-    {% endblock %}
+{% endblock %}

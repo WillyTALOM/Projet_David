@@ -26,7 +26,8 @@ class ProductController extends AbstractController
         $product = $productRepository->findOneBy(['slug' => $slug]);
         return $this->render('product/productShow.html.twig', [
             'product' => $product,
-            'products' => $produits
+            'products' => $produits,
+
         ]);
     }
 
@@ -42,22 +43,25 @@ class ProductController extends AbstractController
     #[Route('/admin/product/create', name: 'create_product')]
     public function create(Request $request, ProductRepository $productRepository, ManagerRegistry $managerRegistry,): Response
     {
+        $slugger = new AsciiSlugger();
         $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
+        $manager = $managerRegistry->getManager();
+        $form = $this->createForm(ProductType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $products = $productRepository->findAll();
-            $productNames = [];
+
             $productReference = [];
             foreach ($products as $newproduct) {
-                $productNames[] = $newproduct->getName();
+                // $productNames[] = $newproduct->getName($form['name']->getData());
                 $productReference[] = $newproduct->getReference();
             }
 
 
+
             if (in_array($form['reference']->getData(), $productReference)) {
-                $this->addFlash('danger', 'Le produit n\'a pas pu être créé : la référence du produit est déjà utilisée');
+                $this->addFlash('danger', 'Le produit n\'a pas pu être créé : Ce produit existe déja');
                 return $this->redirectToRoute('admin_products');
             }
 
@@ -90,13 +94,22 @@ class ProductController extends AbstractController
             }
 
 
-            $product->setPriceSolde($product->getPrice() * (1 - ($product->getReduction() / 100)));
 
-            $slugger = new AsciiSlugger();
+            $product->setPrice($form['price']->getData());
+            $product->setReduction($form['reduction']->getData());
+            $product->setPriceSolde($product->getPrice() * (1 - ($product->getReduction() / 100)));
             $product->setSlug(strtolower($slugger->slug($form['name']->getData())));
             $product->setCreatedAt(new DateTimeImmutable());
+            $product->setName($form['name']->getData());
+            $product->setReference($form['reference']->getData());
+            $product->setAbstract($form['abstract']->getData());
+            $product->setDescription($form['description']->getData());
+            $product->setQuantity($form['quantity']->getData());
+            $product->setPrice($form['price']->getData());
+            $product->setBrand($form['brand']->getData());
+            $product->setCategory($form['category']->getData());
+            $product->setSexe($form['sexe']->getData());
 
-            $manager = $managerRegistry->getManager();
             $manager->persist($product);
             $manager->flush();
 

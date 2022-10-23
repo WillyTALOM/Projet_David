@@ -23,11 +23,11 @@
 				<a id="icon2" href="{{path('products_by_sexe', {'sexe': 'enfant'})}}"
 					class="nav-link text-dark ">ENFANT</a>
 				<a id="icon2" href="{{path('contact')}}" class="nav-link text-dark ">CONTACT</a>
-				<a id="icon2" href="{{path('favoris')}}" class="nav-link text-dark ">
+				<a id="icon2" href="{{path('user_favorites')}}" class="nav-link text-dark ">
 					<i class="bi bi-suit-heart-fill"></i>
-					{% if app.session.get('favoris') is not empty %}
+					{# {% if app.session.get('user_favorites') is not empty %}
 					<span>{{render(controller('App\\Controller\\FavorisController::getNbFavoris'))}} </span>
-					{% endif %}
+					{% endif %} #}
 				</a>
 				<a id="icon2" href="{{path('cart')}}" class="nav-link text-dark ">
 					{#panier#}

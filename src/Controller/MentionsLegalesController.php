@@ -15,4 +15,12 @@ class MentionsLegalesController extends AbstractController
             'controller_name' => 'MentionsLegalesController',
         ]);
     }
+
+    #[Route('/CGU', name: 'cgu')]
+    public function cgu(): Response
+    {
+        return $this->render('mentions_legales/cgv.html.twig', [
+            'controller_name' => 'MentionsLegalesController',
+        ]);
+    }
 }
