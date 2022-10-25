@@ -55,7 +55,7 @@ class FavoriteController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         } else {
             $this->addFlash('danger', 'Vous devez vous connecter sur votre compte VDV pour ajouter des produits à vos favoris');
-            return $this->redirectToRoute('home');
+            return $this->redirect($request->headers->get('referer'));
         }
     }
 
@@ -73,7 +73,7 @@ class FavoriteController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         } else {
             $this->addFlash('danger', 'Vous n\'avez pas les droits pour supprimer ce favori');
-            return $this->redirectToRoute('home');
+            return $this->redirect($request->headers->get('referer'));
         }
     }
 }

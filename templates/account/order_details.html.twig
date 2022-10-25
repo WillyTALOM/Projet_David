@@ -34,7 +34,9 @@ La commande est annulée
         {% for orderDetail in order.orderDetails %}
 
         <tr>
-            <td>{{ orderDetail.productId.name }}</td>
+            <td><img src="{{ asset('img/product/' ~ orderDetail.productId.image1) }}"
+                    alt="image principale {{ orderDetail.productId.image1}}">
+                {{ orderDetail.productId.name }}</td>
             <td>{{ orderDetail.quantity }}</td>
             <td>{{ (orderDetail.productId.price|number_format(2, ',', '.') ) }} €</td>
             <td>{{ (orderDetail.productId.price * orderDetail.quantity)|number_format(2, ',', '.') }} €</td>
@@ -44,9 +46,9 @@ La commande est annulée
 </table>
 
 <div class="text-right">
-    <strong>Sous-total :</strong> {{ (order.getAmount - order.carrier.price)|number_format(2, ',', '.') }} €<br />
-    <strong>Livraison :</strong> {{ (order.carrier.price|number_format(2, ',', '.')) }} €<br />
-    <strong>Total : </strong> {{ order.getAmount|number_format(2, ',', '.') }} €
+    <strong>Sous-total :</strong> {{ (order.amount - order.carrier.price)|number_format(2, ',', '.') }} €<br />
+    <strong>Livraison :</strong> {{ order.carrier.price|number_format(2, ',', '.') }} €<br />
+    <strong>Total : </strong> {{ (order.amount)|number_format(2, ',', '.') }} €
 </div>
 
 <div class="mb-4">
