@@ -46,7 +46,7 @@ class ProductController extends AbstractController
         $slugger = new AsciiSlugger();
         $product = new Product();
         $manager = $managerRegistry->getManager();
-        $form = $this->createForm(ProductType::class);
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -54,7 +54,7 @@ class ProductController extends AbstractController
 
             $productReference = [];
             foreach ($products as $newproduct) {
-                // $productNames[] = $newproduct->getName($form['name']->getData());
+                $productNames[] = $newproduct->getName();
                 $productReference[] = $newproduct->getReference();
             }
 
@@ -95,21 +95,21 @@ class ProductController extends AbstractController
 
 
 
-            $product->setPrice($form['price']->getData());
-            $product->setReduction($form['reduction']->getData());
+            // $product->setPrice($form['price']->getData());
+            // $product->setReduction($form['reduction']->getData());
+            // $product->setName($form['name']->getData());
+            // $product->setReference($form['reference']->getData());
+            // $product->setAbstract($form['abstract']->getData());
+            // $product->setDescription($form['description']->getData());
+            // $product->setQuantity($form['quantity']->getData());
+            // $product->setPrice($form['price']->getData());
+            // $product->setBrand($form['brand']->getData());
+            // $product->setCategory($form['category']->getData());
+            // $product->setSexe($form['sexe']->getData());
+
+            $product->setCreatedAt(new DateTimeImmutable());
             $product->setPriceSolde($product->getPrice() * (1 - ($product->getReduction() / 100)));
             $product->setSlug(strtolower($slugger->slug($form['name']->getData())));
-            $product->setCreatedAt(new DateTimeImmutable());
-            $product->setName($form['name']->getData());
-            $product->setReference($form['reference']->getData());
-            $product->setAbstract($form['abstract']->getData());
-            $product->setDescription($form['description']->getData());
-            $product->setQuantity($form['quantity']->getData());
-            $product->setPrice($form['price']->getData());
-            $product->setBrand($form['brand']->getData());
-            $product->setCategory($form['category']->getData());
-            $product->setSexe($form['sexe']->getData());
-
             $manager->persist($product);
             $manager->flush();
 
