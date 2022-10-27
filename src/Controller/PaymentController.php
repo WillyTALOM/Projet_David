@@ -35,19 +35,35 @@ class PaymentController extends AbstractController
         $stripeCart = [];
 
         foreach ($sessionCart as $line) {
-            $stripeElement = [ // produit tel que Stripe en a besoin pour le traiter, les noms des index sont importants
-                'quantity' => $line['quantity'],
-                'price_data' => [
-                    'currency' => 'EUR',
-                    'unit_amount' => $line['product']->getPrice() * 100,
-                    'product_data' => [
-                        'name' => $line['product']->getName(),
-                        // 'description' => $line['product']->getDescription(),
-                        // 'images' => [// 'https://127.0.0.1:8000/public/img/product/' . $line['product']->getImg1()]
+            if ($line['product']->getReduction() > 0) {
+                $stripeElement = [ // produit tel que Stripe en a besoin pour le traiter, les noms des index sont importants
+                    'quantity' => $line['quantity'],
+                    'price_data' => [
+                        'currency' => 'EUR',
+                        'unit_amount' => $line['product']->getPriceSolde() * 100,
+                        'product_data' => [
+                            'name' => $line['product']->getName(),
+                            // 'description' => $line['product']->getDescription(),
+                            // 'images' => [// 'https://127.0.0.1:8000/public/img/product/' . $line['product']->getImg1()]
+                        ]
                     ]
-                ]
-            ];
-            $stripeCart[] = $stripeElement;
+                ];
+                $stripeCart[] = $stripeElement;
+            } else {
+                $stripeElement = [ // produit tel que Stripe en a besoin pour le traiter, les noms des index sont importants
+                    'quantity' => $line['quantity'],
+                    'price_data' => [
+                        'currency' => 'EUR',
+                        'unit_amount' => $line['product']->getPrice() * 100,
+                        'product_data' => [
+                            'name' => $line['product']->getName(),
+                            // 'description' => $line['product']->getDescription(),
+                            // 'images' => [// 'https://127.0.0.1:8000/public/img/product/' . $line['product']->getImg1()]
+                        ]
+                    ]
+                ];
+                $stripeCart[] = $stripeElement;
+            }
         }
 
         $carrier = $order->getCarrier();

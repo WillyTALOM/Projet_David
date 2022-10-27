@@ -4,7 +4,11 @@
 
 {% endblock %}
 {% block h1 %}
-
+{% for sex in sexe %}
+{% if sex == sex.femme %}
+Vos produits pour femme
+{% endif %}
+{% endfor %}
 
 {% endblock %}
 

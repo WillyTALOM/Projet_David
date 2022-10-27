@@ -48,16 +48,22 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $registration = $form->getData();
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation(
                 'verify_email',
+
                 $user,
                 (new TemplatedEmail())
                     ->from(new Address($this->getParameter('contact_email'), 'no-reply@vdv.fr'))
                     ->to($user->getEmail())
                     ->subject('Confirmez votre adresse email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->context([
+                        'user' => $user,
+
+
+                    ])
             );
             // do anything else you need here, like send an email
 
@@ -66,6 +72,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+
         ]);
     }
 
