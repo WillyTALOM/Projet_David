@@ -17,7 +17,7 @@
 		{% if app.user %}
 		<div class="col-12">
 			<div class="my-3">
-				Vous êtes connecté en tant que {{ app.user.username }}, <a href="{{ path('logout') }}">déconnexion</a>
+				Vous êtes connecté en tant que {{ app.user.firstName }}, <a href="{{ path('logout') }}">déconnexion</a>
 			</div>
 			<div class="dropdown-divider my-4"></div>
 		</div>

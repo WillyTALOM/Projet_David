@@ -26,7 +26,7 @@
             <div class="card-body">
                 <h5 class="card-title text-center">{{ address.address }}</h5>
                 <p class="card-text">
-                    {{ address.additional }},<br />
+                    {{ address.additional }}<br />
                     {{ address.zip}} - {{ address.city }} - {{ address.country }}
                 </p>
                 <a href="{{ path('user_account_address_update', { 'id' : address.id }) }}"><i

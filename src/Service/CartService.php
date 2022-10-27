@@ -79,7 +79,11 @@ class CartService
         $total = 0;
         foreach ($sessionCart as $id => $quantity) {
             $product = $this->productRepository->find($id);
-            $total += $product->getPrice() * $quantity;
+            if ($product->getReduction() > 0) {
+                $total += $product->getPriceSolde() * $quantity;
+            } else {
+                $total += $product->getPrice() * $quantity;
+            }
         }
         return $total;
     }

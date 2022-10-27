@@ -71,10 +71,11 @@ class CartController extends AbstractController
     {
         $cartValidationForm = $this->createForm(CartValidationType::class);
         $cartValidationForm->handleRequest($request);
+        $manager = $managerRegistry->getManager();
 
         if ($cartValidationForm->isSubmitted() && $cartValidationForm->isValid()) {
 
-            $manager = $managerRegistry->getManager();
+
             $carrier = $cartValidationForm['carrier']->getData();
 
             $order = new Order(); // génère la commande en base de données

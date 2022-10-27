@@ -27,11 +27,9 @@ class PaymentController extends AbstractController
     }
 
     #[Route('/payment/{order}', name: 'payment')]
-    public function index(Request $request, CartService $cartService, Order $order): Response
+    public function index(CartService $cartService, Order $order): Response
     {
-        if ($request->headers->get('referer') !== 'https://127.0.0.1:8000/cart/validation') {
-            return $this->redirectToRoute('cart');
-        }
+
 
         $sessionCart = $cartService->getCart();
         $stripeCart = [];

@@ -28,6 +28,7 @@ class ProductController extends AbstractController
             'product' => $product,
             'products' => $produits,
 
+
         ]);
     }
 
@@ -235,7 +236,8 @@ class ProductController extends AbstractController
     {
         $sexe = $sexeRepository->findOneBy(['name' => $sexe]);
         return $this->render('product/sexe.html.twig', [
-            'products' => $productRepository->findBy(['sexe' => $sexe])
+            'products' => $productRepository->findBy(['sexe' => $sexe]),
+            'sexe' => $sexe
         ]);
     }
 }

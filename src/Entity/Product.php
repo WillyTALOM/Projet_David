@@ -72,6 +72,7 @@ class Product
     private Collection $orders;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Favorite::class)]
+    // #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $favorites;
 
     public function __construct()
