@@ -1,5 +1,24 @@
 <h2>Vous avez une nouvelle commande à expédier</h2>
 
+<h4>Détails de la commande {{ order.reference }}</h4>
+
+<table>
+    <thead>
+        <tr>
+            <th>Désignation</th>
+            <th>Quantité</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for orderDetail in order.orderDetails %}
+        <tr>
+            <td>{{ orderDetail.productId.name }}</td>
+            <td>{{ orderDetail.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 <ul>
     <li>Référence : {{ order.reference }}</li>
     <li>Montant : {{ order.amount }} €</li>
@@ -23,23 +42,6 @@
     </li>
 </ul>
 
-<h2>Détails de la commande {{ order.reference }}</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Désignation</th>
-            <th>Quantité</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for orderDetail in order.orderDetails %}
-        <tr>
-            <td>{{ orderDetail.productId.name }}</td>
-            <td>{{ orderDetail.quantity }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
 {# <img src="{{ email.image('@images/logo.png') }}" alt="logo {{ contact_company }}"> #}

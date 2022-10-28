@@ -31,9 +31,13 @@
 					{{ line.product.name }}
 				</td>
 				<td>{{line.quantity}}</td>
+				{% if line.product.reduction > 0 %}
+				<td>{{(line.product.priceSolde * line.quantity)|number_format(2,',', '')}}
+					€</td>
+				{% else %}
 				<td>{{(line.product.price * line.quantity)|number_format(2,',', '')}}
 					€</td>
-
+				{% endif %}
 			</tr>
 			{% endfor %}
 
