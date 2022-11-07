@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Order;
 use Stripe\StripeClient;
 use App\Service\CartService;
-use App\Repository\OrderRepository;
 use Symfony\Component\Mime\Address;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -44,7 +43,7 @@ class PaymentController extends AbstractController
                         'product_data' => [
                             'name' => $line['product']->getName(),
                             // 'description' => $line['product']->getDescription(),
-                            // 'images' => [// 'https://127.0.0.1:8000/public/img/product/' . $line['product']->getImg1()]
+                            // 'images' => [// 'https://127.0.0.1:8000/public/img/product/' . $line['product']->getImage1()]
                         ]
                     ]
                 ];
@@ -74,9 +73,9 @@ class PaymentController extends AbstractController
                 'unit_amount' => $carrier->getPrice() * 100,
                 'product_data' => [
                     'name' => 'Livraison : ' . $carrier->getName(),
-                    'images' => [
-                        'https://127.0.0.1:8000/public/img/carrier/' . $carrier->getImg()
-                    ]
+                    // 'images' => [
+                    //     'https://127.0.0.1:8000/public/img/carrier/' . $carrier->getImg()
+                    // ]
                 ]
             ]
         ];

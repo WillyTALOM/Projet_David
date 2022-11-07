@@ -75,6 +75,10 @@ class Product
     #[ORM\JoinColumn(onDelete: "CASCADE")]
     private Collection $favorites;
 
+    // public function __toString()
+    // {
+    //     return $this->getSexe();
+    // }
     public function __construct()
     {
         $this->images = new ArrayCollection();

@@ -17,6 +17,7 @@ class Favorite
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'favorites')]
+    #[ORM\JoinColumn(onDelete: "CASCADE")]
     private ?Product $product = null;
 
     public function getId(): ?int

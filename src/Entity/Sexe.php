@@ -23,7 +23,10 @@ class Sexe
     #[ORM\OneToMany(mappedBy: 'sexe', targetEntity: Product::class)]
     private Collection $products;
 
-
+    // public function __toString()
+    // {
+    //     return $this->getName();
+    // }
 
     public function __construct()
     {

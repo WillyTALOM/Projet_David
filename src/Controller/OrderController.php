@@ -2,11 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\OrderDetails;
+
 use App\Repository\OrderDetailsRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
-use App\Service\CartService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,7 +44,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/account/orders/{reference}', name: 'user_account_order_details')]
-    public function show($reference, OrderRepository $orderRepository, OrderDetailsRepository $orderDetailsRepository, ProductRepository $productRepository)
+    public function show($reference, OrderRepository $orderRepository, ProductRepository $productRepository)
     {
         $order = $orderRepository->findOneByReference($reference);
 

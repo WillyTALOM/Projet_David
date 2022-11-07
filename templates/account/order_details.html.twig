@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ma commandes{% endblock %}
+{% block title %}Détail de ma commande{% endblock %}
+
+{% block h1 %}Détail de ma commande{% endblock %}
 
 {% block body %}
-<div class="text-center">
-    <h1>Ma commande {{ order.reference }}</h1>
-</div>
+
 <hr>
 <strong>Statut de la commande : </strong>
 {% if order.paid == 1 %}
@@ -38,8 +38,20 @@ La commande est annulée
                     alt="image principale {{ orderDetail.productId.image1}}">
                 {{ orderDetail.productId.name }}</td>
             <td>{{ orderDetail.quantity }}</td>
+            {% if orderDetail.productId.reduction > 0 %}
+            <td>{{ orderDetail.productId.priceSolde|number_format(2, ',', ' ') }}
+                €
+            </td>
+            {% else %}
             <td>{{ (orderDetail.productId.price|number_format(2, ',', '.') ) }} €</td>
+            {% endif %}
+
+            {% if orderDetail.productId.reduction > 0 %}
+            <td>{{ (orderDetail.productId.priceSolde * orderDetail.quantity)|number_format(2, ',', '.') }} €</td>
+            {% else %}
             <td>{{ (orderDetail.productId.price * orderDetail.quantity)|number_format(2, ',', '.') }} €</td>
+            {% endif %}
+
         </tr>
         {% endfor %}
     </tbody>

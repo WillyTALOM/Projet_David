@@ -59,8 +59,6 @@ class ProductController extends AbstractController
                 $productReference[] = $newproduct->getReference();
             }
 
-
-
             if (in_array($form['reference']->getData(), $productReference)) {
                 $this->addFlash('danger', 'Le produit n\'a pas pu être créé : Ce produit existe déja');
                 return $this->redirectToRoute('admin_products');
@@ -93,20 +91,6 @@ class ProductController extends AbstractController
                 $infoImage3->move($this->getParameter('product_image_dir'), $nomImage3);
                 $product->setImage3($nomImage3);
             }
-
-
-
-            // $product->setPrice($form['price']->getData());
-            // $product->setReduction($form['reduction']->getData());
-            // $product->setName($form['name']->getData());
-            // $product->setReference($form['reference']->getData());
-            // $product->setAbstract($form['abstract']->getData());
-            // $product->setDescription($form['description']->getData());
-            // $product->setQuantity($form['quantity']->getData());
-            // $product->setPrice($form['price']->getData());
-            // $product->setBrand($form['brand']->getData());
-            // $product->setCategory($form['category']->getData());
-            // $product->setSexe($form['sexe']->getData());
 
             $product->setCreatedAt(new DateTimeImmutable());
             $product->setPriceSolde($product->getPrice() * (1 - ($product->getReduction() / 100)));
