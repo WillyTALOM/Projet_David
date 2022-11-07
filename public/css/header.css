@@ -1,13 +1,28 @@
-#header1 {
+/* #header1 {
   height: 4rem;
-}
+} */
 
-body header nav #header2 {
+/* body header nav #header2 {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1;
+} */
+
+#nav .container-fluid a img{
+  max-height: 1.5rem;
+
 }
+
+  #header2 a {
+ margin-left: 2rem;
+}
+
+ #header2 a img {
+ max-height: 3rem;
+  
+
+} 
 
 #icon1 {
   font-size: 30px;
