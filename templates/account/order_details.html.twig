@@ -65,6 +65,9 @@ La commande est annulée
 
 <div class="mb-4">
     <a class="btn btn-dark" href="{{ path('user_account_orders', {'id': app.user.id}) }}">Retour</a>
+    <a href="{{ path('receipt_pdf', {'reference' : order.reference}) }}" class="btn btn-success ">Télécharger la
+        facture</a>
 </div>
+
 
 {% endblock %}

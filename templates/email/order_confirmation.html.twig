@@ -1,3 +1,5 @@
+<h1>Bonjour {{user.firstName}}</h1>
+
 <h2>Récapitulatif de votre commande {{ contact_company }}</h2>
 
 <h3>Détails de la commande {{ order.reference }}</h3>
@@ -12,8 +14,9 @@
     <tbody>
         {% for orderDetail in order.orderDetails %}
         <tr>
-            <td><img src="{{ asset('img/product/' ~ orderDetail.productId.image1) }}"
-                    alt="image principale {{ orderDetail.productId.image1 }}">
+            <td><img style="margin: 0; border: 0; padding: 0; display: block;"
+                    src="{{email.image('@images/product/' ~ orderDetail.productId.image1) }}" width="120" height="120"
+                    alt="image principale {{ orderDetail.productId.image1 }}"> #}
                 {{ orderDetail.productId.name }}
             </td>
             <td>{{ orderDetail.quantity }}</td>
@@ -48,4 +51,4 @@
 </ul>
 
 
-{# <img src="{{ email.image('@images/logo.png') }}" alt="logo {{ contact_company }}"> #}
+<img src="{{ email.image('@images/logo/logo1.png') }}" alt="logo {{ contact_company }}">

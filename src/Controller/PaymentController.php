@@ -136,7 +136,8 @@ class PaymentController extends AbstractController
             ->htmlTemplate('email/order_confirmation.html.twig')
             ->context([
                 'order' => $order,
-                'orderDetails' => $order->getOrderDetails()
+                'orderDetails' => $order->getOrderDetails(),
+                'user' => $this->getUser()
             ]);
         $mailer->send($email);
 
@@ -149,6 +150,6 @@ class PaymentController extends AbstractController
         $managerRegistry->getManager()->flush();
 
 
-        return $this->render('payment/success.html.twig');
+        return $this->render('payment/success.html.twig', ['order' => $order,]);
     }
 }

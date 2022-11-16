@@ -59,6 +59,7 @@ class OrderController extends AbstractController
             'product' => $product,
             'order' => $order,
 
+
         ]);
     }
 }
