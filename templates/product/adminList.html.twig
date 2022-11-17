@@ -3,7 +3,17 @@
 {% block title %}produits
 {% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
+{% endblock %}
+
 {% block body %}
+
+<div class="pagination-container">
+	{% do products.setPageRange(1) %}
+	{{ knp_pagination_render(products, '__partials/pagination.html.twig') }}
+
+</div>
 
 <h1 class="pb-5 text-center">Liste des produits</h1>
 <table class="table table-hover table-sm text-center align-middle">

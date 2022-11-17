@@ -34,9 +34,19 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/products', name: 'admin_products')]
-    public function adminList(ProductRepository $productRepository): Response
+    public function adminList(ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
+
         $products = $productRepository->findAll();
+
+        $data = $products;
+
+        $products = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('product/adminList.html.twig', [
             'products' => $products
         ]);
