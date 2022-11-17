@@ -237,7 +237,7 @@ class ProductController extends AbstractController
         $products = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
-            1
+            12
         );
 
         return $this->render('product/sexe.html.twig', [
