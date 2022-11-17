@@ -8,6 +8,7 @@ use App\Form\ProductType;
 use App\Repository\SexeRepository;
 use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -216,11 +217,21 @@ class ProductController extends AbstractController
     }
 
     #[Route('/products/{sexe}', name: 'products_by_sexe')]
-    public function getProduitsBySexe(string $sexe, SexeRepository $sexeRepository, ProductRepository $productRepository): Response
+    public function getProduitsBySexe(string $sexe, SexeRepository $sexeRepository, ProductRepository $productRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $sexe = $sexeRepository->findOneBy(['name' => $sexe]);
+        $products = $productRepository->findBy(['sexe' => $sexe]);
+
+        $data = $products;
+
+        $products = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            1
+        );
+
         return $this->render('product/sexe.html.twig', [
-            'products' => $productRepository->findBy(['sexe' => $sexe]),
+            'products' => $products,
             'sexe' => $sexe
         ]);
     }

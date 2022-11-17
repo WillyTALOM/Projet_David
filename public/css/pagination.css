@@ -1,0 +1,50 @@
+main .pagination-container{
+    width: 50%;
+    position: absolute;
+    bottom: 350px; 
+    
+}
+
+    main .pagination-container .pagination{
+        
+        display:flex ;
+        word-spacing: 5px;
+        justify-content: center;
+
+    }
+
+    
+
+    main .pagination-container .pagination .page-item{
+        width: 3.5rem;
+        display:flex ;
+        justify-content: center;
+
+    }
+
+
+    main .pagination-container .pagination .page-item-disabled{
+        width: 8rem;
+        display:flex ;
+        justify-content: center;
+
+    } 
+
+     main  form select {
+                        width: calc(5%);
+                        height: 2rem;
+                        border-radius: 1rem;
+                        font-size: initial;
+                        text-align: center;
+                        border: 2px solid var(--color-green);
+                        color: var(--color-green);
+                        margin-bottom: 2rem;
+                    }
+
+    main  form  a i {
+                        font-size: 1.3rem;
+                    }
+
+    main .table tbody tr td a i{
+        color: var( --color-blue-fluo);
+    }               

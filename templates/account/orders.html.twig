@@ -2,10 +2,19 @@
 
 {% block title %}Mes commandes{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
+{% endblock %}
+
+
 {% block h1 %}Mes commandes{% endblock %}
 
 {% block body %}
+<div class="pagination-container">
+    {% do orders.setPageRange(1) %}
+    {{ knp_pagination_render(orders, '__partials/pagination.html.twig') }}
 
+</div>
 
 <p>C'est dans cet espace que vous allez pouvoir gérer toutes vos commandes.</p>
 
@@ -58,4 +67,5 @@
 </div>
 
 {% endif %}
+
 {% endblock %}
