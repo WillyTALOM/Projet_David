@@ -3,6 +3,10 @@
 {% block title %}Toutes les commandes
 {% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
+{% endblock %}
+
 {% block body %}
 
 
@@ -53,5 +57,11 @@
 
 <div class="text-end mt-4">
 	<a href="#" class="btn btn-success">Créer une commande</a>
+</div>
+
+<div class="pagination-container">
+	{% do orders.setPageRange(1) %}
+	{{ knp_pagination_render(orders, '__partials/pagination.html.twig') }}
+
 </div>
 {% endblock %}

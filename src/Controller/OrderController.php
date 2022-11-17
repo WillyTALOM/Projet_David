@@ -15,10 +15,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class OrderController extends AbstractController
 {
     #[Route('/admin/orders', name: 'admin_orders')]
-    public function index(OrderRepository $orderRepository): Response
+    public function index(OrderRepository $orderRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $orders = $orderRepository->findAll();
+        $data = $orders;
 
+        $orders = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('admin/order/index.html.twig', [
             'orders' => $orders,
         ]);
