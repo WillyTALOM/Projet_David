@@ -60,10 +60,10 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $address->setUser($user);
             $user->setCreatedAt(new DateTimeImmutable());
-
             $entityManager->persist($user);
+            $entityManager->persist($address);
             $entityManager->flush();
             $registration = $form->getData();
             // generate a signed url and email it to the user
