@@ -42,6 +42,16 @@ class RegistrationFormType extends AbstractType
                     'maxLenght' => 180
                 ]
             ])
+              ->add('addresses', CollectionType::class, [
+                'entry_type' => AddressType::class,
+                'entry_options' => [
+                    'label' => false
+                ],
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true
+
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
