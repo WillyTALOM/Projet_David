@@ -33,14 +33,26 @@ class RegistrationController extends AbstractController
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-           $address = new Address();
-
-
+        $address = new Address();
         $user->getAddresses()->add($address);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $addresses = $addressRepository->findAll();
+            $newAddress = [];
+            $addressAdditional = [];
+            $addressZip = [];
+            $addressCity = [];
+            $addressCountry = [];
+
+            foreach ($addresses as $existingAddress) {
+                $newAddress[] = $existingAddress->getAddress();
+                $addressAdditional[] = $existingAddress->getAdditional();
+                $addressZip[] = $existingAddress->getZip();
+                $addressCity[] = $existingAddress->getCity();
+                $addressCountry[] = $existingAddress->getCity();
+            }
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
